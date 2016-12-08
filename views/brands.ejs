@@ -1,0 +1,110 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <% include partials/header %>
+</head>
+<body>
+
+    <% include partials/bodytop %>
+
+<%
+    // If we have no rows at all (app set up only!), let's display a message
+    if(brands.length === 0) {
+%>
+    <span style="margin-left: 20px">Add your first item to get started</span>
+<%
+    }
+%>
+    <div class="row" style="position: relative">
+        <div class="small-10 columns">
+            <h3>Brands</h3>
+            <form id="form_brands" name="mainForm" method="post"> <!-- action is set by button onclick function -->
+                <table id="table_brands">
+                    <tbody>
+                        <!-- The first row of the table contains the add form -->
+                        <tr id="row_brands_new">
+                            <td>
+                                <input data-required="false" data-action="delete" style="display: none" type="checkbox" data-group="new" name="checkbox" value="new" class="insideTable"  data-default-text="new">
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="brandName" value="" placeholder="Brand name" class="insideTable" style="width: 200px">
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="homepage" value="" placeholder="Homepage" class="insideTable" style="width: 200px">
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="twitterHandle" value="" placeholder="Twitter" class="insideTable" style="width: 200px">
+                            </td>
+                            <td>
+                                <textarea required data-required="true" data-action="add" type="text" data-group="new" name="brandSpiel" value="" placeholder="Brand spiel" class="insideTable" style="width: 200px" rows="5"></textarea>
+                            </td>
+                            <td>
+                                <select required data-required="true" data-action="add" data-group="new" data-default-value="false" name="baluFavourite" class="insideTable" title="Balu Favourite" style="width: 50px">
+                                    <option value="TRUE">True</option>
+                                    <option selected value="FALSE">False</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="submit" value="Add" data-endpoint="/submit-brands" data-table-id="table_brands" data-group="new" data-action="add" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    for (var i = 0; i < brands.length; i++) {
+        var lvBaluFavourite = 'false'; // default
+        if(brands[i].baluFavourite === 'true'){
+            lvBaluFavourite = 'true';
+        }
+%>
+
+                        <tr id=<%- '"row_brands_' + brands[i].brandId + '"' %>>
+                            <td>
+                                <input data-required="false" data-action="delete" id=<%- '"' + brands[i].brandId + '"' %> type="checkbox" data-group=<%- '"' + brands[i].brandId + '"' %> name="checkbox" value=<%- '"' + brands[i].brandId + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="brandName"><%- brands[i].brandName %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + brands[i].brandId + '"' %> name="brandName" style="display: none" value=<%- '"' + brands[i].brandName + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="homepage"><%- brands[i].homepage.substring(brands[i].homepage.indexOf('//')+2,brands[i].homepage.length-1) %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + brands[i].brandId + '"' %> name="homepage" style="display: none" value=<%- '"' + brands[i].homepage + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="twitterHandle"><%- brands[i].twitterHandle %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + brands[i].brandId + '"' %> name="twitterHandle" style="display: none" value=<%- '"' + brands[i].twitterHandle + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <!-- to do: put a tooltip over this for full spiel text -->
+                                <span name="brandSpiel"><%- brands[i].brandSpiel.substring(0,100) + ' ...'  %></span>
+                                <textarea required data-required="true" data-action="update" type="text" data-group=<%- '"' + brands[i].brandId + '"' %> name="brandSpiel" style="display: none" class="insideTable" rows="5"><%- brands[i].brandSpiel %></textarea>
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="baluFavourite"><%- brands[i].baluFavourite %></span>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + brands[i].brandId + '"' %> data-default-value="false" name="baluFavourite" stitle="Balu Favourite" style="display: none" %> class="insideTable">
+                                    <option <% if(lvBaluFavourite === "true" ){ %> selected <% } %> value="true">True</option>
+                                    <option <% if(lvBaluFavourite === "false" ){ %> selected <% } %> value="false">False</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="submit" style="display: none" value="Update" data-endpoint="/submit-brands" data-table-id="table_brands" data-group=<%- '"' + brands[i].brandId + '"' %>  data-action="update" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    } // end loop through records
+%>
+
+                    </tbody>
+                </table>
+                <input type="submit" value="Delete" data-endpoint="/submit-brands" data-table-id="table_brands" data-action="delete" class="button tiny" style="float: bottom">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+
+    <% include partials/bodytail %>
+    <script src="js/mainCS.js"></script>
+
+  </body>
+</html>

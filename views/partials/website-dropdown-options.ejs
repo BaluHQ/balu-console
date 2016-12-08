@@ -1,0 +1,20 @@
+<%
+if(lvSelectedWebsiteId == null) {
+%>
+    <option selected value="" disabled>Select website</option>
+<%
+} else {
+%>
+    <option value="" disabled>Select website</option>
+<%
+}
+for(var i = 0; i < websites.length; i++){
+    lvSelectedWebsiteText = '';
+    if(lvSelectedWebsiteId === websites[i].websiteId){
+        lvSelectedWebsiteText = 'selected'
+    }
+%>
+    <option <%- lvSelectedWebsiteText %> value=<%- '"' + websites[i].websiteId + '"' %>><%- websites[i].websiteURL %></option>
+<%
+} // end of loop through websites
+%>

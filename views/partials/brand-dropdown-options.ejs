@@ -1,0 +1,13 @@
+
+    <option value="" selected disabled>Select brand</option>
+<%
+for(var i = 0; i < brands.length; i++){
+    var lvSelectedBrandText = '';
+    if(lvSelectedBrandId === brands[i].brandId){
+        lvSelectedBrandText = 'selected'
+    }
+%>
+    <option <%- lvSelectedBrandText %> value=<%- '"' + brands[i].brandId + '"' %>><%- brands[i].brandName %></option>
+<%
+} // end of loop through websites
+%>

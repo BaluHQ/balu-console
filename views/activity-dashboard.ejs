@@ -1,0 +1,273 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <% include partials/header %>
+</head>
+<body>
+
+    <% include partials/bodytop %>
+
+    <div class="small-12 small columns">
+
+        <!-- -->
+        <h2>Summary Figures</h2>
+        <ul>
+            <li>Number of Users: <%= summaryData.numberOfUsers %></li>
+            <br />
+            <li>Number of Click Throughs: <%= summaryData.numberOfClickThroughs %></li>
+            <li>Number of Auto Recs: <%= summaryData.numberOfAutoRecs %></li>
+            <li>Number of Manual Searches: <%= summaryData.numberOfManualSearches %></li>
+            <br />
+            <li>Number of User Submitted Recs: <%= summaryData.numberOfUserSubmittedRecs %></li>
+            <li>Number of User Submitted Websites: <%= summaryData.numberofUserSubmittedWebsites %></li>
+            <br />
+            <li>Number of Tracked Tab Errors: <%= summaryData.numberOfBrokenLinks %></li>
+            <li>Number of Manual Searches With No Results: <%= summaryData.numberOfManualSearches_noResult %></li>
+            <br />
+            <li>Number of Balu On / Off Requests: <%= summaryData.numberOfOnOffs %></li>
+            <li>Number of Balu Show / Hide Requests: <%= summaryData.numberOfShowHides %></li>
+            <li>Number of Sidebar Hide Until Refresh / Restart Requests: <%= summaryData.numberOfHideUntilRefreshRestarts %></li>
+            <li>Number of Blocked Brands: <%= summaryData.numberOfBlockedBrands %></li>
+
+        </ul>
+
+        <!-- -->
+        <h2>Users</h2>
+        <h3>User List</h3>
+        <table>
+          <tr>
+            <th>User Name (email)</th>
+            <th>Date Joined</th>
+            <th>Email Verifcation</th>
+            <th>Joyride Status</th>
+            <th>Who Is</th>
+          </tr>
+          <% users.forEach(function(pvUser){ %>
+              <tr>
+                  <td><%= pvUser.email %></td>
+                  <td><%= pvUser.createdAt %></td>
+                  <td><%= pvUser.emailVerified %></td>
+                  <td><%= pvUser.joyrideStatus %></td>
+                  <td><%= pvUser.whoIs %></td>
+              </tr>
+          <% }) %>
+        </table>
+
+        <!-- -->
+        <h2>User Activity</h2>
+        <h3>Click Throughs</h3>
+        <table>
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Brand</th>
+            <th>Product Name</th>
+            <th>Source URL</th>
+            <th>Target URL</th>
+          </tr>
+          <% clickThroughs.forEach(function(pvClickThrough){ %>
+              <tr>
+                  <td><%= pvClickThrough.email %></td>
+                  <td><%= pvClickThrough.createdAt %></td>
+                  <td><%= pvClickThrough.brandName %></td>
+                  <td><%= pvClickThrough.productName %></td>
+                  <td><%= pvClickThrough.tabURL %></td>
+                  <td><%= pvClickThrough.hyperlinkURL %></td>
+              </tr>
+          <% }) %>
+        </table>
+        <h3>Automatic Recommendations</h3>
+        <table>
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Brands</th>
+            <th>Source URL</th>
+          </tr>
+          <% autoRecs.forEach(function(pvAutoRecs){ %>
+              <tr>
+                  <td><%= pvAutoRecs.email %></td>
+                  <td><%= pvAutoRecs.createdAt %></td>
+                  <td><%= pvAutoRecs.twitterHandles %></td>
+                  <td><%= pvAutoRecs.tabURL %></td>
+              </tr>
+          <% }) %>
+        </table>
+        <h3>Manual Searches</h3>
+        <table>
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Search Term</th>
+          </tr>
+          <% manualSearches.forEach(function(pvManualSearch){ %>
+              <tr>
+                  <td><%= pvManualSearch.email %></td>
+                  <td><%= pvManualSearch.createdAt %></td>
+                  <td><%= pvManualSearch.searchTerm %></td>
+              </tr>
+          <% }) %>
+        </table>
+
+        <!-- -->
+        <h2>User Contributions</h2>
+        <h3>User Submitted Recommendations</h3>
+        <table>
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Product Name</th>
+            <th>URL / Twitter</th>
+            <th>Reason</th>
+            <th>Processed?</th>
+          </tr>
+          <% userSubmittedRecs.forEach(function(pvUserSubmittedRecs){ %>
+              <tr>
+                  <td><%= pvUserSubmittedRecs.email %></td>
+                  <td><%= pvUserSubmittedRecs.createdAt %></td>
+                  <td><%= pvUserSubmittedRecs.productName %></td>
+                  <td><%= pvUserSubmittedRecs.URLOrTwitter %></td>
+                  <td><%= pvUserSubmittedRecs.processed %></td>
+              </tr>
+          <% }) %>
+        </table>
+        <h3>User Submitted Websites</h3>
+        <table>
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Website</th>
+          </tr>
+          <% userSubmittedWebsites.forEach(function(pvUserSubmittedWebsites){ %>
+              <tr>
+                  <td><%= pvUserSubmittedWebsites.email %></td>
+                  <td><%= pvUserSubmittedWebsites.createdAt %></td>
+                  <td><%= pvUserSubmittedWebsites.websiteRec %></td>
+              </tr>
+          <% }) %>
+        </table>
+
+        <!-- -->
+        <h2>Issues</h2>
+        <h3>Broken Link</h3>
+        <table>
+          <tr>
+            <th>URL</th>
+            <th>Date</th>
+            <th>Product Name</th>
+            <th>User</th>
+            <th>Page Confirmation Search</th>
+            <th>Processed?</th>
+          </tr>
+          <% brokenLinks.forEach(function(pvBrokenLink){ %>
+              <tr>
+                  <td><%= pvBrokenLink.originalURL %></td>
+                  <td><%= pvBrokenLink.createdAt %></td>
+                  <td><%= pvBrokenLink.productName %></td>
+                  <td><%= pvBrokenLink.email %></td>
+                  <td><%= pvBrokenLink.pageConfirmationSearch %></td>
+                  <td><%= pvBrokenLink.processed %></td>
+              </tr>
+          <% }) %>
+        </table>
+        <!-- To do: errors (from the ErrorLog table), but at the moment logging isn't actually writing to this table! -->
+        <h3>Manual Searches With No Results</h3>
+        <table>
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Search Term</th>
+          </tr>
+          <% manualSearches_noResult.forEach(function(pvManualSearch_noResult){ %>
+              <tr>
+                  <td><%= pvManualSearch_noResult.email %></td>
+                  <td><%= pvManualSearch_noResult.createdAt %></td>
+                  <td><%= pvManualSearch_noResult.searchTerm %></td>
+              </tr>
+          <% }) %>
+        </table>
+
+        <!-- -->
+        <h2>User Engagement</h2>
+        <h3>Balu On / Off Requests</h3>
+        <table>
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Event Name</th>
+            <th>URL</th>
+          </tr>
+          <% onOffs.forEach(function(lvOnOffs){ %>
+              <tr>
+                  <td><%= lvOnOffs.email %></td>
+                  <td><%= lvOnOffs.createdAt %></td>
+                  <td><%= lvOnOffs.eventName %></td>
+                  <td><%= lvOnOffs.tabURL %></td>
+              </tr>
+          <% }) %>
+        </table>
+        <h3>Balu Show / Hide Requests</h3>
+        <table>
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Event Name</th>
+            <th>URL</th>
+          </tr>
+          <% showHides.forEach(function(lvShowHides){ %>
+              <tr>
+                  <td><%= lvShowHides.email %></td>
+                  <td><%= lvShowHides.createdAt %></td>
+                  <td><%= lvShowHides.eventName %></td>
+                  <td><%= lvShowHides.tabURL %></td>
+              </tr>
+          <% }) %>
+        </table>
+        <h3>Sidebar Hide Until Refresh / Restart Requests</h3>
+        <table>
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Event Name</th>
+            <th>URL</th>
+          </tr>
+          <% hideUntilRefreshRestarts.forEach(function(lvHideUntilRefreshRestart){ %>
+              <tr>
+                  <td><%= lvHideUntilRefreshRestart.email %></td>
+                  <td><%= lvHideUntilRefreshRestart.createdAt %></td>
+                  <td><%= lvHideUntilRefreshRestart.eventName %></td>
+                  <td><%= lvHideUntilRefreshRestart.tabURL %></td>
+              </tr>
+          <% }) %>
+        </table>
+        <h3>Blocked Brands</h3>
+        <table>
+          <tr>
+            <th>Brand</th>
+            <th>Date</th>
+            <th>User</th>
+            <th>Reason</th>
+            <th title="The product name of the recommendation the user clicked on to block this brand">Recommendation Source</th>
+            <th>Tab URL</th>
+          </tr>
+          <% blockedBrands.forEach(function(lvBlockedBrands){ %>
+              <tr>
+                  <td><%= lvBlockedBrands.brandName %></td>
+                  <td><%= lvBlockedBrands.createdAt %></td>
+                  <td><%= lvBlockedBrands.email %></td>
+                  <td><%= lvBlockedBrands.reason %></td>
+                  <td><%= lvBlockedBrands.productName %></td>
+                  <td><%= lvBlockedBrands.tabURL %></td>
+              </tr>
+          <% }) %>
+        </table>
+    </div>
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+
+    <% include partials/bodytail %>
+
+  </body>
+</html>

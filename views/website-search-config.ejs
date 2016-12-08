@@ -1,0 +1,144 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <% include partials/header %>
+</head>
+<body>
+
+    <% include partials/bodytop %>
+
+    <div class="small-8 small columns end">
+        <h3>Website Search Config</h3>
+
+
+<%
+    // If we have no rows at all (app set up only!), let's display a message
+    if(categoryWebsiteJoins.length === 0) {
+%>
+        <span style="margin-left: 20px">Add your first Search Category to get started</span>
+<%
+    }
+%>
+        <ul class="accordion" data-accordion="">
+
+<%
+
+    var lvCurrentSearchCategoryId;
+    var lvNextSearchCategoryId;
+    var lvPreviousSearchCategoryId;
+    var lvSelectedWebsiteId; // updated for each row, to set the dropdown correctly
+
+    // for each row in categoryWebsiteJoins, which is sorted by searchCategory then website, one searchCategory has many websites
+    for (var i = 0; i < categoryWebsiteJoins.length; i++) {
+
+        lvCurrentSearchCategoryId = categoryWebsiteJoins[i].searchCategoryId;
+
+        // Set the previous and next category ids, which will allow us to control the flow as we loop through the array
+        if(i > 0) {
+            lvPreviousSearchCategoryId = categoryWebsiteJoins[i-1].searchCategoryId;
+        } else {
+            lvPreviousSearchCategoryId = '';
+        }
+        if(i < categoryWebsiteJoins.length-1) {
+            lvNextSearchCategoryId = categoryWebsiteJoins[i+1].searchCategoryId;
+        } else {
+            lvNextSearchCategoryId = '"';
+        }
+
+        // If this is the first iteration of a new searchCategory, let's create a new accordion <li>
+        if (lvPreviousSearchCategoryId != lvCurrentSearchCategoryId) {
+            lvSelectedWebsiteId = null;
+%>
+            <li class="accordion-navigation">
+                <a href=<%- '"#panel_' + lvCurrentSearchCategoryId + '"' %>><%- categoryWebsiteJoins[i].searchCategoryName %></a>
+                <div id=<%- '"panel_' + lvCurrentSearchCategoryId + '"' %> class="content">
+                    <input type="hidden" id="fieldCategoryId" value=<%- '"' + lvCurrentSearchCategoryId + '"' %>>
+                    <div class="row" style="position: relative">
+                        <div class="small-10 columns">
+                            <form id=<%- '"form_categoryWebsiteJoins_' + lvCurrentSearchCategoryId + '"' %> name="mainForm" method="post"> <!-- action is set by button onclick function -->
+                                <table id=<%- '"table_categoryWebsiteJoins_' + lvCurrentSearchCategoryId + '"' %> >
+                                    <tbody>
+                                        <!-- The first row of the table contains the addCategoryWebsiteJoin form -->
+                                        <tr id="row_categoryWebsiteJoins_new">
+                                            <td style="display: none">
+                                                <input required data-required="true" data-action="add" type="text" data-group="new" name="searchCategory" value="new" data-default-text="new">
+                                            </td>
+                                            <td>
+                                                <input data-required="false" data-action="delete" style="display: none" type="checkbox" data-group="new" name="checkbox" value="new" class="insideTable"  data-default-text="new">
+                                            </td>
+                                            <td>
+                                                <select required data-required="true" data-action="add" data-group="new" name="website" style="width: 200px" class="insideTable">
+                                                    <%- include partials/website-dropdown-options %>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input required data-required="true" data-action="add" type="text" data-group="new" name="activeDepartments" placeholder="Active Departments" value="ALL" %> style="width: 200px" class="insideTable" data-default-text="ALL">
+                                            </td>
+                                            <td>
+                                                <input type="submit" value="Add"  data-endpoint="/submit-category-website-join" data-table-id=<%- '"table_categoryWebsiteJoins_' + lvCurrentSearchCategoryId + '"' %> data-group="new" data-action="add" class="button tiny insideTable">
+                                            </td>
+                                        </tr>
+
+<%
+        } // if this is the first iteration of a new searchCategory
+
+        // If this is not the test website (which we put into every searchCategory to avoid errors elsewhere in the app)
+        if(testWebsiteURL !== categoryWebsiteJoins[i].websiteURL.toLowerCase()){
+            var lvDepartmentEditValue = 'ALL';
+            if(categoryWebsiteJoins[i].departments !== ''){
+                lvDepartmentEditValue = categoryWebsiteJoins[i].departments;
+            }
+            lvSelectedWebsiteId = categoryWebsiteJoins[i].websiteId;
+%>
+
+                                    <tr id=<%- '"row_categoryWebsiteJoins_' + categoryWebsiteJoins[i].categoryWebsiteJoinId + '"' %>>
+                                        <td style="display: none">
+                                            <input data-required="false" data-action="update" type="text" data-group="new" name="searchCategory" value=<%- '"' + categoryWebsiteJoins[i].searchCategoryId + '"' %> >
+                                        </td>
+                                        <td>
+                                            <input data-required="false" data-action="delete" id=<%- '"' + categoryWebsiteJoins[i].categoryWebsiteJoinId + '"' %> type="checkbox" data-group=<%- '"' + categoryWebsiteJoins[i].categoryWebsiteJoinId + '"' %> name="checkbox" value=<%- '"' + categoryWebsiteJoins[i].categoryWebsiteJoinId + '"' %> class="insideTable">
+                                        </td>
+                                        <td>
+                                            <span name="website"><%- categoryWebsiteJoins[i].websiteURL %></span>
+                                        </td>
+                                        <td data-inline-edit="true" data-editable="false">
+                                            <span name="activeDepartments" style="display: block;"><%- categoryWebsiteJoins[i].departments %></span>
+                                            <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + categoryWebsiteJoins[i].categoryWebsiteJoinId + '"' %> name="activeDepartments" style="display: none" value=<%- '"' + lvDepartmentEditValue + '"' %> style="width: 200px" class="insideTable">
+                                        </td>
+                                        <td>
+                                            <input type="submit" style="display: none" value="Update" data-endpoint="/submit-category-website-join" data-table-id=<%- '"table_categoryWebsiteJoins_' + lvCurrentSearchCategoryId + '"' %> data-group=<%- '"' + categoryWebsiteJoins[i].categoryWebsiteJoinId + '"' %>  data-action="update" class="button tiny insideTable">
+                                        </td>
+                                    </tr>
+<%
+        } // If this is not the test website
+
+        // If this is the last iteration of the current searchCategory, close down the accordian <li>
+        if (lvCurrentSearchCategoryId != lvNextSearchCategoryId) {
+%>
+
+                                    </tbody>
+                                </table>
+                                <input type="submit" value="Delete" data-endpoint="/submit-category-website-join" data-table-id=<%- '"table_categoryWebsiteJoins_' + lvCurrentSearchCategoryId + '"' %>  data-action="delete" class="button tiny" style="float: bottom">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+<%
+        }  // if this is the last iteration of the current searchCategory
+    } // for each categoryWebsiteJoin
+%>
+        </ul>
+
+    </div>
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+
+    <% include partials/bodytail %>
+    <script src="js/mainCS.js"></script>
+
+  </body>
+</html>

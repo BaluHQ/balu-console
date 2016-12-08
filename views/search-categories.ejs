@@ -1,0 +1,86 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <% include partials/header %>
+</head>
+<body>
+
+    <% include partials/bodytop %>
+
+<%
+    // If we have no rows at all (app set up only!), let's display a message
+    if(searchCategories.length === 0) {
+%>
+    <span style="margin-left: 20px">Add your first item to get started</span>
+<%
+    }
+%>
+    <div class="row" style="position: relative">
+        <div class="small-10 columns">
+            <h3>Search Categories</h3>
+            <form id="form_searchCategories" name="mainForm" method="post"> <!-- action is set by button onclick function -->
+                <table id="table_searchCategories">
+                    <tbody>
+                        <!-- The first row of the table contains the add form -->
+                        <tr id="row_searchCategories_new">
+                            <td>
+                                <input data-required="false" data-action="delete" style="display: none" type="checkbox" data-group="new" name="checkbox" value="new" class="insideTable"  data-default-text="new">
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="categoryName" value="" placeholder="New category" class="insideTable" style="width: 200px">
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="categoryShortName" value="" placeholder="Category short Name" class="insideTable" style="width: 200px">
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="whyDoWeCare" value="" placeholder="Why Do We Care slug" class="insideTable" style="width: 200px">
+                            </td>
+                            <td>
+                                <input type="submit" value="Add"  data-endpoint="/submit-search-categories" data-table-id="table_searchCategories" data-group="new" data-action="add" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    for (var i = 0; i < searchCategories.length; i++) {
+%>
+
+                        <tr id=<%- '"row_searchCategories_' + searchCategories[i].searchCategoryId + '"' %>>
+                            <td>
+                                <input data-required="false" data-action="delete" id=<%- '"' + searchCategories[i].searchCategoryId + '"' %> type="checkbox" data-group=<%- '"' + searchCategories[i].searchCategoryId + '"' %> name="checkbox" value=<%- '"' + searchCategories[i].searchCategoryId + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="categoryName"><%- searchCategories[i].categoryName %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + searchCategories[i].searchCategoryId + '"' %> name="categoryName" style="display: none" value=<%- '"' + searchCategories[i].categoryName + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="categoryShortName"><%- searchCategories[i].categoryShortName %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + searchCategories[i].searchCategoryId + '"' %> name="categoryShortName" style="display: none" value=<%- '"' + searchCategories[i].categoryShortName + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="whyDoWeCare"><%- searchCategories[i].whyDoWeCare %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + searchCategories[i].searchCategoryId + '"' %> name="whyDoWeCare" style="display: none" value=<%- '"' + searchCategories[i].whyDoWeCare + '"' %> class="insideTable">
+                            </td>
+                            </td>
+                            <td>
+                                <input type="submit" style="display: none" value="Update" data-endpoint="/submit-search-categories" data-table-id="table_searchCategories" data-group=<%- '"' + searchCategories[i].searchCategoryId + '"' %>  data-action="update" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    } // end loop through records
+%>
+
+                    </tbody>
+                </table>
+                <input type="submit" value="Delete" data-endpoint="/submit-search-categories" data-table-id="table_searchCategories" data-action="delete" class="button tiny" style="float: bottom">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+
+    <% include partials/bodytail %>
+    <script src="js/mainCS.js"></script>
+
+  </body>
+</html>

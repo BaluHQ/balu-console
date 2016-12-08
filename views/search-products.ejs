@@ -1,0 +1,223 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <% include partials/header %>
+</head>
+<body>
+
+    <% include partials/bodytop %>
+
+<%
+    // If we have no rows at all (app set up only!), let's display a message
+    if(searchProducts.length === 0) {
+%>
+    <span style="margin-left: 20px">Add your first item to get started</span>
+<%
+    }
+%>
+    <div class="row" style="position: relative; margin-left: 0px; margin-right: 0px">
+        <div class="small-10 columns">
+            <h3>Search Products</h3>
+            <form id="form_searchProducts" name="mainForm" method="post"> <!-- action is set by button onclick function -->
+                <table id="table_searchProducts">
+                    <tbody>
+                        <!-- The first row of the table contains the add form -->
+                        <tr id="row_searchProducts_new">
+                            <td>
+                                <input data-required="false" data-action="delete" style="display: none" type="checkbox" data-group="new" name="checkbox" value="new" class="insideTable"  data-default-text="new">
+                            </td>
+                            <td>
+                                <select required data-required="true" data-action="add" data-group="new" name="searchCategory" style="width: 200px" class="insideTable">
+                                    <%- include partials/search-category-dropdown-options %>
+                                </select>
+                            </td>
+                            <td>
+                                <select required data-required="true" data-action="add" data-group="new" name="productGroup" style="width: 200px" class="insideTable">
+                                    <%- include partials/product-group-dropdown-options %>
+                                </select>
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="productName" value="" placeholder="Product name" class="insideTable" style="width: 200px">
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="brand" value="All" placeholder="Brand" data-default-text="All" class="insideTable" style="width: 100px">
+                            </td>
+                            <td>
+                                <select required data-required="true" data-action="add" data-group="new" data-default-value="OR" name="andOr" style="width: 50px" class="insideTable">
+                                    <option selected value="OR">Or</option>
+                                    <option value="AND">And</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="searchTerm1" value="" placeholder="Search 1" class="insideTable" style="width: 100px">
+                            </td>
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="searchTerm2" value="" placeholder="Search 2" class="insideTable" style="width: 100px">
+                            </td>
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="searchTerm3" value="" placeholder="Search 3" class="insideTable" style="width: 100px">
+                            </td>
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="searchTerm4" value="" placeholder="Search 4" class="insideTable" style="width: 100px">
+                            </td>
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="searchTerm5" value="" placeholder="Search 5" class="insideTable" style="width: 100px">
+                            </td>
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="searchTerm6" value="" placeholder="Search 6" class="insideTable" style="width: 100px">
+                            </td>
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="searchTerm7" value="" placeholder="Search 7" class="insideTable" style="width: 100px">
+                            </td>
+
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="sex" value="" placeholder="Sex (optional)" class="insideTable" style="width: 100px">
+                            </td>
+
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="negativeSearchTerm1" value="" placeholder="Negative Search 1" class="insideTable" style="width: 100px">
+                            </td>
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="negativeSearchTerm2" value="" placeholder="Negative Search 2" class="insideTable" style="width: 100px">
+                            </td>
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="negativeSearchTerm3" value="" placeholder="Negative Search 3" class="insideTable" style="width: 100px">
+                            </td>
+                            <td>
+                                <input type="text" data-required="false" data-action="add" data-group="new" name="negativeSearchTerm4" value="" placeholder="Negative Search 4" class="insideTable" style="width: 100px">
+                            </td>
+
+                            <td>
+                                <select required data-required="true" data-action="add" data-group="new" data-default-value="OR" name="negativeAndOr" style="width: 50px" class="insideTable">
+                                    <option value="OR">Or</option>
+                                    <option value="AND">And</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="submit" value="Add"  data-endpoint="/submit-search-products" data-table-id="table_searchProducts" data-group="new" data-action="add" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    for (var i = 0; i < searchProducts.length; i++) {
+        var lvAndOr = 'OR'; // default
+        if(searchProducts[i].andOr === 'AND'){
+            lvAndOr = 'AND';
+        }
+        var lvNegativeAndOr = 'OR'; // default
+        if(searchProducts[i].negativeAndOr === 'AND'){
+            lvNegativeAndOr = 'AND';
+        }
+        var lvSelectedSearchCategoryId = searchProducts[i].searchCategoryId;
+        var lvSelectedProductGroupId = searchProducts[i].productGroupId;
+%>
+
+                        <tr id=<%- '"row_searchProducts_' + searchProducts[i].searchProductId + '"' %>>
+                            <td>
+                                <input data-required="false" data-action="delete" id=<%- '"' + searchProducts[i].searchProductId + '"' %> type="checkbox" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="checkbox" value=<%- '"' + searchProducts[i].searchProductId + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="searchCategory"><%- searchProducts[i].searchCategoryName %></span>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="searchCategory" class="insideTable" style="display: none">
+                                    <%- include partials/search-category-dropdown-options %>
+                                </select>
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="productGroup"><%- searchProducts[i].productGroupName %></span>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="productGroup" class="insideTable" style="display: none">
+                                    <%- include partials/product-group-dropdown-options %>
+                                </select>
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="productName"><%- searchProducts[i].productName %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="productName" style="display: none" value=<%- '"' + searchProducts[i].productName + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="brand"><%- searchProducts[i].brand %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="brand" style="display: none" value=<%- '"' + searchProducts[i].brand + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="andOr"><%- searchProducts[i].andOr %></span>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> data-default-value="OR" name="andOr" style="display: none" class="insideTable">
+                                    <option <% if(lvAndOr === "AND" ){ %> selected <% } %> value="AND">And</option>
+                                    <option <% if(lvAndOr === "OR" ){ %> selected <% } %> value="OR">Or</option>
+                                </select>
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="searchTerm1"><%- searchProducts[i].searchTerm1 %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="searchTerm1" style="display: none" value=<%- '"' + searchProducts[i].searchTerm1 + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="searchTerm2"><%- searchProducts[i].searchTerm2 %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="searchTerm2" style="display: none" value=<%- '"' + searchProducts[i].searchTerm2 + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="searchTerm3"><%- searchProducts[i].searchTerm3 %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="searchTerm3" style="display: none" value=<%- '"' + searchProducts[i].searchTerm3 + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="searchTerm4"><%- searchProducts[i].searchTerm4 %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="searchTerm4" style="display: none" value=<%- '"' + searchProducts[i].searchTerm4 + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="searchTerm5"><%- searchProducts[i].searchTerm5 %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="searchTerm5" style="display: none" value=<%- '"' + searchProducts[i].searchTerm5 + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="searchTerm6"><%- searchProducts[i].searchTerm6 %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="searchTerm6" style="display: none" value=<%- '"' + searchProducts[i].searchTerm6 + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="searchTerm7"><%- searchProducts[i].searchTerm7 %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="searchTerm7" style="display: none" value=<%- '"' + searchProducts[i].searchTerm7 + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="sex"><%- searchProducts[i].sex %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="sex" style="display: none" value=<%- '"' + searchProducts[i].sex + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="negativeSearchTerm1"><%- searchProducts[i].negativeSearchTerm1 %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="negativeSearchTerm1" style="display: none" value=<%- '"' + searchProducts[i].negativeSearchTerm1 + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="negativeSearchTerm2"><%- searchProducts[i].negativeSearchTerm2 %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="negativeSearchTerm1" style="display: none" value=<%- '"' + searchProducts[i].negativeSearchTerm1 + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="negativeSearchTerm3"><%- searchProducts[i].negativeSearchTerm3 %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="negativeSearchTerm1" style="display: none" value=<%- '"' + searchProducts[i].negativeSearchTerm1 + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="negativeSearchTerm4"><%- searchProducts[i].negativeSearchTerm4 %></span>
+                                <input data-required="false" data-action="update" type="text" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> name="negativeSearchTerm1" style="display: none" value=<%- '"' + searchProducts[i].negativeSearchTerm1 + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="negativeAndOr"><%- searchProducts[i].negativeAndOr %></span>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %> data-default-value="OR" name="negativeAndOr" style="display: none" class="insideTable">
+                                <option <% if(lvNegativeAndOr === "AND" ){ %> selected <% } %> value="AND">And</option>
+                                <option <% if(lvNegativeAndOr === "OR" ){ %> selected <% } %> value="OR">Or</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="submit" style="display: none" value="Update" data-endpoint="/submit-search-products" data-table-id="table_searchProducts" data-group=<%- '"' + searchProducts[i].searchProductId + '"' %>  data-action="update" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    } // end loop through records
+%>
+
+                    </tbody>
+                </table>
+                <input type="submit" value="Delete" data-endpoint="/submit-search-categories" data-table-id="table_searchProducts" data-action="delete" class="button tiny" style="float: bottom">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+
+    <% include partials/bodytail %>
+    <script src="js/mainCS.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "name": "balu-console",
+  "version": "0.0.1",
+  "description": "The Balu Console manages the data underpinning all the Balu apps, including usage monitoring and analytics",
+  "main": "main.js",
+  "dependencies": {
+    "bluebird": "3.4.6",
+    "body-parser": "1.15.2",
+    "connect-redis": "3.1.0",
+    "cookie-parser": "1.4.3",
+    "ejs": "2.5.2",
+    "express": "4.14.0",
+    "express-session": "1.14.2",
+    "formidable": "1.0.17",
+    "fs": "0.0.1-security",
+    "parse": "1.9.2",
+    "path": "0.12.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BaluHQ/balu-console.git"
+  },
+  "author": "BaluHQ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BaluHQ/balu-console/issues"
+  },
+  "homepage": "https://github.com/BaluHQ/balu-console#readme"
+}

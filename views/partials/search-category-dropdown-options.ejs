@@ -1,0 +1,13 @@
+
+    <option value="" selected disabled>Select search category</option>
+<%
+for(var i = 0; i < searchCategories.length; i++){
+    var lvSelectedSearchCategoryText = '';
+    if(lvSelectedSearchCategoryId === searchCategories[i].searchCategoryId){
+        lvSelectedSearchCategoryText = 'selected'
+    }
+%>
+    <option <%- lvSelectedSearchCategoryText %> value=<%- '"' + searchCategories[i].searchCategoryId + '"' %>><%- searchCategories[i].categoryName %></option>
+<%
+} // end of loop through websites
+%>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <% include partials/header %>
+</head>
+<body>
+
+    <% include partials/bodytop %>
+
+<%
+    // If we have no rows at all (app set up only!), let's display a message
+    if(recommendations.length === 0) {
+%>
+    <span style="margin-left: 20px">Add your first item to get started</span>
+<%
+    }
+%>
+    <div class="row" style="position: relative; margin-left: 10px; margin-right: 10px">
+        <div class="small-10 columns">
+            <h3>Recommendations</h3>
+            <form id="form_recommendations" name="mainForm" method="post" enctype="multipart/form-data"> <!-- action is set by button onclick function -->
+                <table id="table_recommendations">
+                    <tbody>
+                        <!-- The first row of the table contains the add form -->
+                        <tr id="row_recommendations_new">
+                            <td>
+                                <input data-required="false" data-action="delete"  style="display: none" type="checkbox" data-group="new" name="checkbox" value="new" class="insideTable"  data-default-text="new">
+                            </td>
+                            <td>
+                                <select required data-required="true" data-action="add" data-group="new" name="productGroup" style="width: 200px" class="insideTable">
+                                    <%- include partials/product-group-dropdown-options %>
+                                </select>
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="productName" value="" placeholder="Product name" class="insideTable" style="width: 200px">
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="pageConfirmationSearch" value="" placeholder="Page load confirmation search" class="insideTable" style="width: 200px">
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="productURL" value="" placeholder="Product URL" class="insideTable" style="width: 300px">
+                            </td>
+                            <td>
+                                <select required data-required="true" data-action="add" data-group="new" name="brand" style="width: 200px" class="insideTable">
+                                    <%- include partials/brand-dropdown-options %>
+                                </select>
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="file" data-group="new" name="image"  style="width: 200px" class="insideTable" style="width: 200px">
+                            </td>
+                            <td>
+                                <input type="submit" value="Add"  data-endpoint="/submit-recommendations" data-table-id="table_recommendations" data-group="new" data-action="add" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    for (var i = 0; i < recommendations.length; i++) {
+        var lvSelectedProductGroupId = recommendations[i].productGroupId;
+        var lvSelectedBrandId = recommendations[i].brandId;
+
+%>
+
+                        <tr id=<%- '"row_recommendations_' + recommendations[i].recommendationId + '"' %>>
+                            <td>
+                                <input data-required="false" data-action="delete" id=<%- '"' + recommendations[i].recommendationId + '"' %> type="checkbox" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> name="checkbox" value=<%- '"' + recommendations[i].recommendationId + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="productGroup"><%- recommendations[i].productGroupName %></span>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> name="productGroup" class="insideTable" style="display: none">
+                                    <%- include partials/product-group-dropdown-options %>
+                                </select>
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="productName"><%- recommendations[i].productName %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> name="productName" style="display: none" value=<%- '"' + recommendations[i].productName + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="pageConfirmationSearch"><%- recommendations[i].pageConfirmationSearch %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> name="pageConfirmationSearch" style="display: none" value=<%- '"' + recommendations[i].pageConfirmationSearch + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="productURL"><%- recommendations[i].productURL.substring(recommendations[i].productURL.indexOf('/')+2,recommendations[i].productURL.indexOf('/',8)+1) + ' ... ' + recommendations[i].productURL.substring(recommendations[i].productURL.length-20) %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> name="productURL" style="display: none" value=<%- '"' + recommendations[i].productURL + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="brand"><%- recommendations[i].brandName %></span>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> name="brand" class="insideTable" style="display: none">
+                                    <%- include partials/brand-dropdown-options %>
+                                </select>
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="image"><%- recommendations[i].image %></span>
+                                <input data-action="update" type="file" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> name="image" class="insideTable" style="display:none">
+                            </td>
+                            <td>
+                                <input type="submit" style="display: none" value="Update" data-endpoint="/submit-recommendations" data-table-id="table_recommendations" data-group=<%- '"' + recommendations[i].recommendationId + '"' %>  data-action="update" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    } // end loop through records
+%>
+
+                    </tbody>
+                </table>
+                <input type="submit" value="Delete" data-endpoint="/submit-recommendations" data-table-id="table_recommendations" data-action="delete" class="button tiny" style="float: bottom">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+
+    <% include partials/bodytail %>
+    <script src="js/mainCS.js"></script>
+
+  </body>
+</html>

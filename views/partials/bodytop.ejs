@@ -1,0 +1,63 @@
+
+<div class="fixed contain-to-grid">
+    <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="#">Console</a></h1>
+            </li>
+            <li class="toggle-topbar menu-icon">
+                <a href="#"><span></span></a>
+            </li>
+        </ul>
+        <section class="top-bar-section">
+            <ul class="left">
+                <!-- To do: class="active" -->
+                <li class="has-dropdown not-click">
+                    <a href="search-products">Search</a>
+                    <ul class="dropdown">
+                        <li><a href="website-search-config">Website Search Config</a></li>
+                        <li><a href="websites">Websites</a></li>
+                        <li><a href="search-categories">Search Categories</a></li>
+                        <li><a href="search-products">Search Products</a></li>
+                    </ul>
+                </li>
+                <li><a href="product-groups">Product Groups</a></li>
+                <li class="has-dropdown not-click">
+                    <a href="recommendations">Recommendations</a>
+                    <ul class="dropdown">
+                        <li><a href="brands">Brands</a></li>
+                        <li><a href="recommendations">Recommendations</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <ul class="right">
+                <li>
+                    <li><a href="activity-dashboard">Dashboard</a></li>
+                    <li><a href="data-quality">Data Quality</a></li>
+                    <li class="has-dropdown not-click">
+                        <a>Logs</a>
+                        <ul class="dropdown">
+                            <li><a href="job-log">Job Log</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="bts-dashboard">Test System</a></li>
+                    <li><a href="login">Log In/Out</a></li>
+                </li>
+            </ul>
+        </section>
+    </nav>
+</div>
+<div class="row">
+    <div class="small-12 columns">
+        <%- parseServerURL %> (<a href="switch-server">switch</a>)&nbsp;
+        <%
+        if(parseServerURL.includes('localhost')) {
+        %>
+        [localhost balu-parse-server always points to the test mlab DB]
+        <%
+        }
+        %>
+    </div>
+</div>
+<br />

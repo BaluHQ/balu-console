@@ -1,0 +1,87 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <% include partials/header %>
+</head>
+<body>
+
+    <% include partials/bodytop %>
+
+<%
+    // If we have no rows at all (app set up only!), let's display a message
+    if(productGroups.length === 0) {
+%>
+    <span style="margin-left: 20px">Add your first item to get started</span>
+<%
+    }
+%>
+    <div class="row" style="position: relative">
+        <div class="small-10 columns">
+            <h3>Product Groups</h3>
+            <form id="form_productGroups" name="mainForm" method="post"> <!-- action is set by button onclick function -->
+                <table id="table_productGroups">
+                    <tbody>
+                        <!-- The first row of the table contains the add form -->
+                        <tr id="row_productGroups_new">
+                            <td>
+                                <input data-required="false" data-action="delete" style="display: none" type="checkbox" data-group="new" name="checkbox" value="new" class="insideTable"  data-default-text="new">
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="productGroupName" value="" placeholder="Product group" class="insideTable" style="width: 200px">
+                            </td>
+                            <td title="Christmas banner">
+                                <select required data-required="true" data-action="add" data-group="new" data-default-value="false" name="christmasBanner" class="insideTable" style="width: 50px">
+                                    <option value="true">True</option>
+                                    <option selected value="false">False</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="submit" value="Add"  data-endpoint="/submit-product-groups" data-table-id="table_productGroups" data-group="new" data-action="add" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    for (var i = 0; i < productGroups.length; i++) {
+        var lvChristmasBanner = 'false'; // default
+        if(productGroups[i].christmasBanner === 'true'){
+            lvChristmasBanner = 'true';
+        }
+%>
+                        <tr id=<%- '"row_productGroups_' + productGroups[i].productGroupId + '"' %>>
+                            <td>
+                                <input data-required="false" data-action="delete" id=<%- '"' + productGroups[i].productGroupId + '"' %> type="checkbox" data-group=<%- '"' + productGroups[i].productGroupId + '"' %> name="checkbox" value=<%- '"' + productGroups[i].productGroupId + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="productGroupName"><%- productGroups[i].productGroupName %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + productGroups[i].productGroupId + '"' %> name="productGroupName" style="display: none" value=<%- '"' + productGroups[i].productGroupName + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false" title="Christmas banner" >
+                                <span name="christmasBanner"><%- productGroups[i].christmasBanner %></span>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + productGroups[i].productGroupId + '"' %> data-default-value="false" name="christmasBanner" style="display: none" class="insideTable">
+                                    <option <% if(lvChristmasBanner === "true" ){ %> selected <% } %> value="true">True</option>
+                                    <option <% if(lvChristmasBanner === "false"){ %> selected <% } %> value="false">False</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="submit" style="display: none" value="Update" data-endpoint="/submit-product-groups" data-table-id="table_productGroups" data-group=<%- '"' + productGroups[i].productGroupId + '"' %>  data-action="update" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    } // end loop through records
+%>
+
+                    </tbody>
+                </table>
+                <input type="submit" value="Delete" data-endpoint="/submit-product-groups" data-table-id="table_productGroups" data-action="delete" class="button tiny" style="float: bottom">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+
+    <% include partials/bodytail %>
+    <script src="js/mainCS.js"></script>
+
+  </body>
+</html>

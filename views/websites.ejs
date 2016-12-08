@@ -1,0 +1,88 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <% include partials/header %>
+</head>
+<body>
+
+    <% include partials/bodytop %>
+
+<%
+    // If we have no rows at all (app set up only!), let's display a message
+    if(websites.length === 0) {
+%>
+    <span style="margin-left: 20px">Add your first item to get started</span>
+<%
+    }
+%>
+    <div class="row" style="position: relative">
+        <div class="small-10 columns">
+            <h3>Websites</h3>
+            <form id="form_websites" name="mainForm" method="post"> <!-- action is set by button onclick function -->
+                <table id="table_websites">
+                    <tbody>
+                        <!-- The first row of the table contains the add form -->
+                        <tr id="row_websites_new">
+                            <td>
+                                <input data-required="false" data-action="delete" style="display: none" type="checkbox" data-group="new" name="checkbox" value="new" class="insideTable"  data-default-text="new">
+                            </td>
+                            <td>
+                                <input required data-required="true" data-action="add" type="text" data-group="new" name="websiteURL" value="" placeholder="website URL" class="insideTable" style="width: 200px">
+                            </td>
+                            <td>
+                                <select required data-required="true" data-action="add" data-group="new" data-default-value="ON" name="isWebsiteOnOrOff" class="insideTable" style="width: 50px">
+                                    <option selected value="ON">On</option>
+                                    <option value="OFF">Off</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="submit" value="Add"  data-endpoint="/submit-websites" data-table-id="table_websites" data-group="new" data-action="add" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    for (var i = 0; i < websites.length; i++) {
+        var lvIsWebsiteOnOrOff = 'ON'; // default
+        if(websites[i].isWebsiteOnOrOff  === 'OFF'){
+            lvIsWebsiteOnOrOff = 'OFF'
+        }
+%>
+
+                        <tr id=<%- '"row_websites_' + websites[i].websiteId + '"' %>>
+                            <td>
+                                <input data-required="false" data-action="delete" id=<%- '"' + websites[i].websiteId + '"' %> type="checkbox" data-group=<%- '"' + websites[i].websiteId + '"' %> name="checkbox" value=<%- '"' + websites[i].websiteId + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="websiteURL"><%- websites[i].websiteURL %></span>
+                                <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + websites[i].websiteId + '"' %> name="websiteURL" style="display: none" value=<%- '"' + websites[i].websiteURL + '"' %> class="insideTable">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="isWebsiteOnOrOff" style="display: block;"><%- websites[i].isWebsiteOnOrOff %></span>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + websites[i].websiteId + '"' %> data-default-value="ON" name="isWebsiteOnOrOff" style="display: none" class="insideTable">
+                                    <option <% if(lvIsWebsiteOnOrOff === "ON" ){ %> selected <% } %> value="ON">On</option>
+                                    <option <% if(lvIsWebsiteOnOrOff === "OFF" ){ %> selected <% } %> value="OFF">Off</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="submit" style="display: none" value="Update" data-endpoint="/submit-websites" data-table-id="table_websites" data-group=<%- '"' + websites[i].websiteId + '"' %>  data-action="update" class="button tiny insideTable">
+                            </td>
+                        </tr>
+<%
+    } // end loop through records
+%>
+
+                    </tbody>
+                </table>
+                <input type="submit" value="Delete" data-endpoint="/submit-websites" data-table-id="table_websites" data-action="delete" class="button tiny" style="float: bottom">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+
+    <% include partials/bodytail %>
+    <script src="js/mainCS.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,14 @@
+select.insideTable {
+    vertical-align: middle;
+    margin: 0;
+}
+
+input.insideTable {
+    vertical-align: middle;
+    margin: 0;
+}
+
+a.insideTable {
+    vertical-align: middle;
+    margin: 0;
+}
