@@ -1690,7 +1690,9 @@ module.exports = {
                 recommendation.set('pageConfirmationSearch',pvArgs.inputs.pageConfirmationSearch);
                 recommendation.set('productURL',pvArgs.inputs.productURL);
                 recommendation.set('ethicalBrand',{__type: "Pointer",className: "EthicalBrand", objectId: pvArgs.inputs.brand});
-                // to do: set the file
+                if(pvArgs.savedFile !== null) {
+                    recommendation.set('image',pvArgs.savedFile);
+                }
                 recommendation.save(null,{
                     sessionToken: pvArgs.sessionToken,
                     success: function(pvRecommendation){

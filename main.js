@@ -102,6 +102,7 @@ app.use('/website-search-config', handler.checkUserSession);
 /* Serve static files */
 
 app.use(express.static(__dirname + '/public'));
+app.use("/uploads", express.static(__dirname + '/uploads'));
 
 /*
  * Server routes
