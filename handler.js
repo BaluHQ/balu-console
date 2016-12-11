@@ -82,7 +82,7 @@ module.exports = {
     processFormData: function(req,res,next){
 
         var lvFunctionName = 'processFormData';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        //log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS'); // this produces too many calls to leave in
 
         // The data comes through in a format I don't fully understand. But formidable.IncomingForm.on('field' / 'file',...) events
         // DO understand it. So we will use formidable to build up some normal JS objects, importantly lvArgs.inputs, which itself contains an
@@ -107,8 +107,20 @@ module.exports = {
             }
         });
         lvForm.on('file', function(pvName,pvFile){
-            fs.rename(pvFile.path, path.join(lvForm.uploadDir, pvFile.name)); // move the file to our uploads folder
-            lvArgs.inputs[pvName] = path.join(lvForm.uploadDir, pvFile.name); // And save the path into our inputs, to be processed by our app backend later
+
+            // pvFile.path is the path and name of the file that's just been created on the balu-console server
+            // pvFile.name is the original filename (which isn't automatically used when the file is saved to the server)
+            log.log(gvScriptName + '.' + lvFunctionName + ': pvFile.path | pvFile.name == ' + pvFile.path + ' | ' + pvFile.name,'DEBUG');
+
+            var lvBitmap = fs.readFileSync(pvFile.path);
+
+            // First attempt: move the file into our upload directory and pick it up again (to save to mLab) later
+            //fs.rename(pvFile.path, path.join(lvForm.uploadDir, pvFile.name)); // move the file to our uploads folder
+            //lvArgs.inputs[pvName] = path.join(lvForm.uploadDir, pvFile.name); // And save the path into our inputs, to be processed by our app backend later
+
+            // Second attempt: get the base64 rep of the file and pass it straight through the JS to be saved to mLab in model.js
+            var lvBase64 = new Buffer(lvBitmap).toString('base64');
+            lvArgs.inputs[pvName] = lvBase64;
         });
 
         // And one for errors
@@ -718,7 +730,7 @@ module.exports = {
             var lvArgs = req.args;
 
             if(lvArgs.action === 'add') {
-                model.saveFileAsync(lvArgs.inputs.image)
+                model.saveFileAsync(lvArgs)
                 .then(function(pvArgs){
                     lvArgs.imageObjectId = pvArgs.fileObjectId;
                     return model.addRecommendationAsync(lvArgs);
@@ -728,7 +740,7 @@ module.exports = {
                     res.send(lvArgs);
                 });
             } else if(lvArgs.action === 'update') {
-                model.saveFileAsync(lvArgs.inputs.image)
+                model.saveFileAsync(lvArgs)
                 .then(function(pvArgs){
                     lvArgs.imageObjectId = pvArgs.fileObjectId;
                     return model.updateRecommendationAsync(lvArgs);

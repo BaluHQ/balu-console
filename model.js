@@ -33,7 +33,7 @@ if(process.env.PARSE_SERVER_ACTIVE === 'TST') {
     var gvActiveParseServerURL =  gvParseServerURL_TST;
 } else if (process.env.PARSE_SERVER_ACTIVE === 'PRD') {
     var gvActiveParseServerURL =  gvParseServerURL_TST;
-}
+} // console run with no environment vars, i.e. localhost, always points to localhost parse server
 
 var gvAppId = 'mmhyD9DKGeOanjpRLHCR3bX8snue22oOd3NGfWKu';
 
@@ -1411,15 +1411,19 @@ module.exports = {
 
         var Recommendation = Parse.Object.extend("Recommendation");
         var recommendation = new Recommendation();
+
         recommendation.set('productGroups',{__type: "Pointer",className: "ProductGroup", objectId: pvArgs.inputs.productGroup});
         recommendation.set('productName',pvArgs.inputs.productName);
         recommendation.set('pageConfirmationSearch',pvArgs.inputs.pageConfirmationSearch);
         recommendation.set('productURL',pvArgs.inputs.productURL);
         recommendation.set('ethicalBrand',{__type: "Pointer",className: "EthicalBrand", objectId: pvArgs.inputs.brand});
-        // to do: set image id
+        if(pvArgs.savedFile !== null) {
+            recommendation.set('image',pvArgs.savedFile);
+        }
         recommendation.save(null,{
             sessionToken: pvArgs.sessionToken,
             success: function(pvRecommendation){
+                log.log(gvScriptName_model + '.' + lvFunctionName + ': Successfully saved', 'DEBUG');
                 // to return the data to the callback.
                 var lvArgs = {};
                 // The new record object must contain one property for each input value passed in, where the checkbox input value is the id
@@ -2050,32 +2054,30 @@ module.exports = {
      * Utility functions *
      *********************/
 
-    saveFile: function(pvFileName, pvCallback){
+    saveFile: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'saveFile';
         log.log(gvScriptName_model + '.' + lvFunctionName + ': Start', 'PROCS');
 
-        if(pvFileName){
+        var lvArgs = pvArgs;
 
-            // To do: I need to save the file to the Parse Server!
-            var lvParseFile = 'test 123';
-            pvCallback(null,{fileObjectId: lvParseFile});
-
-            /*
-            // To-do: remove invalid characters from productName
-            var lvParseFile = new Parse.File(lvFileName, lvImage);
-            lvParseFile.save(null,{
-            sessionToken: pvArgs.sessionToken,
-                success: function(pvSavedFile) {
-                    lvArgs.savedFile = pvSavedFile;
+        // inputs.image has the location of the file on the balu-console server (our middleware deals with this on form upload)
+        // inputs.productName will be used to construct a meaningful filename
+        if(pvArgs.inputs.image){
+            var lvNewFileName = pvArgs.inputs.productName.replace('\'','') + '_image.jpg';
+            var lvParseFile = new Parse.File(lvNewFileName,{base64: pvArgs.inputs.image});
+            lvParseFile.save({
+                success: function(pvParseFile){
+                    log.log(gvScriptName_model + '.' + lvFunctionName + ': pvParseFile.url() == ' + pvParseFile.url(), 'DEBUG');
+                    lvArgs.savedFile = pvParseFile;
                     pvCallback(null,lvArgs);
                 },
-                error: parseErrorImage
+                error: log.parseErrorSave
             });
-            */
         } else {
             // We never remove a file, only overwrite, so if there's no filename passed in, do nothing
-            pvCallback(null,{fileObjectId: null});
+            lvArgs.savedFile = null;
+            pvCallback(null,lvArgs);
         }
     }
 };
