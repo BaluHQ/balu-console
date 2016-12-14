@@ -408,7 +408,8 @@ module.exports = {
         var lvData = {parseServerURL: gvActiveParseServerURL,
                       summaryData: {}}; // To do: ideally each query will push to the page as soon as it's finished, using AJAX, but I don't know how to do this yet!
 
-        model.getUsersAsync({user_systemUsers: 'EXCLUDE'})
+        model.getUsersAsync({sessionToken: lvSessionToken,
+                             user_systemUsers: 'EXCLUDE'})
         .then(function(pvArgs){
             lvData.summaryData.numberOfUsers = pvArgs.rowCount;
             lvData.users = pvArgs.users;
@@ -471,6 +472,26 @@ module.exports = {
         })
         .then(function(pvArgs){
             res.render('activity-dashboard.ejs',pvArgs.pageElements);
+        });
+    },
+
+    userReportGET: function(req,res,next){
+
+        var lvFunctionName = 'userReportGET';
+        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+
+        // To be passed to each model function
+        var lvSessionToken = req.session.sessionToken;
+
+        var lvData = {parseServerURL: gvActiveParseServerURL};
+
+        model.getUsersAsync({sessionToken: lvSessionToken})
+        .then(function(pvArgs){
+            lvData.users = pvArgs.users;
+            return ui.constructUserReportAsync(lvData);
+        })
+        .then(function(pvArgs){
+            res.render('user-report.ejs',pvArgs.pageElements);
         });
     },
 

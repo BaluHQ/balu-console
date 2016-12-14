@@ -34,6 +34,7 @@
         <!-- -->
         <h2>Users</h2>
         <h3>User List</h3>
+        <a href="/user-report" target="_blank">Detailed report</a>
         <table>
           <tr>
             <th>User Name (email)</th>
@@ -41,6 +42,7 @@
             <th>Email Verifcation</th>
             <th>Joyride Status</th>
             <th>Who Is</th>
+            <th>Last Log In</th>
           </tr>
           <% users.forEach(function(pvUser){ %>
               <tr>
@@ -49,6 +51,7 @@
                   <td><%= pvUser.emailVerified %></td>
                   <td><%= pvUser.joyrideStatus %></td>
                   <td><%= pvUser.whoIs %></td>
+                  <td><%= pvUser.lastLoggedIn %></td>
               </tr>
           <% }) %>
         </table>

@@ -96,6 +96,8 @@ module.exports = {
 
         var lvArgs = {rowCount: null, users: []}; // to return the data to the callback
 
+        // To do: this is a bit messy, with much more looping than needed, because I haven't sorted the tables correctly so can't pop items
+        // from the two datasets as they are matched.
         var userQuery = new Parse.Query(Parse.User);
         userQuery.limit(1000);
         if(pvArgs.user_systemUsers === 'EXCLUDE') {
@@ -112,21 +114,42 @@ module.exports = {
         userQuery.find({sessionToken: pvArgs.sessionToken}).then(
             function(users){
                 log.log(gvScriptName_model + '.' + lvFunctionName + ': retrieved ' + users.length + ' users from DB',' INFO');
+                lvArgs.rowCount = users.length;
                 if(users.length >= 1000) {
                     log.log(gvScriptName_model + '.' + lvFunctionName + ': find() is exceeding Parse Server row limit. Code needs upgrading otherwise data will be ignored!','ERROR');
                 }
-                lvArgs.rowCount = users.length;
-                for(var i = 0; i < users.length; i++){
-                    lvArgs.users.push({
-                        createdAt: users[i].createdAt.toLocaleString(),
-                        userId: users[i].id,
-                        email: users[i].get('email'),
-                        emailVerified: users[i].get('emailVerified'),
-                        joyrideStatus: users[i].get('joyrideStatus'),
-                        whoIs: users[i].get('whoIs')
-                    });
-                }
-                pvCallback(null,lvArgs);
+                var userLogQuery = new Parse.Query(Parse.Object.extend('UserLog'));
+                userLogQuery.ascending('user,createdAt');
+                userLogQuery.equalTo('eventName','USER_LOG_IN');
+                userLogQuery.find({sessionToken: pvArgs.sessionToken}).then(
+                    function(userLogs){
+                        log.log(gvScriptName_model + '.' + lvFunctionName + ': retrieved ' + userLogs.length + ' userLogs from DB',' INFO');
+                        var lvLastUserToPush = 'not a user';
+                        for(var i = 0; i < users.length; i++){
+                            for(var j = 0; j < userLogs.length; j++){
+                                if(users[i].id === userLogs[j].get('user').id && lvLastUserToPush !== users[i].id) {
+                                    lvLastUserToPush = users[i].id;
+                                    lvArgs.users.push({
+                                        createdAt: users[i].createdAt.toLocaleString(),
+                                        userId: users[i].id,
+                                        email: users[i].get('email'),
+                                        emailVerified: users[i].get('emailVerified'),
+                                        joyrideStatus: users[i].get('joyrideStatus'),
+                                        whoIs: users[i].get('whoIs'),
+                                        lastLoggedIn: userLogs[j].get('createdAt')
+                                    });
+                                    break;
+                                }
+                            }
+                        }
+                        pvCallback(null,lvArgs);
+                    },
+                    function (error) {
+                        log.log(gvScriptName_model + '.' + lvFunctionName + ': ' + error.message,'ERROR');
+                        lvArgs.responseMessage = error.message;
+                        pvCallback(error,lvArgs);
+                    }
+                );
             },
             function (error) {
                 log.log(gvScriptName_model + '.' + lvFunctionName + ': ' + error.message,'ERROR');
@@ -639,7 +662,7 @@ module.exports = {
                 for(var i = 0; i < userLogs.length; i++){
                     // In case we don't always have a user
                     var lvEmail = null;
-                    if (typeof(userLogs[i].get('user')) !== 'undefined'){
+                    if (typeof(userLogs[i].get('user')) !== 'undefined' && userLogs[i].get('user') !== null){
                          lvEmail = userLogs[i].get('user').get('email');
                     }
                     lvArgs.userLogs.push({

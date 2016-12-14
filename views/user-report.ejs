@@ -1,0 +1,44 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <% include partials/header %>
+</head>
+<body>
+
+    <% include partials/bodytop %>
+
+    <div class="small-12 small columns">
+
+        <!-- -->
+        <h2>Users</h2>
+        <h3>User List</h3>
+        <table>
+          <tr>
+            <th>User Name (email)</th>
+            <th>Date Joined</th>
+            <th>Email Verifcation</th>
+            <th>Joyride Status</th>
+            <th>Who Is</th>
+            <th>Last Log In</th>
+          </tr>
+          <% users.forEach(function(pvUser){ %>
+              <tr>
+                  <td><%= pvUser.email %></td>
+                  <td><%= pvUser.createdAt %></td>
+                  <td><%= pvUser.emailVerified %></td>
+                  <td><%= pvUser.joyrideStatus %></td>
+                  <td><%= pvUser.whoIs %></td>
+                  <td><%= pvUser.lastLoggedIn %></td>
+              </tr>
+          <% }) %>
+        </table>
+    </div>
+
+    <footer>
+        <% include partials/footer %>
+    </footer>
+
+    <% include partials/bodytail %>
+
+  </body>
+</html>

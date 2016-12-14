@@ -182,6 +182,20 @@ module.exports = {
         pvCallback(null,lvArgs);
     },
 
+    constructUserReport: function(pvArgs, pvCallback){
+
+        var lvFunctionName = 'constructUserReport';
+        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+
+        var lvArgs = {pageElements: {}};
+        lvArgs.pageElements = {
+            parseServerURL: pvArgs.parseServerURL,
+            users: pvArgs.users,
+        };
+
+        pvCallback(null,lvArgs);
+    },
+
     constructDataQuality: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructDataQuality';

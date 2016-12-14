@@ -96,8 +96,18 @@ app.use(function(req,res,next){
 
 // For "internal" screens, check whether user is logged in and redirect to login screen if not
 // To do: How do I avoid having one of these for each?! put all the routes into a router, and put router in as first param
-app.use('/activity-dashboard', handler.checkUserSession);
 app.use('/website-search-config', handler.checkUserSession);
+app.use('/websites', handler.checkUserSession);
+app.use('/search-categories', handler.checkUserSession);
+app.use('/search-products', handler.checkUserSession);
+app.use('/product-groups', handler.checkUserSession);
+app.use('/brands', handler.checkUserSession);
+app.use('/recommendations', handler.checkUserSession);
+app.use('/activity-dashboard', handler.checkUserSession);
+app.use('/user-report', handler.checkUserSession);
+app.use('/data-quality', handler.checkUserSession);
+app.use('/job-log', handler.checkUserSession);
+app.use('/bts-dashboard', handler.checkUserSession);
 
 /* Serve static files */
 
@@ -135,6 +145,7 @@ app.get('/product-groups', handler.productGroupsGET);
 app.get('/brands', handler.brandsGET);
 app.get('/recommendations', handler.recommendationsGET);
 app.get('/activity-dashboard', handler.activityDashboardGET);
+app.get('/user-report', handler.userReportGET);
 app.get('/data-quality', handler.dataQualityGET);
 app.get('/job-log', handler.jobLogGET);
 app.get('/bts-dashboard', handler.btsDashboardGET);
