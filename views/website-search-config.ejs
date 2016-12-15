@@ -61,7 +61,7 @@
                                         <!-- The first row of the table contains the addCategoryWebsiteJoin form -->
                                         <tr id="row_categoryWebsiteJoins_new">
                                             <td style="display: none">
-                                                <input required data-required="true" data-action="add" type="text" data-group="new" name="searchCategory" value="new" data-default-text="new">
+                                                <input required data-required="true" data-action="add" type="text" data-group="new" name="searchCategory" value=<%- '"' + lvCurrentSearchCategoryId + '"' %> data-default-text="new">
                                             </td>
                                             <td>
                                                 <input data-required="false" data-action="delete" style="display: none" type="checkbox" data-group="new" name="checkbox" value="new" class="insideTable"  data-default-text="new">
@@ -73,6 +73,12 @@
                                             </td>
                                             <td>
                                                 <input required data-required="true" data-action="add" type="text" data-group="new" name="activeDepartments" placeholder="Active Departments" value="ALL" %> style="width: 200px" class="insideTable" data-default-text="ALL">
+                                            </td>
+                                            <td title="Website-level Recommendation">
+                                                <select required data-required="true" data-action="add" data-group="new" data-default-value="FALSE" name="isWebsiteLevelRec" class="insideTable" style="width: 50px">
+                                                    <option value="TRUE">True</option>
+                                                    <option selected value="FALSE">False</option>
+                                                </select>
                                             </td>
                                             <td>
                                                 <input type="submit" value="Add"  data-endpoint="/submit-category-website-join" data-table-id=<%- '"table_categoryWebsiteJoins_' + lvCurrentSearchCategoryId + '"' %> data-group="new" data-action="add" class="button tiny insideTable">
@@ -89,6 +95,10 @@
                 lvDepartmentEditValue = categoryWebsiteJoins[i].departments;
             }
             lvSelectedWebsiteId = categoryWebsiteJoins[i].websiteId;
+            var lvIsWebsiteLevelRec = 'false'; // default
+            if(categoryWebsiteJoins[i].isWebsiteLevelRec === 'true'){
+                lvIsWebsiteLevelRec = 'true';
+            }
 %>
 
                                     <tr id=<%- '"row_categoryWebsiteJoins_' + categoryWebsiteJoins[i].categoryWebsiteJoinId + '"' %>>
@@ -104,6 +114,13 @@
                                         <td data-inline-edit="true" data-editable="false">
                                             <span name="activeDepartments" style="display: block;"><%- categoryWebsiteJoins[i].departments %></span>
                                             <input required data-required="true" data-action="update" type="text" data-group=<%- '"' + categoryWebsiteJoins[i].categoryWebsiteJoinId + '"' %> name="activeDepartments" style="display: none" value=<%- '"' + lvDepartmentEditValue + '"' %> style="width: 200px" class="insideTable">
+                                        </td>
+                                        <td data-inline-edit="true" data-editable="false" title="Website-level Recommendation">
+                                            <span name="isWebsiteLevelRec"><%- categoryWebsiteJoins[i].isWebsiteLevelRec %></span>
+                                            <select required data-required="true" data-action="update" data-group=<%- '"' + categoryWebsiteJoins[i].categoryWebsiteJoinId + '"' %> data-default-value="FALSE" name="isWebsiteLevelRec" style="display: none" class="insideTable">
+                                                <option <% if(lvIsWebsiteLevelRec === "true" ){ %> selected <% } %> value="TRUE">True</option>
+                                                <option <% if(lvIsWebsiteLevelRec === "false"){ %> selected <% } %> value="FALSE">False</option>
+                                            </select>
                                         </td>
                                         <td>
                                             <input type="submit" style="display: none" value="Update" data-endpoint="/submit-category-website-join" data-table-id=<%- '"table_categoryWebsiteJoins_' + lvCurrentSearchCategoryId + '"' %> data-group=<%- '"' + categoryWebsiteJoins[i].categoryWebsiteJoinId + '"' %>  data-action="update" class="button tiny insideTable">
