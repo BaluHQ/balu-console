@@ -196,6 +196,8 @@ function form_ajxCallback(pvArgs, pvPageData) {
 
     var lvFunctionName = 'form_ajxCallback';
     log(gvScriptName + '.' + lvFunctionName + ': Receiving',' AJAX');
+    log(gvScriptName + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
+
     switch(pvPageData.action) {
 
         /* For add commands, create a new row and append to table */
