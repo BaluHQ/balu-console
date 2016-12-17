@@ -485,7 +485,8 @@ module.exports = {
 
         var lvData = {parseServerURL: gvActiveParseServerURL};
 
-        model.getUsersAsync({sessionToken: lvSessionToken})
+        model.getUsersAsync({sessionToken: lvSessionToken,
+                             user_systemUsers: 'EXCLUDE'})
         .then(function(pvArgs){
             lvData.users = pvArgs.users;
             return ui.constructUserReportAsync(lvData);

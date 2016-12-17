@@ -92,7 +92,7 @@ module.exports = {
     getUsers: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'getUsers';
-        log.log(gvScriptName_model + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName_model + '.' + lvFunctionName + ': Start, pvArgs.user_systemUsers == ' + pvArgs.user_systemUsers,'PROCS');
 
         var lvArgs = {rowCount: null, users: []}; // to return the data to the callback
 
@@ -112,44 +112,22 @@ module.exports = {
         userQuery.descending('createdAt');
 
         userQuery.find({sessionToken: pvArgs.sessionToken}).then(
-            function(users){
-                log.log(gvScriptName_model + '.' + lvFunctionName + ': retrieved ' + users.length + ' users from DB',' INFO');
-                lvArgs.rowCount = users.length;
-                if(users.length >= 1000) {
-                    log.log(gvScriptName_model + '.' + lvFunctionName + ': find() is exceeding Parse Server row limit. Code needs upgrading otherwise data will be ignored!','ERROR');
+            function(pvUsers){
+                log.log(gvScriptName_model + '.' + lvFunctionName + ': retrieved ' + pvUsers.length + ' users from DB',' INFO');
+                lvArgs.rowCount = pvUsers.length;
+                if(pvUsers.length >= 1000) {
+                    log.log(gvScriptName_model + '.' + lvFunctionName + ': User.find() is exceeding Parse Server row limit. Code needs upgrading otherwise data will be ignored!','ERROR');
                 }
-                var userLogQuery = new Parse.Query(Parse.Object.extend('UserLog'));
-                userLogQuery.ascending('user,createdAt');
-                userLogQuery.equalTo('eventName','USER_LOG_IN');
-                userLogQuery.find({sessionToken: pvArgs.sessionToken}).then(
-                    function(userLogs){
-                        log.log(gvScriptName_model + '.' + lvFunctionName + ': retrieved ' + userLogs.length + ' userLogs from DB',' INFO');
-                        var lvLastUserToPush = 'not a user';
-                        for(var i = 0; i < users.length; i++){
-                            for(var j = 0; j < userLogs.length; j++){
-                                if(users[i].id === userLogs[j].get('user').id && lvLastUserToPush !== users[i].id) {
-                                    lvLastUserToPush = users[i].id;
-                                    lvArgs.users.push({
-                                        createdAt: users[i].createdAt.toLocaleString(),
-                                        userId: users[i].id,
-                                        email: users[i].get('email'),
-                                        emailVerified: users[i].get('emailVerified'),
-                                        joyrideStatus: users[i].get('joyrideStatus'),
-                                        whoIs: users[i].get('whoIs'),
-                                        lastLoggedIn: userLogs[j].get('createdAt')
-                                    });
-                                    break;
-                                }
-                            }
-                        }
-                        pvCallback(null,lvArgs);
-                    },
-                    function (error) {
-                        log.log(gvScriptName_model + '.' + lvFunctionName + ': ' + error.message,'ERROR');
-                        lvArgs.responseMessage = error.message;
-                        pvCallback(error,lvArgs);
-                    }
-                );
+                for(var i = 0; i < pvUsers.length; i++) {
+                    lvArgs.users.push({
+                        createdAt: pvUsers[i].createdAt.toLocaleString(),
+                        userId: pvUsers[i].id,
+                        email: pvUsers[i].get('email'),
+                        emailVerified: pvUsers[i].get('emailVerified'),
+                        joyrideStatus: pvUsers[i].get('joyrideStatus'),
+                        whoIs: pvUsers[i].get('whoIs')});
+                }
+                pvCallback(null,lvArgs);
             },
             function (error) {
                 log.log(gvScriptName_model + '.' + lvFunctionName + ': ' + error.message,'ERROR');

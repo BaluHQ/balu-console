@@ -19,7 +19,6 @@
             <th>Email Verifcation</th>
             <th>Joyride Status</th>
             <th>Who Is</th>
-            <th>Last Log In</th>
           </tr>
           <% users.forEach(function(pvUser){ %>
               <tr>
@@ -28,7 +27,6 @@
                   <td><%= pvUser.emailVerified %></td>
                   <td><%= pvUser.joyrideStatus %></td>
                   <td><%= pvUser.whoIs %></td>
-                  <td><%= pvUser.lastLoggedIn %></td>
               </tr>
           <% }) %>
         </table>
