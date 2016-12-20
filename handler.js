@@ -389,6 +389,10 @@ module.exports = {
         })
         .then(function(pvArgs){
             lvData.brands = pvArgs.brands;
+            return model.getSearchCategoriesAsync(lvData);
+        })
+        .then(function(pvArgs){
+            lvData.searchCategories = pvArgs.searchCategories;
             return ui.constructRecommendationsAsync(lvData);
         })
         .then(function(pvArgs){

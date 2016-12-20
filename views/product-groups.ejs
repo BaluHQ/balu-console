@@ -30,9 +30,9 @@
                                 <input required data-required="true" data-action="add" type="text" data-group="new" name="productGroupName" value="" placeholder="Product group" class="insideTable" style="width: 200px">
                             </td>
                             <td title="Christmas banner">
-                                <select required data-required="true" data-action="add" data-group="new" data-default-value="false" name="christmasBanner" class="insideTable" style="width: 50px">
-                                    <option value="true">True</option>
-                                    <option selected value="false">False</option>
+                                <select required data-required="true" data-action="add" data-group="new" data-default-value="FALSE" name="christmasBanner" class="insideTable" style="width: 50px">
+                                    <option value="TRUE">True</option>
+                                    <option selected value="FALSE">False</option>
                                 </select>
                             </td>
                             <td>
@@ -56,9 +56,9 @@
                             </td>
                             <td data-inline-edit="true" data-editable="false" title="Christmas banner" >
                                 <span name="christmasBanner"><%- productGroups[i].christmasBanner %></span>
-                                <select required data-required="true" data-action="update" data-group=<%- '"' + productGroups[i].productGroupId + '"' %> data-default-value="false" name="christmasBanner" style="display: none" class="insideTable">
-                                    <option <% if(lvChristmasBanner === "true" ){ %> selected <% } %> value="true">True</option>
-                                    <option <% if(lvChristmasBanner === "false"){ %> selected <% } %> value="false">False</option>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + productGroups[i].productGroupId + '"' %> data-default-value="FALSE" name="christmasBanner" style="display: none" class="insideTable">
+                                    <option <% if(lvChristmasBanner === "true" ){ %> selected <% } %> value="TRUE">True</option>
+                                    <option <% if(lvChristmasBanner === "false"){ %> selected <% } %> value="FALSE">False</option>
                                 </select>
                             </td>
                             <td>

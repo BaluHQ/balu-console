@@ -158,7 +158,7 @@ function formSubmit_listener(pvButtonClicked) {
     } else if (lvDataForAfter.action === 'delete') {
         // Construct list of IDs to delete
         $(lvForm).find('input[type="checkbox"]:checked').each(function(pvIndex){
-            lvFormData.append($(this).attr('name'),$(this).val());
+            lvFormData.append($(this).val(),$(this).val()); // suppose this should probably be an array!
             lvDataForAfter.formData[$(this).val()] = $(this).attr('name');
         });
     }
@@ -196,6 +196,8 @@ function form_ajxCallback(pvArgs, pvPageData) {
 
     var lvFunctionName = 'form_ajxCallback';
     log(gvScriptName + '.' + lvFunctionName + ': Receiving',' AJAX');
+    //log(gvScriptName + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
+
     switch(pvPageData.action) {
 
         /* For add commands, create a new row and append to table */

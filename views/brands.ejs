@@ -39,7 +39,7 @@
                                 <textarea required data-required="true" data-action="add" type="text" data-group="new" name="brandSpiel" value="" placeholder="Brand spiel" class="insideTable" style="width: 200px" rows="5"></textarea>
                             </td>
                             <td>
-                                <select required data-required="true" data-action="add" data-group="new" data-default-value="false" name="baluFavourite" class="insideTable" title="Balu Favourite" style="width: 50px">
+                                <select required data-required="true" data-action="add" data-group="new" data-default-value="FALSE" name="baluFavourite" class="insideTable" title="Balu Favourite" style="width: 50px">
                                     <option value="TRUE">True</option>
                                     <option selected value="FALSE">False</option>
                                 </select>
@@ -79,9 +79,9 @@
                             </td>
                             <td data-inline-edit="true" data-editable="false">
                                 <span name="baluFavourite"><%- brands[i].baluFavourite %></span>
-                                <select required data-required="true" data-action="update" data-group=<%- '"' + brands[i].brandId + '"' %> data-default-value="false" name="baluFavourite" stitle="Balu Favourite" style="display: none" %> class="insideTable">
-                                    <option <% if(lvBaluFavourite === "true" ){ %> selected <% } %> value="true">True</option>
-                                    <option <% if(lvBaluFavourite === "false" ){ %> selected <% } %> value="false">False</option>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + brands[i].brandId + '"' %> data-default-value="FALSE" name="baluFavourite" stitle="Balu Favourite" style="display: none" %> class="insideTable">
+                                    <option <% if(lvBaluFavourite === "true" ){ %> selected <% } %> value="TRUE">True</option>
+                                    <option <% if(lvBaluFavourite === "false" ){ %> selected <% } %> value="TRUE">False</option>
                                 </select>
                             </td>
                             <td>
