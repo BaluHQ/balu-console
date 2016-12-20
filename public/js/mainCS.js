@@ -196,7 +196,7 @@ function form_ajxCallback(pvArgs, pvPageData) {
 
     var lvFunctionName = 'form_ajxCallback';
     log(gvScriptName + '.' + lvFunctionName + ': Receiving',' AJAX');
-    log(gvScriptName + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
+    //log(gvScriptName + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
 
     switch(pvPageData.action) {
 

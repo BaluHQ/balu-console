@@ -1439,7 +1439,7 @@ module.exports = {
         var Recommendation = Parse.Object.extend("Recommendation");
         var recommendation = new Recommendation();
 
-        if(pvArgs.inputs.productGroup !== 'null') {
+        if(pvArgs.inputs.productGroup !== 'null' && pvArgs.inputs.productGroup !== '') {
             recommendation.set('productGroups',{__type: "Pointer",className: "ProductGroup", objectId: pvArgs.inputs.productGroup});
         }
         recommendation.set('productName',pvArgs.inputs.productName);
@@ -1447,7 +1447,7 @@ module.exports = {
         recommendation.set('productURL',pvArgs.inputs.productURL);
         recommendation.set('ethicalBrand',{__type: "Pointer",className: "EthicalBrand", objectId: pvArgs.inputs.brand});
 
-        if(pvArgs.inputs.searchCategory !== 'null') {
+        if(pvArgs.inputs.searchCategory !== 'null' && pvArgs.inputs.searchCategory !== '') {
             recommendation.set('searchCategory',{__type: "Pointer",className: "SearchCategory", objectId: pvArgs.inputs.searchCategory});
         }
         if(pvArgs.savedFile !== null) {
@@ -1867,7 +1867,6 @@ module.exports = {
         searchProductQuery.get(pvArgs.inputs.checkbox,{
             sessionToken: pvArgs.sessionToken,
             success: function(searchProduct){
-                console.log('xdkfsdhfjksd');
                 searchProduct.set('searchCategories',{__type: "Pointer",className: "SearchCategory", objectId: pvArgs.inputs.searchCategorysearchCategory});
                 searchProduct.set('productGroup',{__type: "Pointer",className: "ProductGroup", objectId: pvArgs.inputs.productGroup});
                 searchProduct.set('productName',pvArgs.inputs.productName);
