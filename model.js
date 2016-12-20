@@ -188,7 +188,7 @@ module.exports = {
 
         var lvFunctionName = 'getEthicalBrands';
         log.log(gvScriptName_model + '.' + lvFunctionName + ': Start', 'PROCS');
-        log.log(gvScriptName_model + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
+        //log.log(gvScriptName_model + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
 
         var lvArgs = {rowCount: null, brands: []}; // to return the data to the callback
 
@@ -304,7 +304,7 @@ module.exports = {
 
         var lvFunctionName = 'getProductGroups';
         log.log(gvScriptName_model + '.' + lvFunctionName + ': Start', 'PROCS');
-        log.log(gvScriptName_model + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
+        //log.log(gvScriptName_model + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
 
         var lvArgs = {rowCount: null, productGroups: []}; // to return the data to the callback
 
@@ -352,6 +352,7 @@ module.exports = {
         var recommendationQuery = new Parse.Query(Parse.Object.extend('Recommendation'));
         recommendationQuery.include('productGroups'); // should be singular
         recommendationQuery.include('ethicalBrand');
+        recommendationQuery.include('searchCategory');
         recommendationQuery.limit(1000);
         //recommendationQuery.ascending('');
 
@@ -363,16 +364,30 @@ module.exports = {
                 }
                 lvArgs.rowCount = recommendations.length;
                 for(var i = 0; i < recommendations.length; i++){
+                    var lvProductGroupId = null;
+                    var lvProductGroupName = null;
+                    if(recommendations[i].get('productGroups')){
+                        lvProductGroupId = recommendations[i].get('productGroups').id;
+                        lvProductGroupName = recommendations[i].get('productGroups').get('productGroupName');
+                    }
+                    var lvSearchCategoryId = null;
+                    var lvSearchCategoryName = null;
+                    if(recommendations[i].get('searchCategory')){
+                        lvSearchCategoryId = recommendations[i].get('searchCategory').id;
+                        lvSearchCategoryName = recommendations[i].get('searchCategory').get('categoryName');
+                    }
                     lvArgs.recommendations.push({
                         createdAt: recommendations[i].createdAt.toLocaleString(),
                         recommendationId: recommendations[i].id,
                         productName: recommendations[i].get('productName'),
                         productURL: recommendations[i].get('productURL'),
-                        productGroupId: recommendations[i].get('productGroups').id,
-                        productGroupName: recommendations[i].get('productGroups').get('productGroupName'),
+                        productGroupId: lvProductGroupId,
+                        productGroupName: lvProductGroupName,
                         brandId: recommendations[i].get('ethicalBrand').id,
                         brandName: recommendations[i].get('ethicalBrand').get('brandName'),
-                        pageConfirmationSearch: recommendations[i].get('pageConfirmationSearch')
+                        pageConfirmationSearch: recommendations[i].get('pageConfirmationSearch'),
+                        searchCategoryId: lvSearchCategoryId,
+                        searchCategoryName: lvSearchCategoryName
                     });
                 }
                 pvCallback(null,lvArgs);
@@ -424,7 +439,7 @@ module.exports = {
 
         var lvFunctionName = 'getSearchCategories';
         log.log(gvScriptName_model + '.' + lvFunctionName + ': Start', 'PROCS');
-        log.log(gvScriptName_model + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
+        //log.log(gvScriptName_model + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
 
         var lvArgs = {rowCount: null, searchCategories: []}; // to return the data to the callback
 
@@ -1419,16 +1434,22 @@ module.exports = {
 
         var lvFunctionName = 'addRecommendation';
         log.log(gvScriptName_model + '.' + lvFunctionName + ': Start', 'PROCS');
-        log.log(gvScriptName_model + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
+        //log.log(gvScriptName_model + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
 
         var Recommendation = Parse.Object.extend("Recommendation");
         var recommendation = new Recommendation();
 
-        recommendation.set('productGroups',{__type: "Pointer",className: "ProductGroup", objectId: pvArgs.inputs.productGroup});
+        if(pvArgs.inputs.productGroup !== 'null') {
+            recommendation.set('productGroups',{__type: "Pointer",className: "ProductGroup", objectId: pvArgs.inputs.productGroup});
+        }
         recommendation.set('productName',pvArgs.inputs.productName);
         recommendation.set('pageConfirmationSearch',pvArgs.inputs.pageConfirmationSearch);
         recommendation.set('productURL',pvArgs.inputs.productURL);
         recommendation.set('ethicalBrand',{__type: "Pointer",className: "EthicalBrand", objectId: pvArgs.inputs.brand});
+
+        if(pvArgs.inputs.searchCategory !== 'null') {
+            recommendation.set('searchCategory',{__type: "Pointer",className: "SearchCategory", objectId: pvArgs.inputs.searchCategory});
+        }
         if(pvArgs.savedFile !== null) {
             recommendation.set('image',pvArgs.savedFile);
         }
@@ -1438,12 +1459,27 @@ module.exports = {
                 // to return the data to the callback.
                 var lvArgs = {};
                 // The new record object must contain one property for each input value passed in, where the checkbox input value is the id
+
+                var lvProductGroup = {key: null,
+                                      value: null};
+                var lvSearchCategory = {key: null,
+                                        value: null};
+                if(typeof pvRecommendation.get('productGroups') !== 'undefined') {
+                    lvProductGroup = {key: pvRecommendation.get('productGroups').objectId,
+                                      value: pvRecommendation.get('productGroup_sort')};
+                }
+                if(typeof pvRecommendation.get('searchCategory') !== 'undefined') {
+                    lvSearchCategory = {key: pvRecommendation.get('searchCategory').objectId,
+                                        value: pvRecommendation.get('searchCategory_sort')};
+                }
+
                 lvArgs.newRecord = {checkbox: pvRecommendation.id,
-                                    productGroup: {key: pvRecommendation.get('productGroups').objectId, value: pvRecommendation.get('productGroup_sort')},
+                                    productGroup: lvProductGroup,
                                     productName: pvRecommendation.get('productName'),
                                     pageConfirmationSearch: pvRecommendation.get('pageConfirmationSearch'),
                                     productURL: pvRecommendation.get('productURL'),
                                     brand: {key: pvRecommendation.get('ethicalBrand').objectId, value: pvRecommendation.get('brandName_sort')},
+                                    searchCategory: lvSearchCategory,
                                     image: '' // no point in returning this
                                 };
 
@@ -1733,7 +1769,14 @@ module.exports = {
         recommendationQuery.get(pvArgs.inputs.checkbox,{
             sessionToken: pvArgs.sessionToken,
             success: function(recommendation){
-                recommendation.set('productGroups',{__type: "Pointer",className: "ProductGroup", objectId: pvArgs.inputs.productGroup});
+                // productGroup and SearchCategory can (either of them) be ''
+                log.log(pvArgs.inputs.productGroup,'DEBUG');
+                if(pvArgs.inputs.productGroup !== '') {
+                    recommendation.set('productGroups',{__type: "Pointer",className: "ProductGroup", objectId: pvArgs.inputs.productGroup});
+                }
+                if(pvArgs.inputs.searchCategory !== '') {
+                    recommendation.set('searchCategory',{__type: "Pointer",className: "SearchCategory", objectId: pvArgs.inputs.searchCategory});
+                }
                 recommendation.set('productName',pvArgs.inputs.productName);
                 recommendation.set('pageConfirmationSearch',pvArgs.inputs.pageConfirmationSearch);
                 recommendation.set('productURL',pvArgs.inputs.productURL);
@@ -1746,14 +1789,31 @@ module.exports = {
                     success: function(pvRecommendation){
                         // to return the data to the callback.
                         var lvArgs = {};
+
+                        // productGroup and SearchCategory can (either of them) be null
+                        var lvProductGroup = {key: null,
+                                              value: null};
+                        var lvSearchCategory = {key: null,
+                                                value: null};
+                        if(typeof pvRecommendation.get('productGroups') !== 'undefined') {
+                            lvProductGroup = {key: pvRecommendation.get('productGroups').objectId,
+                                              value: pvRecommendation.get('productGroup_sort')};
+                        }
+                        if(typeof pvRecommendation.get('searchCategory') !== 'undefined') {
+                            lvSearchCategory = {key: pvRecommendation.get('searchCategory').objectId,
+                                                value: pvRecommendation.get('searchCategory_sort')};
+                        }
+
                         // The new record object must contain one property for each input value passed in, where the checkbox input value is the id
                         lvArgs.updatedRecord = {checkbox: pvRecommendation.id,
-                                                productGroup: {key: pvRecommendation.get('productGroups').objectId, value: pvRecommendation.get('productGroup_sort')},
+                                                productGroup: lvProductGroup,
                                                 productName: pvRecommendation.get('productName'),
                                                 pageConfirmationSearch: pvRecommendation.get('pageConfirmationSearch'),
                                                 productURL: pvRecommendation.get('productURL'),
                                                 brand: {key: pvRecommendation.get('ethicalBrand').objectId, value: pvRecommendation.get('brandName_sort')},
+                                                searchCategory: lvSearchCategory,
                                                 image: ''}; // no point returning this
+
                         pvCallback(null,lvArgs);
                     },
                     error: log.parseErrorSave
@@ -2119,7 +2179,7 @@ module.exports = {
 
         var lvFunctionName = 'saveFile';
         log.log(gvScriptName_model + '.' + lvFunctionName + ': Start', 'PROCS');
-        log.log(gvScriptName_model + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
+        //log.log(gvScriptName_model + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
 
         var lvArgs = pvArgs;
 

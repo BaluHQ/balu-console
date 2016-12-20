@@ -27,8 +27,13 @@
                                 <input data-required="false" data-action="delete"  style="display: none" type="checkbox" data-group="new" name="checkbox" value="new" class="insideTable"  data-default-text="new">
                             </td>
                             <td>
-                                <select required data-required="true" data-action="add" data-group="new" name="productGroup" style="width: 200px" class="insideTable">
+                                <select data-required="false" data-action="add" data-group="new" name="productGroup" style="width: 200px" class="insideTable">
                                     <%- include partials/product-group-dropdown-options %>
+                                </select>
+                            </td>
+                            <td>
+                                <select data-required="false" data-action="add" data-group="new" name="searchCategory" style="width: 200px" class="insideTable">
+                                    <%- include partials/search-category-dropdown-options %>
                                 </select>
                             </td>
                             <td>
@@ -53,10 +58,10 @@
                             </td>
                         </tr>
 <%
-    for (var i = 0; i < recommendations.length; i++) {
+    for (var i = 0; i < recommendations.length && i < 10; i++) {
         var lvSelectedProductGroupId = recommendations[i].productGroupId;
         var lvSelectedBrandId = recommendations[i].brandId;
-
+        var lvSelectedSearchCategoryId = recommendations[i].searchCategoryId;
 %>
 
                         <tr id=<%- '"row_recommendations_' + recommendations[i].recommendationId + '"' %>>
@@ -65,8 +70,14 @@
                             </td>
                             <td data-inline-edit="true" data-editable="false">
                                 <span name="productGroup"><%- recommendations[i].productGroupName %></span>
-                                <select required data-required="true" data-action="update" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> name="productGroup" class="insideTable" style="display: none">
+                                <select data-required="false" data-action="update" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> name="productGroup" class="insideTable" style="display: none">
                                     <%- include partials/product-group-dropdown-options %>
+                                </select>
+                            </td>
+                            <td data-inline-edit="true" data-editable="false">
+                                <span name="searchCategory"><%- recommendations[i].searchCategoryName %></span>
+                                <select data-required="false" data-action="update" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> name="searchCategory" class="insideTable" style="display: none">
+                                    <%- include partials/search-category-dropdown-options %>
                                 </select>
                             </td>
                             <td data-inline-edit="true" data-editable="false">

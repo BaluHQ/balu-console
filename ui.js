@@ -131,7 +131,8 @@ module.exports = {
             parseServerURL: pvArgs.parseServerURL,
             recommendations: pvArgs.recommendations,
             productGroups: pvArgs.productGroups,
-            brands: pvArgs.brands
+            brands: pvArgs.brands,
+            searchCategories: pvArgs.searchCategories
         };
 
         pvCallback(null,lvArgs);
