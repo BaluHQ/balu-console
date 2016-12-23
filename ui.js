@@ -60,7 +60,8 @@ module.exports = {
         lvArgs.pageElements = {
             databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
-            websites: pvArgs.websites
+            websites: pvArgs.websites,
+            log: pvArgs.log
         };
 
         pvCallback(null,lvArgs);
@@ -75,7 +76,8 @@ module.exports = {
         lvArgs.pageElements = {
             databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
-            searchCategories: pvArgs.searchCategories
+            searchCategories: pvArgs.searchCategories,
+            log: pvArgs.log
         };
 
         pvCallback(null,lvArgs);
@@ -93,6 +95,7 @@ module.exports = {
             searchProducts: pvArgs.searchProducts,
             searchCategories: pvArgs.searchCategories,
             productGroups: pvArgs.productGroups,
+            log: pvArgs.log
         };
 
         pvCallback(null,lvArgs);
@@ -107,7 +110,8 @@ module.exports = {
         lvArgs.pageElements = {
             databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
-            productGroups: pvArgs.productGroups
+            productGroups: pvArgs.productGroups,
+            log: pvArgs.log
         };
 
         pvCallback(null,lvArgs);
@@ -140,7 +144,8 @@ module.exports = {
             recommendations: pvArgs.recommendations,
             productGroups: pvArgs.productGroups,
             brands: pvArgs.brands,
-            searchCategories: pvArgs.searchCategories
+            searchCategories: pvArgs.searchCategories,
+            log: pvArgs.log
         };
 
         pvCallback(null,lvArgs);
@@ -171,7 +176,8 @@ module.exports = {
             onOffs: pvArgs.userLogs_onOff.slice(0,lvRowLimit),
             showHides: pvArgs.userLogs_showHide.slice(0,lvRowLimit),
             hideUntilRefreshRestarts: pvArgs.userLogs_hideUntilRefreshRestart.slice(0,lvRowLimit),
-            blockedBrands: pvArgs.userLogBlockedBrands.slice(0,lvRowLimit)
+            blockedBrands: pvArgs.userLogBlockedBrands.slice(0,lvRowLimit),
+            log: pvArgs.log
         };
 
         // And then add an extra object with the summary data (row counts)
@@ -202,6 +208,7 @@ module.exports = {
             databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
             users: pvArgs.users,
+            log: pvArgs.log
         };
 
         pvCallback(null,lvArgs);
@@ -216,6 +223,7 @@ module.exports = {
         lvArgs.pageElements = {
             databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
+            log: pvArgs.log
         };
 
         pvCallback(null,lvArgs);
@@ -230,6 +238,7 @@ module.exports = {
         lvArgs.pageElements = {
             databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
+            log: pvArgs.log
         };
 
         pvCallback(null,lvArgs);
@@ -244,6 +253,7 @@ module.exports = {
         lvArgs.pageElements = {
             databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
+            log: pvArgs.log
         };
 
         pvCallback(null,lvArgs);
