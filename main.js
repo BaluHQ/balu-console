@@ -89,53 +89,69 @@ app.use(handler.processFormData); // custom middleware for processing AJAX form 
 app.use(function(req,res,next){
     // Don't execute for the js/css, otherwise it floods the log with gumph
     if(!req.path.includes('/js/') && !req.path.includes('/css/')){
-        log.log(gvScriptName,'expressMiddleware','[' + req.method + '] ' + req.url,'ROUTE');
+        req.log += log.log(gvScriptName,'expressMiddleware','[' + req.method + '] ' + req.url,'ROUTE');
     }
     next();
 });
 
 /* Session Handling */
 
-// For all screens, get the database URI
-// For "internal" screens, check whether user is logged in and redirect to login screen if not
+// For all screens, set up the log object, get the database URI, and, for "internal" (secure) screens, check whether
+// user is logged in. Redirect to login screen if not
+
 // To do: How do I avoid having one of these for each?! put all the routes into a router, and put router in as first param??
 
+app.use('/login', handler.setUpLogString);
 app.use('/login', handler.getDatabaseURI);
+
+app.use('/logout', handler.setUpLogString);
 app.use('/logout', handler.getDatabaseURI);
 
+app.use('/website-search-config', handler.setUpLogString);
 app.use('/website-search-config', handler.checkUserSession);
 app.use('/website-search-config', handler.getDatabaseURI);
 
+app.use('/websites', handler.setUpLogString);
 app.use('/websites', handler.checkUserSession);
 app.use('/websites', handler.getDatabaseURI);
 
+app.use('/search-categories', handler.setUpLogString);
 app.use('/search-categories', handler.checkUserSession);
 app.use('/search-categories', handler.getDatabaseURI);
 
+app.use('/search-products', handler.setUpLogString);
 app.use('/search-products', handler.checkUserSession);
 app.use('/search-products', handler.getDatabaseURI);
 
+app.use('/product-groups', handler.setUpLogString);
 app.use('/product-groups', handler.checkUserSession);
 app.use('/product-groups', handler.getDatabaseURI);
 
+app.use('/brands', handler.setUpLogString);
 app.use('/brands', handler.checkUserSession);
 app.use('/brands', handler.getDatabaseURI);
 
+app.use('/recommendations', handler.setUpLogString);
 app.use('/recommendations', handler.checkUserSession);
 app.use('/recommendations', handler.getDatabaseURI);
 
+app.use('/activity-dashboard', handler.setUpLogString);
 app.use('/activity-dashboard', handler.checkUserSession);
 app.use('/activity-dashboard', handler.getDatabaseURI);
 
+app.use('/user-report', handler.setUpLogString);
 app.use('/user-report', handler.checkUserSession);
 app.use('/user-report', handler.getDatabaseURI);
 
+app.use('/data-quality', handler.setUpLogString);
 app.use('/data-quality', handler.checkUserSession);
 app.use('/data-quality', handler.getDatabaseURI);
 
+app.use('/job-log', handler.setUpLogString);
 app.use('/job-log', handler.checkUserSession);
 app.use('/job-log', handler.getDatabaseURI);
 
+app.use('/bts-dashboard', handler.setUpLogString);
 app.use('/bts-dashboard', handler.checkUserSession);
 app.use('/bts-dashboard', handler.getDatabaseURI);
 
@@ -150,19 +166,13 @@ app.use("/uploads", express.static(__dirname + '/uploads'));
 
 /* Log in */
 
-// Login GET
 app.get('/login', handler.loginGET);
-
-// Login POST
 app.post('/login', handler.loginPOST);
-
-// LogOut GET
 app.get('/logout', handler.logOutGET);
-
-// LogOut POST
 app.post('/logout', handler.logOutPOST);
 
 /* Switch Balu Parse Server */
+
 app.get('/switch-server', handler.switchServerGET);
 
 /* Main Pages of Console */
@@ -181,6 +191,7 @@ app.get('/job-log', handler.jobLogGET);
 app.get('/bts-dashboard', handler.btsDashboardGET);
 
 /* AJAX Requests */
+
 // to do: make a router of these, and when done filter the processFormData middleware to it
 app.post('/submit-category-website-join', handler.submitCategoryWebsiteJoinsPOST);
 app.post('/submit-websites', handler.submitWebsitesPOST);
