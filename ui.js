@@ -26,7 +26,7 @@ var gvScriptName = 'ui';
 (function initialise(){
 
     var lvFunctionName = 'initialise';
-    log.log(gvScriptName + '.' + lvFunctionName + ': Start','INITS');
+    log.log(gvScriptName,lvFunctionName,'Start','INITS');
 
 })();
 
@@ -36,10 +36,11 @@ module.exports = {
     constructWebsiteSearchConfig: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructWebsiteSearchConfig';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
             categoryWebsiteJoins: pvArgs.categoryWebsiteJoins,
             websites: pvArgs.websites,
@@ -52,10 +53,11 @@ module.exports = {
     constructWebsites: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructWebsites';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
             websites: pvArgs.websites
         };
@@ -66,10 +68,11 @@ module.exports = {
     constructSearchCategories: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructSearchCategories';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
             searchCategories: pvArgs.searchCategories
         };
@@ -80,10 +83,11 @@ module.exports = {
     constructSearchProducts: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructSearchProducts';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
             searchProducts: pvArgs.searchProducts,
             searchCategories: pvArgs.searchCategories,
@@ -96,10 +100,11 @@ module.exports = {
     constructProductGroups: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructProductGroups';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
             productGroups: pvArgs.productGroups
         };
@@ -110,10 +115,11 @@ module.exports = {
     constructBrands: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructBrands';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
             brands: pvArgs.brands
         };
@@ -124,10 +130,11 @@ module.exports = {
     constructRecommendations: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructRecommendations';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
             recommendations: pvArgs.recommendations,
             productGroups: pvArgs.productGroups,
@@ -141,7 +148,7 @@ module.exports = {
     constructActivityDashboard: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructActivityDashboard';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
 
@@ -149,6 +156,7 @@ module.exports = {
 
         // Create page elements with each of the datasets in it
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
             //
             users: pvArgs.users.slice(0,lvRowLimit),
@@ -186,10 +194,11 @@ module.exports = {
     constructUserReport: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructUserReport';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
             users: pvArgs.users,
         };
@@ -200,10 +209,11 @@ module.exports = {
     constructDataQuality: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructDataQuality';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
         };
 
@@ -213,10 +223,11 @@ module.exports = {
     constructJobLog: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructJobLog';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
         };
 
@@ -226,10 +237,11 @@ module.exports = {
     constructBTSDashboard: function(pvArgs, pvCallback){
 
         var lvFunctionName = 'constructBTSDashboard';
-        log.log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         var lvArgs = {pageElements: {}};
         lvArgs.pageElements = {
+            databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
         };
 
