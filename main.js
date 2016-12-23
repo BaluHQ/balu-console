@@ -81,7 +81,6 @@ if(typeof(process.env.REDISCLOUD_URL) !== 'undefined') {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(handler.processFormData); // custom middleware for processing AJAX form data
-
 /* Logging */
 
 app.use(function(req,res,next){
@@ -94,20 +93,48 @@ app.use(function(req,res,next){
 
 /* Session Handling */
 
+// For all screens, get the database URI
 // For "internal" screens, check whether user is logged in and redirect to login screen if not
-// To do: How do I avoid having one of these for each?! put all the routes into a router, and put router in as first param
+// To do: How do I avoid having one of these for each?! put all the routes into a router, and put router in as first param??
+
+app.use('/login', handler.getDatabaseURI);
+app.use('/logout', handler.getDatabaseURI);
+
 app.use('/website-search-config', handler.checkUserSession);
+app.use('/website-search-config', handler.getDatabaseURI);
+
 app.use('/websites', handler.checkUserSession);
+app.use('/websites', handler.getDatabaseURI);
+
 app.use('/search-categories', handler.checkUserSession);
+app.use('/search-categories', handler.getDatabaseURI);
+
 app.use('/search-products', handler.checkUserSession);
+app.use('/search-products', handler.getDatabaseURI);
+
 app.use('/product-groups', handler.checkUserSession);
+app.use('/product-groups', handler.getDatabaseURI);
+
 app.use('/brands', handler.checkUserSession);
+app.use('/brands', handler.getDatabaseURI);
+
 app.use('/recommendations', handler.checkUserSession);
+app.use('/recommendations', handler.getDatabaseURI);
+
 app.use('/activity-dashboard', handler.checkUserSession);
+app.use('/activity-dashboard', handler.getDatabaseURI);
+
 app.use('/user-report', handler.checkUserSession);
+app.use('/user-report', handler.getDatabaseURI);
+
 app.use('/data-quality', handler.checkUserSession);
+app.use('/data-quality', handler.getDatabaseURI);
+
 app.use('/job-log', handler.checkUserSession);
+app.use('/job-log', handler.getDatabaseURI);
+
 app.use('/bts-dashboard', handler.checkUserSession);
+app.use('/bts-dashboard', handler.getDatabaseURI);
 
 /* Serve static files */
 
