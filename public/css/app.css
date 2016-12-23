@@ -12,3 +12,9 @@ a.insideTable {
     vertical-align: middle;
     margin: 0;
 }
+
+.logOutput {
+    margin-top: 20px;
+    font-family: monospace;
+    font-size: 10px;
+}

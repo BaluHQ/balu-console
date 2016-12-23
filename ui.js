@@ -44,7 +44,8 @@ module.exports = {
             parseServerURL: pvArgs.parseServerURL,
             categoryWebsiteJoins: pvArgs.categoryWebsiteJoins,
             websites: pvArgs.websites,
-            testWebsiteURL: pvArgs.testWebsiteURL
+            testWebsiteURL: pvArgs.testWebsiteURL,
+            log: pvArgs.log
         };
 
         pvCallback(null,lvArgs);
