@@ -32,9 +32,12 @@ var handler = require('./handler.js');
 var gvScriptName = 'main';
 
 /*
- * Initialise this script
+ * Initialise the script
  */
-log.log(gvScriptName + '.' + 'initialise' + ': Start','INITS');
+(function initialise(){
+    var lvFunctionName = 'initialise';
+    log.log(gvScriptName,lvFunctionName,'Start','INITS');
+})();
 
 /*
  * Configure server middleware
@@ -86,7 +89,7 @@ app.use(handler.processFormData); // custom middleware for processing AJAX form 
 app.use(function(req,res,next){
     // Don't execute for the js/css, otherwise it floods the log with gumph
     if(!req.path.includes('/js/') && !req.path.includes('/css/')){
-        log.log('[' + req.method + '] ' + req.url,'ROUTE');
+        log.log(gvScriptName,'expressMiddleware','[' + req.method + '] ' + req.url,'ROUTE');
     }
     next();
 });
@@ -195,5 +198,5 @@ app.get('/', handler.rootGET);
  */
 var lvPortNumber = process.env.PORT || 8080;
 app.listen(lvPortNumber, function() {
-    log.log(gvScriptName + '.' + 'initialise' + ': Express web server listening on port ' + lvPortNumber,' INFO');
+    log.log(gvScriptName,'initialise','Express web server listening on port ' + lvPortNumber,' INFO');
 });
