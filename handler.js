@@ -61,6 +61,14 @@ module.exports = {
      **************/
 
     /*
+     * Set up our log string in req, so all other middleware can do a += on it.
+     */
+    setUpLogString: function(req,res,next){
+        req.log = '';
+        next();
+    },
+
+    /*
      * Check whether the user is logged in and, if they're not, redirect them to the login screen
      */
     checkUserSession: function(req,res,next){
