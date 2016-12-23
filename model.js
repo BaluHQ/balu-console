@@ -102,9 +102,16 @@ module.exports = {
      * RETRIEVING DATA FROM DATABASE *
      *********************************/
 
+    // Don't collect the logs for these functions. Output them to console,
+    // but they don't need to be handed back to the front-end - they're just wrappers
+    // To do: If this changes, there is some mess that needs sorting out around
+    // the way the log objects are created and passed through from fron to back, and back
+    // from back to front. For example, you quickly end up with duplicate writes when
+    // you come back through the middle level in the chain. 
+
     getUsers: function(pvArgs, pvCallback){
         var lvFunctionName = 'getUsers';
-        log.log(gvScriptName,lvFunctionName,'Start, pvArgs.user_systemUsers == ' + pvArgs.user_systemUsers,'PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
         getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
     },
 
