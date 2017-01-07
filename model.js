@@ -1,11 +1,10 @@
-/*********************************************************
- * Description: Pulls data out of the DB and prepares it *
- *********************************************************/
+/*****************************************************
+ * Description: Interface with the balu-parse-server *
+ *****************************************************/
 
 /*
  * Load modules
  */
-//var CacheManager = require('cache-manager')
 var Promise = require('bluebird');
 var Parse = require('parse/node');
 
@@ -50,11 +49,6 @@ var gvAppId = 'mmhyD9DKGeOanjpRLHCR3bX8snue22oOd3NGfWKu';
     Parse.serverURL = gvActiveParseServerURL;
 
     log.log(gvScriptName,lvFunctionName,'Initialised Balu Parse Server to ' + gvActiveParseServerURL,' INFO');
-
-
-    // Set up the cache. This is very static data. Let's refresh it only every 5 hours (18000 seconds) */
-    //var memoryCache = cacheManager.caching({store: 'memory', max: 100, ttl: 18000});
-    //var ttl = 18000;
 
 })();
 
@@ -107,7 +101,7 @@ module.exports = {
     // To do: If this changes, there is some mess that needs sorting out around
     // the way the log objects are created and passed through from fron to back, and back
     // from back to front. For example, you quickly end up with duplicate writes when
-    // you come back through the middle level in the chain. 
+    // you come back through the middle level in the chain.
 
     getUsers: function(pvArgs, pvCallback){
         var lvFunctionName = 'getUsers';
@@ -1121,6 +1115,9 @@ module.exports = {
     }
 };
 
+/*
+ * split out into a local function so it can be referenced from two locations
+ */
 function lfAddCategoryWebsiteJoin(pvArgs, pvCallback){
 
     var lvFunctionName = 'lfAddCategoryWebsiteJoin';

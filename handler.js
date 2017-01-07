@@ -65,6 +65,7 @@ module.exports = {
      */
     setUpLogString: function(req,res,next){
         req.log = '';
+        req.log += log.log(gvScriptName,'expressMiddleware','[' + req.method + '] ' + req.originalUrl,'ROUTE');
         next();
     },
 
@@ -79,7 +80,7 @@ module.exports = {
         if(req.session.loggedIn) {
             next();
         } else {
-            req.log += log.log('[' + req.method + '] ' + req.url + ': user is not logged in, redirecting',' INFO');
+            log.log(gvScriptName,lvFunctionName,'[' + req.method + '] ' + req.url + ': user is not logged in, redirecting',' INFO');
             res.redirect('/login');
         }
     },
@@ -96,7 +97,6 @@ module.exports = {
             sessionToken: req.session,
             success: function(pvResponse){
                 gvDatabaseURI = pvResponse.databaseURI;
-                req.log += log.log(pvResponse.log);
                 next();
             }
         });
@@ -222,16 +222,15 @@ module.exports = {
                                       log: lvLog,
                                       errorMessage: null});
         } else {
-            lvLog += log.log(gvScriptName,lvFunctionName,'user not logged in, redirecting',' INFO');
+            log.log(gvScriptName,lvFunctionName,'user not logged in, redirecting',' INFO');
             res.redirect('/login');
         }
     },
 
     logOutPOST: function(req,res,next){
 
-        var lvLog = req.log;
         var lvFunctionName = 'logOutPOST';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         // To do: don't I need to log out of Parse here (Parse.User.logOut() wasn't working - just hanging)
         req.session.destroy();
@@ -239,11 +238,8 @@ module.exports = {
     },
 
     rootGET: function(req,res,next){
-
-        var lvLog = req.log;
         var lvFunctionName = 'rootGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
         res.redirect('/login');
     },
 
@@ -252,9 +248,8 @@ module.exports = {
      **************************************/
 
     switchServerGET: function(req,res,next){
-        var lvLog = req.log;
         var lvFunctionName = 'switchServerGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
+        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         // To do: these redirects are meant to hit the logout post method (so user is actually logged out, and redirected to login page)
         if(gvActiveParseServerURL.includes('balu-parse-server-test')){
@@ -273,7 +268,7 @@ module.exports = {
 
         var lvLog = req.log;
         var lvFunctionName = 'websiteSearchConfigGET';
-        lvLog += lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
+        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
         // To be passed to each model function
         var lvSessionToken = req.session.sessionToken;
 
@@ -617,7 +612,7 @@ module.exports = {
     },
 
     /***********************
-     * AJAX Route Handlers *
+     * POST Route Handlers *
      ***********************/
 
     submitCategoryWebsiteJoinsPOST: function(req,res,next){

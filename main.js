@@ -32,14 +32,6 @@ var handler = require('./handler.js');
 var gvScriptName = 'main';
 
 /*
- * Initialise the script
- */
-(function initialise(){
-    var lvFunctionName = 'initialise';
-    log.log(gvScriptName,lvFunctionName,'Start','INITS');
-})();
-
-/*
  * Configure server middleware
  */
 
@@ -83,18 +75,9 @@ if(typeof(process.env.REDISCLOUD_URL) !== 'undefined') {
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(handler.processFormData); // custom middleware for processing AJAX form data
-/* Logging */
+app.use(handler.processFormData); // custom middleware for processing form data
 
-app.use(function(req,res,next){
-    // Don't execute for the js/css, otherwise it floods the log with gumph
-    if(!req.path.includes('/js/') && !req.path.includes('/css/')){
-        req.log += log.log(gvScriptName,'expressMiddleware','[' + req.method + '] ' + req.url,'ROUTE');
-    }
-    next();
-});
-
-/* Session Handling */
+/* Application-spectific Middleware */
 
 // For all screens, set up the log object, get the database URI, and, for "internal" (secure) screens, check whether
 // user is logged in. Redirect to login screen if not
@@ -175,7 +158,7 @@ app.post('/logout', handler.logOutPOST);
 
 app.get('/switch-server', handler.switchServerGET);
 
-/* Main Pages of Console */
+/* GET: Main Pages of Console */
 
 app.get('/website-search-config', handler.websiteSearchConfigGET);
 app.get('/websites', handler.websitesGET);
@@ -190,7 +173,10 @@ app.get('/data-quality', handler.dataQualityGET);
 app.get('/job-log', handler.jobLogGET);
 app.get('/bts-dashboard', handler.btsDashboardGET);
 
-/* AJAX Requests */
+// No path specified
+app.get('/', handler.rootGET);
+
+/* POST: Main form submissions of Console */
 
 // to do: make a router of these, and when done filter the processFormData middleware to it
 app.post('/submit-category-website-join', handler.submitCategoryWebsiteJoinsPOST);
@@ -200,9 +186,6 @@ app.post('/submit-search-products', handler.submitSearchProductsPOST);
 app.post('/submit-product-groups', handler.submitProductGroupsPOST);
 app.post('/submit-brands', handler.submitBrandsPOST);
 app.post('/submit-recommendations', handler.submitRecommendationsPOST);
-
-// No path specified
-app.get('/', handler.rootGET);
 
 /*
  * Fire it up!
