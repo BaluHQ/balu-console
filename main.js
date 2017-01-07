@@ -32,11 +32,6 @@ var handler = require('./handler.js');
 var gvScriptName = 'main';
 
 /*
- * Initialise this script
- */
-log.log(gvScriptName + '.' + 'initialise' + ': Start','INITS');
-
-/*
  * Configure server middleware
  */
 
@@ -80,34 +75,68 @@ if(typeof(process.env.REDISCLOUD_URL) !== 'undefined') {
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(handler.processFormData); // custom middleware for processing AJAX form data
+app.use(handler.processFormData); // custom middleware for processing form data
 
-/* Logging */
+/* Application-spectific Middleware */
 
-app.use(function(req,res,next){
-    // Don't execute for the js/css, otherwise it floods the log with gumph
-    if(!req.path.includes('/js/') && !req.path.includes('/css/')){
-        log.log('[' + req.method + '] ' + req.url,'ROUTE');
-    }
-    next();
-});
+// For all screens, set up the log object, get the database URI, and, for "internal" (secure) screens, check whether
+// user is logged in. Redirect to login screen if not
 
-/* Session Handling */
+// To do: How do I avoid having one of these for each?! put all the routes into a router, and put router in as first param??
 
-// For "internal" screens, check whether user is logged in and redirect to login screen if not
-// To do: How do I avoid having one of these for each?! put all the routes into a router, and put router in as first param
+app.use('/login', handler.setUpLogString);
+app.use('/login', handler.getDatabaseURI);
+
+app.use('/logout', handler.setUpLogString);
+app.use('/logout', handler.getDatabaseURI);
+
+app.use('/website-search-config', handler.setUpLogString);
 app.use('/website-search-config', handler.checkUserSession);
+app.use('/website-search-config', handler.getDatabaseURI);
+
+app.use('/websites', handler.setUpLogString);
 app.use('/websites', handler.checkUserSession);
+app.use('/websites', handler.getDatabaseURI);
+
+app.use('/search-categories', handler.setUpLogString);
 app.use('/search-categories', handler.checkUserSession);
+app.use('/search-categories', handler.getDatabaseURI);
+
+app.use('/search-products', handler.setUpLogString);
 app.use('/search-products', handler.checkUserSession);
+app.use('/search-products', handler.getDatabaseURI);
+
+app.use('/product-groups', handler.setUpLogString);
 app.use('/product-groups', handler.checkUserSession);
+app.use('/product-groups', handler.getDatabaseURI);
+
+app.use('/brands', handler.setUpLogString);
 app.use('/brands', handler.checkUserSession);
+app.use('/brands', handler.getDatabaseURI);
+
+app.use('/recommendations', handler.setUpLogString);
 app.use('/recommendations', handler.checkUserSession);
+app.use('/recommendations', handler.getDatabaseURI);
+
+app.use('/activity-dashboard', handler.setUpLogString);
 app.use('/activity-dashboard', handler.checkUserSession);
+app.use('/activity-dashboard', handler.getDatabaseURI);
+
+app.use('/user-report', handler.setUpLogString);
 app.use('/user-report', handler.checkUserSession);
+app.use('/user-report', handler.getDatabaseURI);
+
+app.use('/data-quality', handler.setUpLogString);
 app.use('/data-quality', handler.checkUserSession);
+app.use('/data-quality', handler.getDatabaseURI);
+
+app.use('/job-log', handler.setUpLogString);
 app.use('/job-log', handler.checkUserSession);
+app.use('/job-log', handler.getDatabaseURI);
+
+app.use('/bts-dashboard', handler.setUpLogString);
 app.use('/bts-dashboard', handler.checkUserSession);
+app.use('/bts-dashboard', handler.getDatabaseURI);
 
 /* Serve static files */
 
@@ -120,22 +149,16 @@ app.use("/uploads", express.static(__dirname + '/uploads'));
 
 /* Log in */
 
-// Login GET
 app.get('/login', handler.loginGET);
-
-// Login POST
 app.post('/login', handler.loginPOST);
-
-// LogOut GET
 app.get('/logout', handler.logOutGET);
-
-// LogOut POST
 app.post('/logout', handler.logOutPOST);
 
 /* Switch Balu Parse Server */
+
 app.get('/switch-server', handler.switchServerGET);
 
-/* Main Pages of Console */
+/* GET: Main Pages of Console */
 
 app.get('/website-search-config', handler.websiteSearchConfigGET);
 app.get('/websites', handler.websitesGET);
@@ -150,7 +173,11 @@ app.get('/data-quality', handler.dataQualityGET);
 app.get('/job-log', handler.jobLogGET);
 app.get('/bts-dashboard', handler.btsDashboardGET);
 
-/* AJAX Requests */
+// No path specified
+app.get('/', handler.rootGET);
+
+/* POST: Main form submissions of Console */
+
 // to do: make a router of these, and when done filter the processFormData middleware to it
 app.post('/submit-category-website-join', handler.submitCategoryWebsiteJoinsPOST);
 app.post('/submit-websites', handler.submitWebsitesPOST);
@@ -160,13 +187,10 @@ app.post('/submit-product-groups', handler.submitProductGroupsPOST);
 app.post('/submit-brands', handler.submitBrandsPOST);
 app.post('/submit-recommendations', handler.submitRecommendationsPOST);
 
-// No path specified
-app.get('/', handler.rootGET);
-
 /*
  * Fire it up!
  */
 var lvPortNumber = process.env.PORT || 8080;
 app.listen(lvPortNumber, function() {
-    log.log(gvScriptName + '.' + 'initialise' + ': Express web server listening on port ' + lvPortNumber,' INFO');
+    log.log(gvScriptName,'initialise','Express web server listening on port ' + lvPortNumber,' INFO');
 });
