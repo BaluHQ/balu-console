@@ -132,7 +132,8 @@ module.exports = {
         lvArgs.pageElements = {
             databaseURI: pvArgs.databaseURI,
             parseServerURL: pvArgs.parseServerURL,
-            brands: pvArgs.brands
+            brands: pvArgs.brands,
+            log: lvLog
         };
 
         pvCallback(null,lvArgs);
