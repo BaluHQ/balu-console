@@ -44,6 +44,12 @@
                                     <option selected value="FALSE">False</option>
                                 </select>
                             </td>
+                            <td title="Is archived">
+                                <select required data-required="true" data-action="add" data-group="new" data-default-value="FALSE" name="isArchived" class="insideTable" style="width: 50px">
+                                    <option value="TRUE">True</option>
+                                    <option selected value="FALSE">False</option>
+                                </select>
+                            </td>
                             <td>
                                 <input type="submit" value="Add" data-endpoint="/submit-brands" data-table-id="table_brands" data-group="new" data-action="add" class="button tiny insideTable">
                             </td>
@@ -53,6 +59,10 @@
         var lvBaluFavourite = 'false'; // default
         if(brands[i].baluFavourite === 'true'){
             lvBaluFavourite = 'true';
+        }
+        var lvIsArchived = 'false'; // default
+        if(brands[i].isArchived === 'true'){
+            lvIsArchived = 'true';
         }
 %>
 
@@ -82,6 +92,13 @@
                                 <select required data-required="true" data-action="update" data-group=<%- '"' + brands[i].brandId + '"' %> data-default-value="FALSE" name="baluFavourite" stitle="Balu Favourite" style="display: none" %> class="insideTable">
                                     <option <% if(lvBaluFavourite === "true" ){ %> selected <% } %> value="TRUE">True</option>
                                     <option <% if(lvBaluFavourite === "false" ){ %> selected <% } %> value="TRUE">False</option>
+                                </select>
+                            </td>
+                            <td data-inline-edit="true" data-editable="false" title="Is archived">
+                                <span name="isArchived"><%- brands[i].isArchived %></span>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + brands[i].brandId + '"' %> data-default-value="FALSE" name="isArchived" style="display: none" class="insideTable">
+                                    <option <% if(lvIsArchived === "true" ){ %> selected <% } %> value="TRUE">True</option>
+                                    <option <% if(lvIsArchived === "false"){ %> selected <% } %> value="FALSE">False</option>
                                 </select>
                             </td>
                             <td>

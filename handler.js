@@ -401,7 +401,8 @@ module.exports = {
 
         var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
 
-        model.getEthicalBrandsAsync({sessionToken: lvSessionToken})
+        model.getEthicalBrandsAsync({sessionToken: lvSessionToken,
+                                     archived:     'BOTH'})
         .then(function(pvArgs){
             lvData.brands = pvArgs.data;
             lvData.log += pvArgs.log;
@@ -424,7 +425,8 @@ module.exports = {
         var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
 
         // To do, ideally we'd load the dropdown data separatley and ajax it in
-        model.getRecommendationsAsync({sessionToken: lvSessionToken})
+        model.getRecommendationsAsync({sessionToken: lvSessionToken, 
+                                       archived:     'BOTH'})
         .then(function(pvArgs){
             lvData.recommendations = pvArgs.data;
             lvData.log += pvArgs.log;
@@ -433,6 +435,7 @@ module.exports = {
         .then(function(pvArgs){
             lvData.productGroups = pvArgs.data;
             lvData.log += pvArgs.log;
+            lvData.archived = 'BOTH';
             return model.getEthicalBrandsAsync(lvData);
         })
         .then(function(pvArgs){

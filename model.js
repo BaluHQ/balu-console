@@ -285,6 +285,7 @@ module.exports = {
         ethicalBrand.set('twitterHandle',pvArgs.inputs.twitterHandle);
         ethicalBrand.set('brandSpiel',pvArgs.inputs.brandSpiel);
         ethicalBrand.set('baluFavourite',lvBaluFavourite);
+        ethicalBrand.set('isArchived',false);
         ethicalBrand.save(null, {
             sessionToken: pvArgs.sessionToken,
             success: function(pvEthicalBrand){
@@ -367,6 +368,7 @@ module.exports = {
         if(pvArgs.savedFile !== null) {
             recommendation.set('image',pvArgs.savedFile);
         }
+        recommendation.set('isArchived',false);
         recommendation.save(null,{
             sessionToken: pvArgs.sessionToken,
             success: function(pvRecommendation){

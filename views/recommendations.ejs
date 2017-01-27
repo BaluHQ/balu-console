@@ -53,6 +53,12 @@
                             <td>
                                 <input required data-required="true" data-action="add" type="file" data-group="new" name="image"  style="width: 200px" class="insideTable" style="width: 200px">
                             </td>
+                            <td title="Is archived">
+                                <select required data-required="true" data-action="add" data-group="new" data-default-value="FALSE" name="isArchived" class="insideTable" style="width: 50px">
+                                    <option value="TRUE">True</option>
+                                    <option selected value="FALSE">False</option>
+                                </select>
+                            </td>
                             <td>
                                 <input type="submit" value="Add"  data-endpoint="/submit-recommendations" data-table-id="table_recommendations" data-group="new" data-action="add" class="button tiny insideTable">
                             </td>
@@ -62,6 +68,11 @@
         var lvSelectedProductGroupId = recommendations[i].productGroupId;
         var lvSelectedBrandId = recommendations[i].brandId;
         var lvSelectedSearchCategoryId = recommendations[i].searchCategoryId;
+
+        var lvIsArchived = 'false'; // default
+        if(recommendations[i].isArchived === 'true'){
+            lvIsArchived = 'true';
+        }
 %>
 
                         <tr id=<%- '"row_recommendations_' + recommendations[i].recommendationId + '"' %>>
@@ -101,6 +112,13 @@
                             <td data-inline-edit="true" data-editable="false">
                                 <span name="image"><%- recommendations[i].image %></span>
                                 <input data-action="update" type="file" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> name="image" class="insideTable" style="display:none">
+                            </td>
+                            <td data-inline-edit="true" data-editable="false" title="Is archived">
+                                <span name="isArchived"><%- recommendations[i].isArchived %></span>
+                                <select required data-required="true" data-action="update" data-group=<%- '"' + recommendations[i].recommendationId + '"' %> data-default-value="FALSE" name="isArchived" style="display: none" class="insideTable">
+                                    <option <% if(lvIsArchived === "true" ){ %> selected <% } %> value="TRUE">True</option>
+                                    <option <% if(lvIsArchived === "false"){ %> selected <% } %> value="FALSE">False</option>
+                                </select>
                             </td>
                             <td>
                                 <input type="submit" style="display: none" value="Update" data-endpoint="/submit-recommendations" data-table-id="table_recommendations" data-group=<%- '"' + recommendations[i].recommendationId + '"' %>  data-action="update" class="button tiny insideTable">
