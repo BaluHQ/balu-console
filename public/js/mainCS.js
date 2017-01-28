@@ -7,15 +7,16 @@
 */
 
 /* Logging control */
-var gvScriptName = 'mainCS';
+var gvScriptName_main = 'mainCS';
 
 /*
  * Initialise the script
  */
 (function initialise(){
 
+    var lvLog = '';
     var lvFunctionName = 'initialise';
-    log(gvScriptName + '.' + lvFunctionName + ': Start','INITS');
+    lvLog += log(gvScriptName_main,lvFunctionName,'Start','INITS');
 
     // Do everything when the DOM is ready
     $(document).ready(function(){
@@ -58,6 +59,10 @@ var gvScriptName = 'mainCS';
 
         $(document.body).on('click','[data-inline-edit="true"]',togglRowEditable_listener);
 
+        // Append logs to screen
+
+        $('#preLog').append(lvLog);
+
     },false);
 
 })();
@@ -71,8 +76,9 @@ var gvScriptName = 'mainCS';
  */
 function buttonClick_listener(pvButtonClicked){
 
-    var lvFunctionName = 'formSubmit_listener';
-    log(gvScriptName + '.' + lvFunctionName + ': Sending','LSTNR');
+    var lvLog = '';
+    var lvFunctionName = 'buttonClick_listener';
+    lvLog += log(gvScriptName_main,lvFunctionName,'Sending','LSTNR');
 
     // to to: stop double click
 
@@ -101,7 +107,7 @@ function buttonClick_listener(pvButtonClicked){
             $(pvButtonClicked).closest('form').find('[data-action="update"][data-required="true"],[data-action="add"][data-required="true"]').prop('required',false);
             break;
         default:
-            log(gvScriptName + '.' + lvFunctionName + ': ERROR, button onclick listener received an action that wasn\'t recognised (Expected add, update or delete; got ' + $(pvButtonClicked).attr('data-action') + ')','ERROR');
+            lvLog += log(gvScriptName_main,lvFunctionName,'ERROR, button onclick listener received an action that wasn\'t recognised (Expected add, update or delete; got ' + $(pvButtonClicked).attr('data-action') + ')','ERROR');
     }
 }
 
@@ -111,8 +117,9 @@ function buttonClick_listener(pvButtonClicked){
  */
 function formSubmit_listener(pvButtonClicked) {
 
+    var lvLog = '';
     var lvFunctionName = 'formSubmit_listener';
-    log(gvScriptName + '.' + lvFunctionName + ': Start','LSTNR');
+    lvLog += log(gvScriptName_main,lvFunctionName,'Sending','LSTNR');
 
 
     var lvFormData = new FormData(); // The object we build up and pass through to the AJAX call at the end
@@ -194,9 +201,9 @@ function formSubmit_listener(pvButtonClicked) {
  */
 function form_ajxCallback(pvArgs, pvPageData) {
 
+    var lvLog = '';
     var lvFunctionName = 'form_ajxCallback';
-    log(gvScriptName + '.' + lvFunctionName + ': Receiving',' AJAX');
-    //log(gvScriptName + '.' + lvFunctionName + ': pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
+    lvLog += log(gvScriptName_main,lvFunctionName,'Sending',' AJAX');
 
     switch(pvPageData.action) {
 
@@ -288,7 +295,7 @@ function form_ajxCallback(pvArgs, pvPageData) {
 
         // No other cases should occur
         default:
-            log(gvScriptName + '.' + lvFunctionName + ': ERROR, AJAX callback received an action that wasn\'t recognised (Expected add, update or delete; got ' + pvArgs.action + ')','ERROR');
+            lvLog += log(gvScriptName_main,lvFunctionName,'ERROR, AJAX callback received an action that wasn\'t recognised (Expected add, update or delete; got ' + pvArgs.action + ')','ERROR');
     }
 }
 
@@ -304,8 +311,9 @@ function togglRowEditable_listener(){
     // In these cases, do nothing
     if($(event.target).prop('tagName') === 'TD') {
 
+        var lvLog = '';
         var lvFunctionName = 'togglRowEditable';
-        log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+        lvLog += log(gvScriptName_main,lvFunctionName,'Start','PROCS');
 
         var lvClickedTableCell = $(event.target);
         togglRowEditable(lvClickedTableCell,null);
@@ -319,8 +327,9 @@ function togglRowEditable_listener(){
  */
 function togglRowEditable(pvClickedTableCell,pvForceDirection){
 
+    var lvLog = '';
     var lvFunctionName = 'togglRowEditable (pvForceDirection == ' + pvForceDirection + ')';
-    log(gvScriptName + '.' + lvFunctionName + ': Start','PROCS');
+    lvLog += log(gvScriptName_main,lvFunctionName,'Start','PROCS');
 
     // We need to establish whether we're going editable or non-editable
     var lvDirection = 'EDITABLE';
@@ -340,7 +349,7 @@ function togglRowEditable(pvClickedTableCell,pvForceDirection){
             // And toggle any other required fields in the row
             // Ideally this would be only unpopulated (so we can make new columns required and force the user on edit to update them). (using this command: .filter(function(){return $(this).val() === "";}))
             // but
-            // I can't think of a better way that showing all of them to avoid form submission validation errors
+            // I can't think of a better way than showing all of them to avoid form submission validation errors
             // To do: I'm not hiding the spans in this command :(
             $(lvRow).find('[data-required="true"]').show(); // these are all the input/selects/textareas which are required fields
             $(lvRow).find('[data-required="true"]').closest('td').attr('data-editable',"true");
