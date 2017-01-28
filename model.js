@@ -298,7 +298,8 @@ module.exports = {
                                     homepage: pvEthicalBrand.get('homepage'),
                                     twitterHandle: pvEthicalBrand.get('twitterHandle'),
                                     brandSpiel: pvEthicalBrand.get('brandSpiel'),
-                                    baluFavourite: {key: pvArgs.inputs.baluFavourite, value: pvArgs.inputs.baluFavourite}};
+                                    baluFavourite: {key: pvArgs.inputs.baluFavourite, value: pvArgs.inputs.baluFavourite},
+                                    isArchived: pvEthicalBrand.get('isArchived')};
 
                 pvCallback(null,lvArgs);
             },
@@ -396,7 +397,8 @@ module.exports = {
                                     productURL: pvRecommendation.get('productURL'),
                                     brand: {key: pvRecommendation.get('ethicalBrand').objectId, value: pvRecommendation.get('brandName_sort')},
                                     searchCategory: lvSearchCategory,
-                                    image: '' // no point in returning this
+                                    image: '',  // no point in returning this
+                                    isArchived: pvRecommendation.get('isArchived')
                                 };
 
                 pvCallback(null,lvArgs);
