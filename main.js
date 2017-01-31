@@ -160,7 +160,7 @@ app.get('/switch-server', handler.switchServerGET);
 
 /* GET: Main Pages of Console */
 
-app.get('/website-search-config', handler.genericPageGET);
+app.get('/website-search-config', handler.websiteSearchConfigGET);
 app.get('/websites', handler.genericPageGET);
 app.get('/search-categories', handler.genericPageGET);
 app.get('/search-products', handler.genericPageGET);

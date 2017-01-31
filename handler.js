@@ -287,6 +287,41 @@ module.exports = {
         res.render('generic_flat_table.ejs',{databaseURI: gvDatabaseURI, parseServerURL: gvActiveParseServerURL, log: req.log});
     },
 
+    // Website Search Config is a grouped table, so we're sticking with the legacy code rather than working it into the generic structure above
+    websiteSearchConfigGET: function(req,res,next){
+
+        var lvLog = req.log;
+        var lvFunctionName = 'websiteSearchConfigGET';
+        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
+        // To be passed to each model function
+        var lvSessionToken = req.session.sessionToken;
+
+        var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
+        // To do, ideally we'd load the website data separatley and ajax it in
+        model.getDataFromCloudAsync({sessionToken: lvSessionToken,dataFunctionName: 'getCategoryWebsiteJoins'})
+        .then(function(pvArgs){
+            lvData.categoryWebsiteJoins = pvArgs.data;
+            lvData.log += pvArgs.log;
+            return model.getDataFromCloudAsync({sessionToken: lvSessionToken,dataFunctionName: 'getWebsites'});
+        })
+        .then(function(pvArgs){
+            lvData.websites = pvArgs.data;
+            lvData.testWebsiteURL = pvArgs.testWebsiteURL;
+            lvData.log += pvArgs.log;
+
+            var lvArgs = {pageElements: {}};
+            lvArgs.pageElements = {
+                databaseURI: lvData.databaseURI,
+                parseServerURL: lvData.parseServerURL,
+                categoryWebsiteJoins: lvData.categoryWebsiteJoins,
+                websites: lvData.websites,
+                testWebsiteURL: lvData.testWebsiteURL,
+                log: lvData.log
+            };
+            res.render('website-search-config.ejs',lvArgs.pageElements);
+        });
+    },
+
     /***********************
      * POST Route Handlers *
      ***********************/
