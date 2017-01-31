@@ -160,21 +160,24 @@ app.get('/switch-server', handler.switchServerGET);
 
 /* GET: Main Pages of Console */
 
-app.get('/website-search-config', handler.websiteSearchConfigGET);
-app.get('/websites', handler.websitesGET);
-app.get('/search-categories', handler.searchCategoriesGET);
-app.get('/search-products', handler.searchProductsGET);
-app.get('/product-groups', handler.productGroupsGET);
-app.get('/brands', handler.brandsGET);
-app.get('/recommendations', handler.recommendationsGET);
-app.get('/activity-dashboard', handler.activityDashboardGET);
-app.get('/user-report', handler.userReportGET);
-app.get('/data-quality', handler.dataQualityGET);
-app.get('/job-log', handler.jobLogGET);
-app.get('/bts-dashboard', handler.btsDashboardGET);
+app.get('/website-search-config', handler.genericPageGET);
+app.get('/websites', handler.genericPageGET);
+app.get('/search-categories', handler.genericPageGET);
+app.get('/search-products', handler.genericPageGET);
+app.get('/product-groups', handler.genericPageGET);
+app.get('/brands', handler.genericPageGET);
+app.get('/recommendations', handler.genericPageGET);
+app.get('/activity-dashboard', handler.genericPageGET);
+app.get('/user-report', handler.genericPageGET);
+app.get('/data-quality', handler.genericPageGET);
+app.get('/job-log', handler.genericPageGET);
+app.get('/bts-dashboard', handler.genericPageGET);
 
 // No path specified
 app.get('/', handler.rootGET);
+
+/* POST: Data retrieval end points */
+app.post('/getData', handler.getDataPOST);
 
 /* POST: Main form submissions of Console */
 
