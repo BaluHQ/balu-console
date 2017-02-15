@@ -151,14 +151,14 @@ function setGlobalVariables(){
             gvPageTitle = 'Recommendations';
             gvEndPoint = '/submit-recommendations';
             break;
+        case 'user-report':
+            gvDataFunctionName = 'getUsers';
+            gvPageTitle = 'User Report';
+            gvEndPoint = '';
+            break;
         case 'activity-dashboard':
             gvDataFunctionName = ''; // to do
             gvPageTitle = 'Activity Dashboard';
-            gvEndPoint = '';
-            break;
-        case 'user-report':
-            gvDataFunctionName = 'getUsers'; // to do
-            gvPageTitle = 'User Report';
             gvEndPoint = '';
             break;
         case 'data-quality':
@@ -451,10 +451,13 @@ function renderHeaderRow(pvArgs){
             lvHtml += '  <th width="50">Archived</th>';
             break;
         case 'activity-dashboard':
-            // to do
             break;
         case 'user-report':
-            // to do
+            lvHtml += '  <th width="200">Created At</th>';
+            lvHtml += '  <th width="200">Email</th>';
+            lvHtml += '  <th width="200">Email verified</th>';
+            lvHtml += '  <th width="200">Joyride Status</th>';
+            lvHtml += '  <th width="200">Who Is</th>';
             break;
         case 'data-quality':
             // to do
@@ -484,7 +487,8 @@ function renderAddNewRow(pvArgs){
 
     switch (gvPageName) {
         case 'website-search-config':
-
+            // This is never called, the website-search-config page uses the old (ejs-based) rendering
+            // because it doesn't follow the basic structure of the generic page
             break;
         case 'websites':
             lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'websiteURL', title: 'Website URL (no http)', placeholder: 'Website URL'});
@@ -537,6 +541,14 @@ function renderAddNewRow(pvArgs){
             lvHtml += renderFileUpload({addOrUpdate: lvActionType, fieldName: 'image', title: 'Thumbnail'});
             lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'isArchived', defaultValue: 'FALSE', title: 'Is archived'});
             break;
+        case 'user-report':
+            lvActionType = 'NON-EDITABLE-FORM-add';
+            lvHtml += renderTextField({addOrUpdate: lvActionType});
+            lvHtml += renderTextField({addOrUpdate: lvActionType});
+            lvHtml += renderTextField({addOrUpdate: lvActionType});
+            lvHtml += renderTextField({addOrUpdate: lvActionType});
+            lvHtml += renderTextField({addOrUpdate: lvActionType});
+            break;
         default:
             // Nothing
     }
@@ -563,7 +575,8 @@ function renderDataRow(pvArgs){
 
     switch (gvPageName) {
         case 'website-search-config':
-
+            // This is never called, the website-search-config page uses the old (ejs-based) rendering
+            // because it doesn't follow the basic structure of the generic page
             break;
         case 'websites':
             lvRowId = pvArgs.dataRow.websiteId;
@@ -625,6 +638,12 @@ function renderDataRow(pvArgs){
         case 'activity-dashboard':
             break;
         case 'user-report':
+            lvActionType = 'NON-EDITABLE-FORM-update';
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'createdAt', displayValue: pvArgs.dataRow.createdAt});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'email', displayValue: pvArgs.dataRow.email});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'emailVerified', displayValue: pvArgs.dataRow.emailVerified});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'joyrideStatus', displayValue: pvArgs.dataRow.joyrideStatus});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'whoIs', displayValue: pvArgs.dataRow.whoIs});
             break;
         case 'data-quality':
             break;
@@ -650,6 +669,8 @@ function renderCheckbox(pvArgs){
         return '  <td><input data-required="false" data-action="delete" id="' + pvArgs.rowId + '" type="checkbox" data-group="' + pvArgs.rowId + '" name="checkbox" value="' + pvArgs.rowId + '" class="insideTable"></td>';
     } else if(pvArgs.addOrUpdate === 'filter') {
         return '<td style="width: ' + pvArgs.width + '"></td>';
+    } else if(pvArgs.addOrUpdate === 'NON-EDITABLE-FORM-update') {
+        return '<td style="width: ' + pvArgs.width + '"></td>';
     }
 }
 
@@ -668,6 +689,13 @@ function renderTextField(pvArgs){
         lvHtml += '  </td>';
     } else if(pvArgs.addOrUpdate === 'filter') {
         lvHtml += '<td style="width: ' + pvArgs.width + '"></td>';
+    } else if(pvArgs.addOrUpdate === 'NON-EDITABLE-FORM-add') {
+        lvHtml += '<td style="width: ' + pvArgs.width + '">';
+        lvHtml += '</td>';
+    } else if(pvArgs.addOrUpdate === 'NON-EDITABLE-FORM-update') {
+        lvHtml += '<td style="width: ' + pvArgs.width + '">';
+        lvHtml += '  <span name="' + pvArgs.fieldName + '">' + pvArgs.displayValue + '</span>';
+        lvHtml += '</td>';
     }
 
     return lvHtml;
@@ -977,7 +1005,13 @@ function renderFileUpload(pvArgs){
 }
 
 function renderAddButton(pvArgs){
-    return '  <td><input type="submit" value="Add" data-endpoint="' + pvArgs.endPoint + '" data-table-id="table_data" data-group="new" data-action="add" class="button tiny insideTable"></td>';
+    var lvHtml = '';
+    if(pvArgs.addOrUpdate === 'NON-EDITABLE-FORM-add'){
+        lvHtml += '<td></td>';
+    } else {
+        lvHtml += '  <td><input type="submit" value="Add" data-endpoint="' + pvArgs.endPoint + '" data-table-id="table_data" data-group="new" data-action="add" class="button tiny insideTable"></td>';
+    }
+    return lvHtml;
 }
 
 function renderUpdateButton(pvArgs){
