@@ -157,7 +157,7 @@ function setGlobalVariables(){
             gvEndPoint = '';
             break;
         case 'activity-dashboard':
-            gvDataFunctionName = ''; // to do
+            gvDataFunctionName = 'getActivityDashboardData'; // to do
             gvPageTitle = 'Activity Dashboard';
             gvEndPoint = '';
             break;
