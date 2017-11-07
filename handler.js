@@ -287,7 +287,8 @@ module.exports = {
         res.render('generic_flat_table.ejs',{databaseURI: gvDatabaseURI, parseServerURL: gvActiveParseServerURL, log: req.log});
     },
 
-    // Website Search Config is a grouped table, so we're sticking with the legacy code rather than working it into the generic structure above
+    // Website Search Config is a grouped table, so we're sticking with the legacy code
+    // rather than working it into the generic structure above
     websiteSearchConfigGET: function(req,res,next){
 
         var lvLog = req.log;

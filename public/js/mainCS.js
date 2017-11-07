@@ -318,7 +318,8 @@ function renderFilterRow(pvArgs){
 
     switch (gvPageName) {
         case 'website-search-config':
-            // No filter
+            // This is never called, the website-search-config page uses the old (ejs-based) rendering
+            // because it doesn't follow the basic structure of the generic page
             break;
         case 'websites':
             lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'websiteURL', title: 'Website URL', placeholder: 'Website URL', width: '200px'});
@@ -397,7 +398,8 @@ function renderHeaderRow(pvArgs){
 
     switch (gvPageName) {
         case 'website-search-config':
-
+            // This is never called, the website-search-config page uses the old (ejs-based) rendering
+            // because it doesn't follow the basic structure of the generic page
             break;
         case 'websites':
             lvHtml += '  <th width="200">Website URL</th>';
