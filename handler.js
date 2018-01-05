@@ -22,7 +22,6 @@ var promise = require('bluebird');
  */
 var log = require('./log.js');
 var model = promise.promisifyAll(require('./model.js'));
-var ui = promise.promisifyAll(require('./ui.js'));
 
 /*
  * Global variables
@@ -52,7 +51,6 @@ var gvAppId = 'mmhyD9DKGeOanjpRLHCR3bX8snue22oOd3NGfWKu';
     Parse.serverURL = gvActiveParseServerURL;
 
 })();
-
 
 module.exports = {
 
@@ -91,12 +89,12 @@ module.exports = {
     getDatabaseURI: function(req,res,next){
 
         var lvFunctionName = 'getDatabaseURI';
-        req.log += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
         Parse.Cloud.run('getDatabaseURI',{},{
             sessionToken: req.session,
             success: function(pvResponse){
                 gvDatabaseURI = pvResponse.databaseURI;
+                req.log += log.log(gvScriptName,lvFunctionName,'URI === ' + gvDatabaseURI,' INFO');
                 next();
             }
         });
@@ -141,8 +139,8 @@ module.exports = {
             var lvBitmap = fs.readFileSync(pvFile.path);
 
             // First attempt: move the file into our upload directory and pick it up again (to save to mLab) later
-            //fs.rename(pvFile.path, path.join(lvForm.uploadDir, pvFile.name)); // move the file to our uploads folder
-            //lvArgs.inputs[pvName] = path.join(lvForm.uploadDir, pvFile.name); // And save the path into our inputs, to be processed by our app backend later
+            // fs.rename(pvFile.path, path.join(lvForm.uploadDir, pvFile.name)); // move the file to our uploads folder
+            // lvArgs.inputs[pvName] = path.join(lvForm.uploadDir, pvFile.name); // And save the path into our inputs, to be processed by our app backend later
 
             // Second attempt: get the base64 rep of the file and pass it straight through the JS to be saved to mLab in model.js
             var lvBase64 = new Buffer(lvBitmap).toString('base64');
@@ -159,6 +157,28 @@ module.exports = {
 
         next();
 
+    },
+
+    /**************************
+     * AJAX Handlers: getData *
+     **************************/
+
+    getDataPOST: function(req,res,next){
+
+        var lvDataFunctionName = req.body.dataFunctionName;
+
+        var lvLog = req.body.log;
+        var lvFunctionName = 'getDataPOST[' + lvDataFunctionName + ']';
+        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
+
+        var lvArgs = {dataFunctionName: lvDataFunctionName,
+                      log: lvLog,
+                      sessionToken: req.session.sessionToken};
+
+        model.getDataFromCloudAsync(lvArgs)
+        .then(function(pvData){
+            res.send(pvData);
+        });
     },
 
     /************************************************************
@@ -263,7 +283,12 @@ module.exports = {
     /**********************************************
      * HTTP Route Handlers: main pages of console *
      **********************************************/
+    genericPageGET: function(req,res,next){
+        res.render('generic_flat_table.ejs',{databaseURI: gvDatabaseURI, parseServerURL: gvActiveParseServerURL, log: req.log});
+    },
 
+    // Website Search Config is a grouped table, so we're sticking with the legacy code
+    // rather than working it into the generic structure above
     websiteSearchConfigGET: function(req,res,next){
 
         var lvLog = req.log;
@@ -274,344 +299,28 @@ module.exports = {
 
         var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
         // To do, ideally we'd load the website data separatley and ajax it in
-        model.getCategoryWebsiteJoinsAsync({sessionToken: lvSessionToken})
+        model.getDataFromCloudAsync({sessionToken: lvSessionToken,dataFunctionName: 'getCategoryWebsiteJoins'})
         .then(function(pvArgs){
             lvData.categoryWebsiteJoins = pvArgs.data;
             lvData.log += pvArgs.log;
-            return model.getWebsitesAsync({sessionToken: lvSessionToken});
+            return model.getDataFromCloudAsync({sessionToken: lvSessionToken,dataFunctionName: 'getWebsites'});
         })
         .then(function(pvArgs){
             lvData.websites = pvArgs.data;
             lvData.testWebsiteURL = pvArgs.testWebsiteURL;
             lvData.log += pvArgs.log;
-            return ui.constructWebsiteSearchConfigAsync(lvData);
-        })
-        .then(function(pvArgs){
-            res.render('website-search-config.ejs',pvArgs.pageElements);
+
+            var lvArgs = {pageElements: {}};
+            lvArgs.pageElements = {
+                databaseURI: lvData.databaseURI,
+                parseServerURL: lvData.parseServerURL,
+                categoryWebsiteJoins: lvData.categoryWebsiteJoins,
+                websites: lvData.websites,
+                testWebsiteURL: lvData.testWebsiteURL,
+                log: lvData.log
+            };
+            res.render('website-search-config.ejs',lvArgs.pageElements);
         });
-    },
-
-    websitesGET: function(req,res,next){
-
-        var lvLog = req.log;
-        var lvFunctionName = 'websitesGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
-        // To be passed to each model function
-        var lvSessionToken = req.session.sessionToken;
-
-        var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
-
-        model.getWebsitesAsync({sessionToken: lvSessionToken})
-        .then(function(pvArgs){
-            lvData.websites = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return ui.constructWebsitesAsync(lvData);
-        })
-        .then(function(pvArgs){
-            res.render('websites.ejs',pvArgs.pageElements);
-        });
-    },
-
-    searchCategoriesGET: function(req,res,next){
-
-        var lvLog = req.log;
-        var lvFunctionName = 'searchCategoriesGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
-        // To be passed to each model function
-        var lvSessionToken = req.session.sessionToken;
-
-        var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
-
-        model.getSearchCategoriesAsync({sessionToken: lvSessionToken})
-        .then(function(pvArgs){
-            lvData.searchCategories = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return ui.constructSearchCategoriesAsync(lvData);
-        })
-        .then(function(pvArgs){
-            res.render('search-categories.ejs',pvArgs.pageElements);
-        });
-    },
-
-    searchProductsGET: function(req,res,next){
-
-        var lvLog = req.log;
-        var lvFunctionName = 'searchProductsGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
-        // To be passed to each model function
-        var lvSessionToken = req.session.sessionToken;
-
-        var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
-
-        // To do, ideally we'd load the dropdown data separatley and ajax it in
-        model.getSearchProductsAsync({sessionToken: lvSessionToken})
-        .then(function(pvArgs){
-            lvData.searchProducts = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getSearchCategoriesAsync(lvData);
-        })
-        .then(function(pvArgs){
-            lvData.searchCategories = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getProductGroupsAsync(lvData);
-        })
-        .then(function(pvArgs){
-            lvData.productGroups = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return ui.constructSearchProductsAsync(lvData);
-        })
-        .then(function(pvArgs){
-            res.render('search-products.ejs',pvArgs.pageElements);
-        });
-    },
-
-    productGroupsGET: function(req,res,next){
-
-        var lvLog = req.log;
-        var lvFunctionName = 'productGroupsGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
-        // To be passed to each model function
-        var lvSessionToken = req.session.sessionToken;
-
-        var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
-
-        model.getProductGroupsAsync({sessionToken: lvSessionToken})
-        .then(function(pvArgs){
-            lvData.productGroups = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return ui.constructProductGroupsAsync(lvData);
-        })
-        .then(function(pvArgs){
-            res.render('product-groups.ejs',pvArgs.pageElements);
-        });
-    },
-
-    brandsGET: function(req,res,next){
-
-        var lvLog = req.log;
-        var lvFunctionName = 'brandsGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
-        // To be passed to each model function
-        var lvSessionToken = req.session.sessionToken;
-
-        var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
-
-        model.getEthicalBrandsAsync({sessionToken: lvSessionToken,
-                                     archived:     'BOTH'})
-        .then(function(pvArgs){
-            lvData.brands = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return ui.constructBrandsAsync(lvData);
-        })
-        .then(function(pvArgs){
-            res.render('brands.ejs',pvArgs.pageElements);
-        });
-    },
-
-    recommendationsGET: function(req,res,next){
-
-        var lvLog = req.log;
-        var lvFunctionName = 'recommendationsGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
-        // To be passed to each model function
-        var lvSessionToken = req.session.sessionToken;
-
-        var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
-
-        // To do, ideally we'd load the dropdown data separatley and ajax it in
-        model.getRecommendationsAsync({sessionToken: lvSessionToken, 
-                                       archived:     'BOTH'})
-        .then(function(pvArgs){
-            lvData.recommendations = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getProductGroupsAsync(lvData);
-        })
-        .then(function(pvArgs){
-            lvData.productGroups = pvArgs.data;
-            lvData.log += pvArgs.log;
-            lvData.archived = 'BOTH';
-            return model.getEthicalBrandsAsync(lvData);
-        })
-        .then(function(pvArgs){
-            lvData.brands = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getSearchCategoriesAsync(lvData);
-        })
-        .then(function(pvArgs){
-            lvData.searchCategories = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return ui.constructRecommendationsAsync(lvData);
-        })
-        .then(function(pvArgs){
-            res.render('recommendations.ejs',pvArgs.pageElements);
-        });
-    },
-
-    activityDashboardGET: function(req,res,next){
-
-        var lvLog = req.log;
-        var lvFunctionName = 'activityDashboardGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
-        // To be passed to each model function
-        var lvSessionToken = req.session.sessionToken;
-
-        // Set up an object to store all the data elements in, as we work our way through the numers DB queries
-        var lvData = {parseServerURL: gvActiveParseServerURL,
-                      databaseURI: gvDatabaseURI,
-                      summaryData: {},
-                      log: lvLog}; // To do: ideally each query will push to the page as soon as it's finished, using AJAX, but I don't know how to do this yet!
-
-        model.getUsersAsync({sessionToken: lvSessionToken,
-                             user_systemUsers: 'EXCLUDE'})
-        .then(function(pvArgs){
-            lvData.summaryData.numberOfUsers = pvArgs.rowCount;
-            lvData.users = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getUserLogs_RecClickThroughAsync({sessionToken: lvSessionToken});
-        })
-        .then(function(pvArgs){
-            lvData.summaryData.numberOfuserLogRecClickThroughs = pvArgs.rowCount;
-            lvData.userLogRecClickThroughs = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getUserLogs_RecommendationsAsync({sessionToken: lvSessionToken});
-        })
-        .then(function(pvArgs){
-            lvData.summaryData.numberOfUserLogRecommendations = pvArgs.rowCount;
-            lvData.userLogRecommendations = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getUserLogs_ManualSearchAsync({sessionToken: lvSessionToken, userLogManualSearch_noResults: 'BOTH'});
-        })
-        .then(function(pvArgs){
-            lvData.summaryData.numberOfUserLogManualSearches = pvArgs.rowCount;
-            lvData.userLogManualSearches = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getUserSubmittedRecsAsync({sessionToken: lvSessionToken, userSubmittedRec_processed: 'EXCLUDE'});
-        })
-        .then(function(pvArgs){
-            lvData.summaryData.numberOfUserSubmittedRecs_notProcessed = pvArgs.rowCount;
-            lvData.userSubmittedRecs_notProcessed = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getUserSubmittedWebsiteRecsAsync({sessionToken: lvSessionToken, userSubmittedWebsiteRec_processed: 'EXCLUDE'});
-        })
-        .then(function(pvArgs){
-            lvData.summaryData.numberofUserSubmittedWebsites_notProcessed = pvArgs.rowCount;
-            lvData.userSubmittedWebsiteRecs_notProcessed = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getUserLogs_TrackedTabErrorAsync({sessionToken: lvSessionToken, userLogTrackedTabError_processed: 'EXCLUDE'});
-        })
-        .then(function(pvArgs){
-            lvData.summaryData.numberOfuserLogTrackedTabErrors_notProcessed = pvArgs.rowCount;
-            lvData.userLogTrackedTabErrors_notProcessed = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getUserLogs_ManualSearchAsync({sessionToken: lvSessionToken, userLogManualSearch_noResults: 'ONLY'});
-        })
-        .then(function(pvArgs){
-            lvData.summaryData.numberOfUserLogManualSearches_noResult = pvArgs.rowCount;
-            lvData.userLogManualSearches_noResult = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getUserLogsAsync({sessionToken: lvSessionToken, userLog_eventNames: ['OPTIONS: BALU_TURNED_ON','OPTIONS: BALU_TURNED_OFF']});
-        })
-        .then(function(pvArgs){
-            lvData.summaryData.numberOfUserLogs_onOff = pvArgs.rowCount;
-            lvData.userLogs_onOff = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getUserLogsAsync({sessionToken: lvSessionToken, userLog_eventNames: ['OPTIONS: BALU_SET_TO_SHOW','OPTIONS: BALU_SET_TO_HIDE']});
-        })
-        .then(function(pvArgs){
-            lvData.summaryData.numberOfUserLogs_showHide = pvArgs.rowCount;
-            lvData.userLogs_showHide = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getUserLogsAsync({sessionToken: lvSessionToken, userLog_eventNames: ['HIDE_SIDEBAR_REFRESH','HIDE_SIDEBAR_RESTART']});
-        })
-        .then(function(pvArgs){
-            lvData.summaryData.numberOfUserLogs_hideUntilRefreshRestart = pvArgs.rowCount;
-            lvData.userLogs_hideUntilRefreshRestart = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return model.getUserLogs_blockBrandAsync({sessionToken: lvSessionToken});
-        })
-        .then(function(pvArgs){
-            lvData.summaryData.numberOfUserLogBlockedBrands = pvArgs.rowCount;
-            lvData.userLogBlockedBrands = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return ui.constructActivityDashboardAsync(lvData);
-        })
-        .then(function(pvArgs){
-            res.render('activity-dashboard.ejs',pvArgs.pageElements);
-        });
-    },
-
-    userReportGET: function(req,res,next){
-
-        var lvLog = req.log;
-        var lvFunctionName = 'userReportGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
-        // To be passed to each model function
-        var lvSessionToken = req.session.sessionToken;
-
-        var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
-
-        model.getUsersAsync({sessionToken: lvSessionToken,
-                             user_systemUsers: 'EXCLUDE'})
-        .then(function(pvArgs){
-            lvData.users = pvArgs.data;
-            lvData.log += pvArgs.log;
-            return ui.constructUserReportAsync(lvData);
-        })
-        .then(function(pvArgs){
-            res.render('user-report.ejs',pvArgs.pageElements);
-        }).catch(function(pvError){
-            // to do: need to handle errors on the front-end
-        });
-    },
-
-    dataQualityGET: function(req,res,next){
-
-        var lvLog = req.log;
-        var lvFunctionName = 'dataQualityGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
-        // To be passed to each model function
-        var lvSessionToken = req.session.sessionToken;
-
-        var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
-
-        res.render('data-quality.ejs',lvData);
-    },
-
-    jobLogGET: function(req,res,next){
-
-        var lvLog = req.log;
-        var lvFunctionName = 'jobLogGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
-        // To be passed to each model function
-        var lvSessionToken = req.session.sessionToken;
-
-        var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
-
-        res.render('job-log.ejs',lvData);
-    },
-
-    btsDashboardGET: function(req,res,next){
-
-        var lvLog = req.log;
-        var lvFunctionName = 'btsDashboardGET';
-        lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-
-        // To be passed to each model function
-        var lvSessionToken = req.session.sessionToken;
-
-        var lvData = {parseServerURL: gvActiveParseServerURL, databaseURI: gvDatabaseURI, log: lvLog};
-
-        res.render('bts-dashboard.ejs',lvData);
     },
 
     /***********************

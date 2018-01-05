@@ -52,20 +52,7 @@ var gvAppId = 'mmhyD9DKGeOanjpRLHCR3bX8snue22oOd3NGfWKu';
 
 })();
 
-function getDataFromCloud(pvFunctionName,pvArgs,pvCallback){
-    Parse.Cloud.run(pvFunctionName,pvArgs,{
-        sessionToken: pvArgs.sessionToken,
-        success: function(pvResponse){
-            log.log(pvResponse.log);
-            pvCallback(null,pvResponse);
-        },
-        error: function(pvError){
-            var lvError = JSON.parse(pvError.message);
-            log.log(lvError.log); // print the error from the balu-parse-server to the console
-            pvCallback(lvError.message,pvArgs); // send the user-friendly message back to the front end
-        }
-    });
-}
+
 
 module.exports = {
 
@@ -96,162 +83,30 @@ module.exports = {
      * RETRIEVING DATA FROM DATABASE *
      *********************************/
 
-    // Don't collect the logs for these functions. Output them to console,
-    // but they don't need to be handed back to the front-end - they're just wrappers
-    // To do: If this changes, there is some mess that needs sorting out around
-    // the way the log objects are created and passed through from fron to back, and back
-    // from back to front. For example, you quickly end up with duplicate writes when
-    // you come back through the middle level in the chain.
+     getDataFromCloud: function(pvArgs,pvCallback){
 
-    getUsers: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUsers';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
+         var lvLog = pvArgs.log || '';
+         var lvFunctionName = 'getDataFromCloud[' + pvArgs.dataFunctionName + ']';
+         lvLog += log.log(gvScriptName,lvFunctionName,'Start','PROCS');
 
-    getCategoryWebsiteJoins: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getCategoryWebsiteJoins';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getEthicalBrands: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getEthicalBrands';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getJobLogs: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getJobLogs';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getLog_Events: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getLog_Events';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getProductGroups: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getProductGroups';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getRecommendations: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getRecommendations';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getRecommendationClickCounts: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getRecommendationClickCounts';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getSearchCategories: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getSearchCategories';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getSearchProducts: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getSearchProducts';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getStats_RecClickThroughs: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getStats_RecClickThroughs';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getStats_Recommendations: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getStats_Recommendations';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserLogs: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserLogs';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserLogs_blockBrand: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserLogs_blockBrand';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserLogs_Joyride: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserLogs_Joyride';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserLogs_ManualSearch: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserLogs_ManualSearch';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserLogs_ManualSearch_Results: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserLogs_ManualSearch_Results';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserLogs_RecClickThrough: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserLogs_RecClickThrough';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserLogs_Recommendations: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserLogs_Recommendations';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserLogs_RecRatings: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserLogs_RecRatings';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserLogs_Search: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserLogs_Search';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserLogs_TrackedTabError: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserLogs_TrackedTabError';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserSubmittedRecs: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserSubmittedRecs';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getUserSubmittedWebsiteRecs: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getUserSubmittedWebsiteRecs';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
-
-    getWebsites: function(pvArgs, pvCallback){
-        var lvFunctionName = 'getWebsites';
-        log.log(gvScriptName,lvFunctionName,'Start','PROCS');
-        getDataFromCloud(lvFunctionName,pvArgs,pvCallback);
-    },
+         Parse.Cloud.run(pvArgs.dataFunctionName,pvArgs,{
+             sessionToken: pvArgs.sessionToken,
+             success: function(pvResponse){
+                 pvResponse.log += log.log(gvScriptName,lvFunctionName,'balu-console has received data back from balu-parse-server','DEBUG');
+                 var lvData = {
+                    log: pvResponse.log,
+                    data: pvResponse.data,
+                    dataFunctionName: pvArgs.dataFunctionName
+                 };
+                 pvCallback(null,lvData);
+             },
+             error: function(pvError){
+                 var lvError = JSON.parse(pvError.message);
+                 log.log(lvError.log); // print the error from the balu-parse-server to the console
+                 pvCallback(lvError.message,pvArgs); // send the user-friendly message back to the front end
+             }
+         });
+     },
 
     /********************************
      * INSERTING DATA INTO DATABASE *
@@ -278,6 +133,12 @@ module.exports = {
         } else if (pvArgs.inputs.baluFavourite === 'FALSE') {
             lvBaluFavourite = false;
         }
+        var lvIsArchived = null;
+        if(pvArgs.inputs.isArchived === 'TRUE') {
+            lvIsArchived = true;
+        } else if (pvArgs.inputs.isArchived === 'FALSE') {
+            lvIsArchived = false;
+        }
         var EthicalBrand = Parse.Object.extend("EthicalBrand");
         var ethicalBrand = new EthicalBrand();
         ethicalBrand.set('brandName',pvArgs.inputs.brandName);
@@ -285,7 +146,7 @@ module.exports = {
         ethicalBrand.set('twitterHandle',pvArgs.inputs.twitterHandle);
         ethicalBrand.set('brandSpiel',pvArgs.inputs.brandSpiel);
         ethicalBrand.set('baluFavourite',lvBaluFavourite);
-        ethicalBrand.set('isArchived',false);
+        ethicalBrand.set('isArchived',lvIsArchived);
         ethicalBrand.save(null, {
             sessionToken: pvArgs.sessionToken,
             success: function(pvEthicalBrand){
@@ -298,8 +159,8 @@ module.exports = {
                                     homepage: pvEthicalBrand.get('homepage'),
                                     twitterHandle: pvEthicalBrand.get('twitterHandle'),
                                     brandSpiel: pvEthicalBrand.get('brandSpiel'),
-                                    baluFavourite: {key: pvArgs.inputs.baluFavourite, value: pvArgs.inputs.baluFavourite},
-                                    isArchived: pvEthicalBrand.get('isArchived')};
+                                    baluFavourite: pvArgs.inputs.baluFavourite,
+                                    isArchived: pvArgs.inputs.isArchived};
 
                 pvCallback(null,lvArgs);
             },
@@ -338,7 +199,7 @@ module.exports = {
                 }
                 lvArgs.newRecord = {checkbox: pvProductGroup.id,
                                     productGroupName: pvProductGroup.get('productGroupName'),
-                                    christmasBanner: {key: pvArgs.inputs.christmasBanner, value: pvArgs.inputs.christmasBanner}};
+                                    christmasBanner: pvArgs.inputs.christmasBanner};
 
                 pvCallback(null,lvArgs);
 
@@ -369,36 +230,35 @@ module.exports = {
         if(pvArgs.savedFile !== null) {
             recommendation.set('image',pvArgs.savedFile);
         }
-        recommendation.set('isArchived',false);
+        var lvIsArchived = null;
+        if(pvArgs.inputs.isArchived === 'TRUE') {
+            lvIsArchived = true;
+        } else if (pvArgs.inputs.isArchived === 'FALSE') {
+            lvIsArchived = false;
+        }
+        recommendation.set('isArchived',lvIsArchived);
         recommendation.save(null,{
             sessionToken: pvArgs.sessionToken,
             success: function(pvRecommendation){
 
                 var lvArgs = {};
-                // The new record object must contain one property for each input value passed in, where the checkbox input value is the id
-
-                var lvProductGroup = {key: null,
-                                      value: null};
-                var lvSearchCategory = {key: null,
-                                        value: null};
-                if(typeof pvRecommendation.get('productGroups') !== 'undefined') {
-                    lvProductGroup = {key: pvRecommendation.get('productGroups').objectId,
-                                      value: pvRecommendation.get('productGroup_sort')};
+                var lvProductGroupId = null;
+                var lvSearchCategoryId = null;
+                if(pvRecommendation.get('productGroups')){
+                    lvProductGroupId = pvRecommendation.get('productGroups').objectId;
                 }
-                if(typeof pvRecommendation.get('searchCategory') !== 'undefined') {
-                    lvSearchCategory = {key: pvRecommendation.get('searchCategory').objectId,
-                                        value: pvRecommendation.get('searchCategory_sort')};
+                if(pvRecommendation.get('searchCategory')){
+                    lvSearchCategoryId = pvRecommendation.get('searchCategory').objectId;
                 }
-
                 lvArgs.newRecord = {checkbox: pvRecommendation.id,
-                                    productGroup: lvProductGroup,
+                                    productGroup: lvProductGroupId,
                                     productName: pvRecommendation.get('productName'),
                                     pageConfirmationSearch: pvRecommendation.get('pageConfirmationSearch'),
                                     productURL: pvRecommendation.get('productURL'),
-                                    brand: {key: pvRecommendation.get('ethicalBrand').objectId, value: pvRecommendation.get('brandName_sort')},
-                                    searchCategory: lvSearchCategory,
+                                    brand: pvRecommendation.get('ethicalBrand').objectId,
+                                    searchCategory: lvSearchCategoryId,
                                     image: '',  // no point in returning this
-                                    isArchived: pvRecommendation.get('isArchived')
+                                    isArchived: pvArgs.inputs.isArchived
                                 };
 
                 pvCallback(null,lvArgs);
@@ -492,8 +352,8 @@ module.exports = {
 
                 // The new record object must contain one property for each input value passed in, where the checkbox input value is the id
                 lvArgs.newRecord = {checkbox: pvSearchProduct.id,
-                                    searchCategory: {key: pvSearchProduct.get('searchCategories').objectId, value: pvSearchProduct.get('searchCategory_sort')},
-                                    productGroup: {key: pvSearchProduct.get('productGroups').objectId, value: pvSearchProduct.get('productGroup_sort')},
+                                    searchCategory: pvSearchProduct.get('searchCategories').objectId,
+                                    productGroup: pvSearchProduct.get('productGroups').objectId,
                                     productName: pvSearchProduct.get('productName'),
                                     brand: pvSearchProduct.get('brand'),
                                     andOr: pvSearchProduct.get('andOr'),
@@ -536,7 +396,7 @@ module.exports = {
                 // The new record object must contain one property for each input value passed in, where the checkbox input value is the id
                 lvArgs.newRecord = {checkbox: pvWebsite.id,
                                     websiteURL: pvWebsite.get('websiteURL'),
-                                    isWebsiteOnOrOff: {key: pvWebsite.get('isWebsiteOnOrOff'), value: pvWebsite.get('isWebsiteOnOrOff')}};
+                                    isWebsiteOnOrOff: pvWebsite.get('isWebsiteOnOrOff')};
 
                 pvCallback(null,lvArgs);
             },
@@ -575,10 +435,10 @@ module.exports = {
                     success: function(pvCategoryWebsiteJoin){
                         var lvArgs = pvArgs;
                         lvArgs.updatedRecord = {checkbox: pvCategoryWebsiteJoin.id,
-                                                searchCategory: {key: pvCategoryWebsiteJoin.get('searchCategory').objectId, value: pvCategoryWebsiteJoin.get('categoryName_sort')},
-                                                website: {key: pvCategoryWebsiteJoin.get('website').objectId, value: pvCategoryWebsiteJoin.get('websiteURL_sort')},
+                                                searchCategory: pvCategoryWebsiteJoin.get('searchCategory').objectId,
+                                                website: pvCategoryWebsiteJoin.get('website').objectId,
                                                 activeDepartments: pvCategoryWebsiteJoin.get('departments'),
-                                                isWebsiteLevelRec: {key: pvArgs.inputs.isWebsiteLevelRec, value: pvArgs.inputs.isWebsiteLevelRec}};
+                                                isWebsiteLevelRec: pvArgs.inputs.isWebsiteLevelRec};
                         pvCallback(null,lvArgs);
                     },
                     error: log.parseErrorSave
@@ -606,11 +466,18 @@ module.exports = {
                 } else if (pvArgs.inputs.baluFavourite === 'FALSE') {
                     lvBaluFavourite = false;
                 }
+                var lvIsArchived = null;
+                if(pvArgs.inputs.isArchived === 'TRUE') {
+                    lvIsArchived = true;
+                } else if (pvArgs.inputs.isArchived === 'FALSE') {
+                    lvIsArchived = false;
+                }
                 ethicalBrand.set('brandName',pvArgs.inputs.brandName);
                 ethicalBrand.set('homepage',pvArgs.inputs.homepage);
                 ethicalBrand.set('twitterHandle',pvArgs.inputs.twitterHandle);
                 ethicalBrand.set('brandSpiel',pvArgs.inputs.brandSpiel);
                 ethicalBrand.set('baluFavourite',lvBaluFavourite);
+                ethicalBrand.set('isArchived',lvIsArchived);
                 ethicalBrand.save(null,{
                     sessionToken: pvArgs.sessionToken,
                     success: function(pvEthicalBrand){
@@ -624,7 +491,8 @@ module.exports = {
                                                 homepage: pvEthicalBrand.get('homepage'),
                                                 twitterHandle: pvEthicalBrand.get('twitterHandle'),
                                                 brandSpiel: pvEthicalBrand.get('brandSpiel'),
-                                                baluFavourite: {key: pvArgs.inputs.baluFavourite, value: pvArgs.inputs.baluFavourite}};
+                                                baluFavourite: pvArgs.inputs.baluFavourite,
+                                                isArchived: pvArgs.inputs.isArchived};
                         pvCallback(null,lvArgs);
                     },
                     error: log.parseErrorSave
@@ -665,7 +533,7 @@ module.exports = {
                         }
                         lvArgs.updatedRecord = {checkbox: pvProductGroup.id,
                                                 productGroupName: pvProductGroup.get('productGroupName'),
-                                                christmasBanner: {key: pvArgs.inputs.christmasBanner, value: pvArgs.inputs.christmasBanner}};
+                                                christmasBanner: pvArgs.inputs.christmasBanner};
                         pvCallback(null,lvArgs);
                     },
                     error: log.parseErrorSave
@@ -679,7 +547,6 @@ module.exports = {
 
         var lvFunctionName = 'updateRecommendation';
         log.log(gvScriptName,lvFunctionName,'Start', 'PROCS');
-        log.log(gvScriptName,lvFunctionName,'pvArgs => ' + JSON.stringify(pvArgs),'DEBUG');
 
         var Recommendation = Parse.Object.extend("Recommendation");
         var recommendationQuery = new Parse.Query(Recommendation);
@@ -688,17 +555,23 @@ module.exports = {
             sessionToken: pvArgs.sessionToken,
             success: function(recommendation){
                 // productGroup and SearchCategory can (either of them) be ''
-                log.log(pvArgs.inputs.productGroup,'DEBUG');
                 if(pvArgs.inputs.productGroup !== '') {
                     recommendation.set('productGroups',{__type: "Pointer",className: "ProductGroup", objectId: pvArgs.inputs.productGroup});
                 }
                 if(pvArgs.inputs.searchCategory !== '') {
                     recommendation.set('searchCategory',{__type: "Pointer",className: "SearchCategory", objectId: pvArgs.inputs.searchCategory});
                 }
+                var lvIsArchived = null;
+                if(pvArgs.inputs.isArchived === 'TRUE') {
+                    lvIsArchived = true;
+                } else if (pvArgs.inputs.isArchived === 'FALSE') {
+                    lvIsArchived = false;
+                }
                 recommendation.set('productName',pvArgs.inputs.productName);
                 recommendation.set('pageConfirmationSearch',pvArgs.inputs.pageConfirmationSearch);
                 recommendation.set('productURL',pvArgs.inputs.productURL);
                 recommendation.set('ethicalBrand',{__type: "Pointer",className: "EthicalBrand", objectId: pvArgs.inputs.brand});
+                recommendation.set('isArchived',lvIsArchived);
                 if(pvArgs.savedFile !== null) {
                     recommendation.set('image',pvArgs.savedFile);
                 }
@@ -708,30 +581,26 @@ module.exports = {
 
                         var lvArgs = {};
 
-                        // productGroup and SearchCategory can (either of them) be null
-                        var lvProductGroup = {key: null,
-                                              value: null};
-                        var lvSearchCategory = {key: null,
-                                                value: null};
-                        if(typeof pvRecommendation.get('productGroups') !== 'undefined') {
-                            lvProductGroup = {key: pvRecommendation.get('productGroups').objectId,
-                                              value: pvRecommendation.get('productGroup_sort')};
+                        // The new record object must contain one property for each input value passed in, where the checkbox input value is the id
+
+                        var lvProductGroupId = null;
+                        var lvSearchCategoryId = null;
+                        if(pvRecommendation.get('productGroups')){
+                            lvProductGroupId = pvRecommendation.get('productGroups').objectId;
                         }
-                        if(typeof pvRecommendation.get('searchCategory') !== 'undefined') {
-                            lvSearchCategory = {key: pvRecommendation.get('searchCategory').objectId,
-                                                value: pvRecommendation.get('searchCategory_sort')};
+                        if(pvRecommendation.get('searchCategory')){
+                            lvSearchCategoryId = pvRecommendation.get('searchCategory').objectId;
                         }
 
-                        // The new record object must contain one property for each input value passed in, where the checkbox input value is the id
                         lvArgs.updatedRecord = {checkbox: pvRecommendation.id,
-                                                productGroup: lvProductGroup,
+                                                productGroup: lvProductGroupId,
                                                 productName: pvRecommendation.get('productName'),
                                                 pageConfirmationSearch: pvRecommendation.get('pageConfirmationSearch'),
                                                 productURL: pvRecommendation.get('productURL'),
-                                                brand: {key: pvRecommendation.get('ethicalBrand').objectId, value: pvRecommendation.get('brandName_sort')},
-                                                searchCategory: lvSearchCategory,
-                                                image: ''}; // no point returning this
-
+                                                brand: pvRecommendation.get('ethicalBrand').objectId,
+                                                searchCategory: lvSearchCategoryId,
+                                                image: '',  // no point returning this
+                                                isArchived: pvArgs.inputs.isArchived};
                         pvCallback(null,lvArgs);
                     },
                     error: log.parseErrorSave
@@ -809,8 +678,8 @@ module.exports = {
                     success: function(pvSearchProduct){
                         var lvArgs = pvArgs;
                         lvArgs.updatedRecord = {checkbox: pvSearchProduct.id,
-                                                searchCategory: {key: pvSearchProduct.get('searchCategories').objectId, value: pvRecommendation.get('searchCategory_sort')},
-                                                productGroup: {key: pvSearchProduct.get('productGroups').objectId, value: pvRecommendation.get('productGroup_sort')},
+                                                searchCategory: pvSearchProduct.get('searchCategories').objectId,
+                                                productGroup: pvSearchProduct.get('productGroups').objectId,
                                                 productName: pvSearchProduct.get('productName'),
                                                 brand: pvSearchProduct.get('brand'),
                                                 andOr: pvSearchProduct.get('andOr'),
@@ -857,7 +726,7 @@ module.exports = {
                         var lvArgs = pvArgs;
                         lvArgs.updatedRecord = {checkbox: pvWebsite.id,
                                                 websiteURL: pvWebsite.get('websiteURL'),
-                                                isWebsiteOnOrOff: {key: pvWebsite.get('isWebsiteOnOrOff'), value: pvWebsite.get('isWebsiteOnOrOff')}};
+                                                isWebsiteOnOrOff: pvWebsite.get('isWebsiteOnOrOff')};
                         pvCallback(null,lvArgs);
                     },
                     error: log.parseErrorSave
@@ -1149,10 +1018,10 @@ function lfAddCategoryWebsiteJoin(pvArgs, pvCallback){
 
             // The new record object must contain one property for each input value passed in, where the checkbox input value is the id
             lvArgs.newRecord = {checkbox: pvCategoryWebsiteJoin.id,
-                                searchCategory: {key: pvCategoryWebsiteJoin.get('searchCategory').objectId, value: pvCategoryWebsiteJoin.get('categoryName_sort')},
-                                website: {key: pvCategoryWebsiteJoin.get('website').objectId, value: pvCategoryWebsiteJoin.get('websiteURL_sort')},
+                                searchCategory: pvCategoryWebsiteJoin.get('searchCategory').objectId,
+                                website: pvCategoryWebsiteJoin.get('website').objectId,
                                 activeDepartments: pvCategoryWebsiteJoin.get('departments'),
-                                isWebsiteLevelRec: {key: pvArgs.inputs.isWebsiteLevelRec, value: pvArgs.inputs.isWebsiteLevelRec}};
+                                isWebsiteLevelRec: pvArgs.inputs.isWebsiteLevelRec};
 
             pvCallback(null,lvArgs);
         },

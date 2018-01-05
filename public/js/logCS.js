@@ -110,6 +110,14 @@ function log(pvScriptName,pvFunctionName,pvMessage,pvLevel){
             }
         break;
 
+        case ' AJAX':
+            if (gvLogAJAX){
+               lvLogText = gvAppName.substring(0,lvMaxAppNameLength) + lvPadding + '| ' + pvLevel + ': ' + pvScriptName + '.' + pvFunctionName + ': ' + pvMessage;
+               console.log(lvLogText);
+               lvLogText = '\n' + lvLogText;
+            }
+        break;
+
         case 'LSTNR':
             // Rather than putting PROCS in listeners (which can fire
             // continually in some scenarios), use LSTNR and keep them ...

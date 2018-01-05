@@ -24,6 +24,7 @@ var gvLogRoutes = false;
 var gvLogDebugs = false;
 var gvLogInfos  = false;
 var gvLogInits  = false;
+var gvLogAJAX   = false;
 var gvLogLstnrs = false;
 var gvLogTemps  = false;
 
@@ -169,32 +170,32 @@ module.exports = {
 
     parseErrorSave: function parseErrorSave(pvObject,pvError) {
         var lvErrorMsg = "Parse error on .save() request: " + pvError.code + " " + pvError.message;
-        l(gvScriptName_log + '.' + 'parseErrorSave' + ': ' + lvErrorMsg,'ERROR');
+        l(gvScriptName_log,'parseErrorSave',lvErrorMsg,'ERROR');
     },
 
     parseErrorFind: function parseErrorFind(pvError) {
         var lvErrorMsg = "Parse error on .find() request: " + pvError.code + " " + pvError.message;
-        l(gvScriptName_log + '.' + 'parseErrorFind' + ': ' + lvErrorMsg,'ERROR');
+        l(gvScriptName_log,'parseErrorFind',lvErrorMsg,'ERROR');
     },
 
     parseErrorUser: function parseErrorUser(pvUser,pvError) {
         var lvErrorMsg = "Parse error on authentication request: " + pvError.code + " " + pvError.message;
-        l(gvScriptName_log + '.' + 'parseErrorUser' + ': ' + lvErrorMsg,'ERROR');
+        l(gvScriptName_log,'parseErrorUser',lvErrorMsg,'ERROR');
     },
 
     parseErrorGet: function parseErrorGet(pvUser,pvError) {
         var lvErrorMsg = "Parse error on .get() request: " + pvError.code + " " + pvError.message;
-        l(gvScriptName_log + '.' + 'parseErrorGet' + ': ' + lvErrorMsg,'ERROR');
+        l(gvScriptName_log,'parseErrorGet',lvErrorMsg,'ERROR');
     },
 
     parseErrorDestroyAll: function parseErrorDestroyAll(pvError) {
         var lvErrorMsg = "Parse error on .destroyAll() request: " + pvError.code + " " + pvError.message;
-        l(gvScriptName_log + '.' + 'parseErrorDestroyAll' + ': ' + lvErrorMsg,'ERROR');
+        l(gvScriptName_log,'parseErrorDestroyAll',lvErrorMsg,'ERROR');
     },
 
     parseErrorSimple: function parseErrorUserSimple(pvError) {
         var lvErrorMsg = "Parse error on user request: " + pvError.code + " " + pvError.message;
-        l(gvScriptName_log + '.' + 'parseErrorUserSimple' + ': ' + lvErrorMsg,'ERROR');
+        l(gvScriptName_log,'parseErrorUserSimple',lvErrorMsg,'ERROR');
     }
 };
 
@@ -277,6 +278,14 @@ function l(pvScriptName,pvFunctionName,pvMessage,pvLevel){
             // and, once the app is working reliably, aren't particularly interesting)
             // Off by default
             if (gvLogInits){
+               lvLogText = gvAppName.substring(0,lvMaxAppNameLength) + lvPadding + '| ' + pvLevel + ': ' + pvScriptName + '.' + pvFunctionName + ': ' + pvMessage;
+               console.log(lvLogText);
+               lvLogText = '\n' + lvLogText;
+            }
+        break;
+
+        case ' AJAX':
+            if (gvLogAJAX){
                lvLogText = gvAppName.substring(0,lvMaxAppNameLength) + lvPadding + '| ' + pvLevel + ': ' + pvScriptName + '.' + pvFunctionName + ': ' + pvMessage;
                console.log(lvLogText);
                lvLogText = '\n' + lvLogText;

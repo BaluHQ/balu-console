@@ -1,0 +1,33 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <% include partials/header %>
+</head>
+<body>
+
+    <% include partials/bodytop %>
+
+    <div id="noDataDiv" class="noDataDiv"></div>
+
+    <div class="row" style="position: relative; margin-left: 10px; margin-right: 10px">
+        <div class="small-10 columns">
+            <h3 id="pageTitle"></h3>
+            <table id="table_filter">
+                <tbody id="table_filter_body"></tbody>
+            </table>
+            <form name="mainForm" method="post" enctype="multipart/form-data"> <!-- action is set by button onclick function and filter dropdown on-changes -->
+                <table id="table_data">
+                    <tbody id="table_data_body"></tbody>
+                </table>
+                <input id="deleteButton" type="submit" value="Delete" data-endpoint="" data-table-id="table_data" data-action="delete" class="button tiny" style="float: bottom">
+            </form>
+        </div>
+    </div>
+
+    <% include partials/footer %>
+
+    <% include partials/bodytail %>
+    <script src="js/mainCS.js"></script>
+
+  </body>
+</html>
