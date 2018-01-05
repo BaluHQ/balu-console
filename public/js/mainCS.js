@@ -322,55 +322,55 @@ function renderFilterRow(pvArgs){
             // because it doesn't follow the basic structure of the generic page
             break;
         case 'websites':
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'websiteURL', title: 'Website URL', placeholder: 'Website URL', width: '200px'});
-            lvHtml += renderOnOff({addOrUpdate: lvActionType, fieldName: 'isWebsiteOnOrOff', defaultValue: null, title: 'Is website on or off', width: '150px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'websiteURL', title: 'Website URL', placeholder: 'Website URL', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderOnOff({addOrUpdate: lvActionType, fieldName: 'isWebsiteOnOrOff', defaultValue: null, title: 'Is website on or off', dataRequired_str: 'true', width: '150px'});
             break;
         case 'search-categories':
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'categoryName', title: 'New category', placeholder: 'Product name',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'categoryShortName', title: 'Category short name', placeholder: 'Product name',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'whyDoWeCare', title: 'Why do we care slug', placeholder: 'Product name',width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'categoryName', title: 'New category', dataRequired_str: 'true', placeholder: 'Category name', dataRequired_str: 'true',width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'categoryShortName', title: 'Category short name', placeholder: 'Category short name', dataRequired_str: 'true',width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'whyDoWeCare', title: 'Why do we care slug', placeholder: 'Why do we care slug', dataRequired_str: 'true',width: '200px'});
             break;
         case 'search-products':
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'searchCategory', title: 'Search category', placeholder: 'search category',width: '200px'});
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'productGroup', title: 'Product group', placeholder: 'product group',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productName', title: 'Product name', placeholder: 'Product name',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'brand', title: 'Brand', placeholder: 'Brand',width: '100px'});
-            lvHtml += renderAndOr({addOrUpdate: lvActionType, fieldName: 'andOr', defaultValue: null, title: 'And / Or',width: '150px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm1', title: 'Search term 1', placeholder: 'Search term 1',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm2', title: 'Search term 2', placeholder: 'Search term 2',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm3', title: 'Search term 3', placeholder: 'Search term 3',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm4', title: 'Search term 4', placeholder: 'Search term 4',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm5', title: 'Search term 5', placeholder: 'Search term 5',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm6', title: 'Search term 6', placeholder: 'Search term 6',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm7', title: 'Search term 7', placeholder: 'Search term 7',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'sex', title: 'Product name', placeholder: 'Product name',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm1', title: 'Negative search term 1', placeholder: 'Negative search term 1',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm2', title: 'Negative search term 2', placeholder: 'Negative search term 2',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm3', title: 'Negative search term 3', placeholder: 'Negative search term 3',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm4', title: 'Negative search term 4', placeholder: 'Negative search term 4',width: '200px'});
-            lvHtml += renderAndOr({addOrUpdate: lvActionType, fieldName: 'negativeAndOr', defaultValue: null, title: 'Negative and / or',width: '150px'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'searchCategory', title: 'Search category', placeholder: 'search category', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'productGroup', title: 'Product group', placeholder: 'product group', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productName', title: 'Product name', placeholder: 'Product name', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'brand', title: 'Brand', placeholder: 'Brand', dataRequired_str: 'true', width: '100px'});
+            lvHtml += renderAndOr({addOrUpdate: lvActionType, fieldName: 'andOr', defaultValue: null, title: 'And / Or', dataRequired_str: 'true', width: '150px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm1', title: 'Search term 1', placeholder: 'Search term 1', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm2', title: 'Search term 2', placeholder: 'Search term 2', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm3', title: 'Search term 3', placeholder: 'Search term 3', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm4', title: 'Search term 4', placeholder: 'Search term 4', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm5', title: 'Search term 5', placeholder: 'Search term 5', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm6', title: 'Search term 6', placeholder: 'Search term 6', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm7', title: 'Search term 7', placeholder: 'Search term 7', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'sex', title: 'Product name', placeholder: 'Product name', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm1', title: 'Negative search term 1', placeholder: 'Negative search term 1', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm2', title: 'Negative search term 2', placeholder: 'Negative search term 2', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm3', title: 'Negative search term 3', placeholder: 'Negative search term 3', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm4', title: 'Negative search term 4', placeholder: 'Negative search term 4', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderAndOr({addOrUpdate: lvActionType, fieldName: 'negativeAndOr', defaultValue: null, title: 'Negative and / or', dataRequired_str: 'true', width: '150px'});
             break;
         case 'product-groups':
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productGroupName', title: 'Product group name', placeholder: 'Product group name',width: '200px'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'christmasBanner', defaultValue: null, title: 'Christmas banner',width: '150px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productGroupName', title: 'Product group name', placeholder: 'Product group name', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'christmasBanner', defaultValue: null, title: 'Christmas banner', dataRequired_str: 'true', width: '150px'});
             break;
         case 'brands':
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'brandName', title: 'Brand name', placeholder: 'Brand name',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'homepage', title: 'Homepage (with http)', placeholder: 'Homepage',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'twitterHandle', title: 'Twitter handle (with @)', placeholder: 'Twitter handle',width: '200px'});
-            lvHtml += renderTextArea({addOrUpdate: lvActionType, fieldName: 'brandSpiel', title: 'Brand spiel', placeholder: 'Brand spiel',width: '200px'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'baluFavourite', defaultValue: null, title: 'Balu favourite',width: '150px'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'isArchived', defaultValue: null, title: 'Is archived',width: '150px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'brandName', title: 'Brand name', placeholder: 'Brand name', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'homepage', title: 'Homepage (with http)', placeholder: 'Homepage', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'twitterHandle', title: 'Twitter handle (with @)', placeholder: 'Twitter handle', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderTextArea({addOrUpdate: lvActionType, fieldName: 'brandSpiel', title: 'Brand spiel', placeholder: 'Brand spiel', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'baluFavourite', defaultValue: null, title: 'Balu favourite', dataRequired_str: 'true', width: '150px'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'isArchived', defaultValue: null, title: 'Is archived', dataRequired_str: 'true', width: '150px'});
             break;
         case 'recommendations':
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'productGroup', title: 'Product group', placeholder: 'product group',width: '200px'});
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'searchCategory', title: 'Search category', placeholder: 'search category',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productName', title: 'Product name', placeholder: 'Product name',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'pageConfirmationSearch', title: 'Page load confirmation search', placeholder: 'Page load confirmation search',width: '200px'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productURL', title: 'Product URL', placeholder: 'Product URL',width: '300px'});
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'brand', title: 'Brand', placeholder: 'brand',width: '200px'});
-            lvHtml += renderFileUpload({addOrUpdate: lvActionType, fieldName: 'image', title: 'Thumbnail',width: '200px'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'isArchived', defaultValue: null, title: 'Is archived',width: '150px'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'productGroup', title: 'Product group', placeholder: 'product group', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'searchCategory', title: 'Search category', placeholder: 'search category', dataRequired_str: 'false', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productName', title: 'Product name', placeholder: 'Product name', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'pageConfirmationSearch', title: 'Page load confirmation search', placeholder: 'Page load confirmation search', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productURL', title: 'Product URL', placeholder: 'Product URL', dataRequired_str: 'true', width: '300px'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'brand', title: 'Brand', placeholder: 'brand', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderFileUpload({addOrUpdate: lvActionType, fieldName: 'image', title: 'Thumbnail', dataRequired_str: 'true', width: '200px'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'isArchived', defaultValue: null, title: 'Is archived', dataRequired_str: 'true', width: '150px'});
             break;
         case 'activity-dashboard':
             break;
@@ -493,55 +493,55 @@ function renderAddNewRow(pvArgs){
             // because it doesn't follow the basic structure of the generic page
             break;
         case 'websites':
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'websiteURL', title: 'Website URL (no http)', placeholder: 'Website URL'});
-            lvHtml += renderOnOff({addOrUpdate: lvActionType, fieldName: 'isWebsiteOnOrOff', defaultValue: 'ON', title: 'Is website on or off'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'websiteURL', title: 'Website URL (no http)', dataRequired_str: 'true', placeholder: 'Website URL'});
+            lvHtml += renderOnOff({addOrUpdate: lvActionType, fieldName: 'isWebsiteOnOrOff', defaultValue: 'ON', title: 'Is website on or off', dataRequired_str: 'true'});
             break;
         case 'search-categories':
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'categoryName', title: 'New category', placeholder: 'Product name'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'categoryShortName', title: 'Category short name', placeholder: 'Product name',});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'whyDoWeCare', title: 'Why do we care slug', placeholder: 'Product name',});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'categoryName', title: 'New category', dataRequired_str: 'true', placeholder: 'Product name'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'categoryShortName', title: 'Category short name', dataRequired_str: 'true', placeholder: 'Product name',});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'whyDoWeCare', title: 'Why do we care slug', dataRequired_str: 'true', placeholder: 'Product name',});
             break;
         case 'search-products':
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'searchCategory', title: 'Search category', placeholder: 'search category'});
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'productGroup', title: 'Product group', placeholder: 'product group'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productName', title: 'Product name', placeholder: 'Product name'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'brand', title: 'Brand', placeholder: 'Brand'});
-            lvHtml += renderAndOr({addOrUpdate: lvActionType, fieldName: 'andOr', defaultValue: 'AND', title: 'And / Or'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm1', title: 'Search term 1', placeholder: 'Search term 1'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm2', title: 'Search term 2', placeholder: 'Search term 2'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm3', title: 'Search term 3', placeholder: 'Search term 3'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm4', title: 'Search term 4', placeholder: 'Search term 4'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm5', title: 'Search term 5', placeholder: 'Search term 5'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm6', title: 'Search term 6', placeholder: 'Search term 6'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm7', title: 'Search term 7', placeholder: 'Search term 7'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'sex', title: 'Product name', placeholder: 'Product name'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm1', title: 'Negative search term 1', placeholder: 'Negative search term 1'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm2', title: 'Negative search term 2', placeholder: 'Negative search term 2'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm3', title: 'Negative search term 3', placeholder: 'Negative search term 3'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm4', title: 'Negative search term 4', placeholder: 'Negative search term 4'});
-            lvHtml += renderAndOr({addOrUpdate: lvActionType, fieldName: 'negativeAndOr', defaultValue: 'AND', title: 'Negative and / or'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'searchCategory', title: 'Search category', dataRequired_str: 'true', placeholder: 'search category'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'productGroup', title: 'Product group', dataRequired_str: 'true', placeholder: 'product group'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productName', title: 'Product name', dataRequired_str: 'true', placeholder: 'Product name'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'brand', title: 'Brand', dataRequired_str: 'true', placeholder: 'Brand'});
+            lvHtml += renderAndOr({addOrUpdate: lvActionType, fieldName: 'andOr', defaultValue: 'AND', dataRequired_str: 'true', title: 'And / Or'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm1', title: 'Search term 1', dataRequired_str: 'false', placeholder: 'Search term 1'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm2', title: 'Search term 2', dataRequired_str: 'false', placeholder: 'Search term 2'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm3', title: 'Search term 3', dataRequired_str: 'false', placeholder: 'Search term 3'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm4', title: 'Search term 4', dataRequired_str: 'false', placeholder: 'Search term 4'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm5', title: 'Search term 5', dataRequired_str: 'false', placeholder: 'Search term 5'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm6', title: 'Search term 6', dataRequired_str: 'false', placeholder: 'Search term 6'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'searchTerm7', title: 'Search term 7', dataRequired_str: 'false', placeholder: 'Search term 7'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'sex', title: 'Product name', dataRequired_str: 'false', placeholder: 'Product name'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm1', title: 'Negative search term 1', dataRequired_str: 'false', placeholder: 'Negative search term 1'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm2', title: 'Negative search term 2', dataRequired_str: 'false', placeholder: 'Negative search term 2'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm3', title: 'Negative search term 3', dataRequired_str: 'false', placeholder: 'Negative search term 3'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'negativeSearchTerm4', title: 'Negative search term 4', dataRequired_str: 'false', placeholder: 'Negative search term 4'});
+            lvHtml += renderAndOr({addOrUpdate: lvActionType, fieldName: 'negativeAndOr', defaultValue: 'AND', title: 'Negative and / or', dataRequired_str: 'true'});
             break;
         case 'product-groups':
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productGroupName', title: 'Product group name', placeholder: 'Product group name'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'christmasBanner', defaultValue: 'FALSE', title: 'Christmas banner'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productGroupName', title: 'Product group name', dataRequired_str: 'true', placeholder: 'Product group name'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'christmasBanner', defaultValue: 'FALSE', title: 'Christmas banner', dataRequired_str: 'true'});
             break;
         case 'brands':
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'brandName', title: 'Brand name', placeholder: 'Brand name'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'homepage', title: 'Homepage (with http)', placeholder: 'Homepage'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'twitterHandle', title: 'Twitter handle (with @)', placeholder: 'Twitter handle'});
-            lvHtml += renderTextArea({addOrUpdate: lvActionType, fieldName: 'brandSpiel', title: 'Brand spiel', placeholder: 'Brand spiel'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'baluFavourite', defaultValue: 'FALSE', title: 'Balu favourite'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'isArchived', defaultValue: 'FALSE', title: 'Is archived'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'brandName', title: 'Brand name', dataRequired_str: 'true', placeholder: 'Brand name'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'homepage', title: 'Homepage (with http)', dataRequired_str: 'true', placeholder: 'Homepage'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'twitterHandle', title: 'Twitter handle (with @)', dataRequired_str: 'true', placeholder: 'Twitter handle'});
+            lvHtml += renderTextArea({addOrUpdate: lvActionType, fieldName: 'brandSpiel', title: 'Brand spiel', dataRequired_str: 'true', placeholder: 'Brand spiel'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'baluFavourite', defaultValue: 'FALSE', title: 'Balu favourite', dataRequired_str: 'true'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'isArchived', defaultValue: 'FALSE', title: 'Is archived', dataRequired_str: 'true'});
             break;
         case 'recommendations':
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'productGroup', title: 'Product group', placeholder: 'product group'});
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'searchCategory', title: 'Search category', placeholder: 'search category'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productName', title: 'Product name', placeholder: 'Product name'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'pageConfirmationSearch', title: 'Page load confirmation search', placeholder: 'Page load confirmation search'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productURL', title: 'Product URL', placeholder: 'Product URL'});
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'brand', title: 'Brand', placeholder: 'brand'});
-            lvHtml += renderFileUpload({addOrUpdate: lvActionType, fieldName: 'image', title: 'Thumbnail'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'isArchived', defaultValue: 'FALSE', title: 'Is archived'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'productGroup', title: 'Product group', dataRequired_str: 'false', placeholder: 'product group'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'searchCategory', title: 'Search category', dataRequired_str: 'false', placeholder: 'search category'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productName', title: 'Product name', dataRequired_str: 'true', placeholder: 'Product name'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'pageConfirmationSearch', title: 'Page load confirmation search', dataRequired_str: 'true', placeholder: 'Page load confirmation search'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'productURL', title: 'Product URL', dataRequired_str: 'true', placeholder: 'Product URL'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, fieldName: 'brand', title: 'Brand', dataRequired_str: 'true', placeholder: 'brand'});
+            lvHtml += renderFileUpload({addOrUpdate: lvActionType, fieldName: 'image', title: 'Thumbnail', dataRequired_str: 'true'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, fieldName: 'isArchived', defaultValue: 'FALSE', title: 'Is archived', dataRequired_str: 'true'});
             break;
         case 'user-report':
             lvActionType = 'NON-EDITABLE-FORM-add';
@@ -582,70 +582,70 @@ function renderDataRow(pvArgs){
             break;
         case 'websites':
             lvRowId = pvArgs.dataRow.websiteId;
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'websiteURL', currentValue: pvArgs.dataRow.websiteURL, displayValue: pvArgs.dataRow.websiteURL, title: 'Website URL', placeholder: 'Website URL'});
-            lvHtml += renderOnOff({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'isWebsiteOnOrOff', defaultValue: 'ON', currentValue: pvArgs.dataRow.isWebsiteOnOrOff, title: 'Is website on or off'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'websiteURL', currentValue: pvArgs.dataRow.websiteURL, displayValue: pvArgs.dataRow.websiteURL, title: 'Website URL', dataRequired_str: 'true', placeholder: 'Website URL'});
+            lvHtml += renderOnOff({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'isWebsiteOnOrOff', dataRequired_str: 'true', defaultValue: 'ON', currentValue: pvArgs.dataRow.isWebsiteOnOrOff, title: 'Is website on or off'});
             break;
         case 'search-categories':
             lvRowId = pvArgs.dataRow.searchCategoryId;
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'categoryName', currentValue: pvArgs.dataRow.categoryName, displayValue: pvArgs.dataRow.categoryName, title: 'New category', placeholder: 'Product name'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'categoryShortName', currentValue: pvArgs.dataRow.categoryShortName, displayValue: pvArgs.dataRow.categoryShortName, title: 'Category short name', placeholder: 'Product name',});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'whyDoWeCare', currentValue: pvArgs.dataRow.whyDoWeCare, displayValue: pvArgs.dataRow.whyDoWeCare, title: 'Why do we care slug', placeholder: 'Product name',});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'categoryName', currentValue: pvArgs.dataRow.categoryName, displayValue: pvArgs.dataRow.categoryName, title: 'New category', dataRequired_str: 'true', placeholder: 'Category name'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'categoryShortName', currentValue: pvArgs.dataRow.categoryShortName, displayValue: pvArgs.dataRow.categoryShortName, title: 'Category short name', dataRequired_str: 'true', placeholder: 'Category short name',});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'whyDoWeCare', currentValue: pvArgs.dataRow.whyDoWeCare, displayValue: pvArgs.dataRow.whyDoWeCare, title: 'Why do we care slug', dataRequired_str: 'true', placeholder: 'Why do we care slug',});
             break;
         case 'search-products':
             lvRowId = pvArgs.dataRow.searchProductId;
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchCategory', currentValue: pvArgs.dataRow.searchCategoryName, currentId: pvArgs.dataRow.searchCategoryId, title: 'Search category', placeholder: 'search category'});
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productGroup', currentValue: pvArgs.dataRow.productGroupName, currentId: pvArgs.dataRow.productGroupId, title: 'Product group', placeholder: 'product group'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productName', currentValue: pvArgs.dataRow.productName, displayValue: pvArgs.dataRow.productName, title: 'Product name', placeholder: 'Product name'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'brand', currentValue: pvArgs.dataRow.brand, displayValue: pvArgs.dataRow.brand, title: 'Brand', placeholder: 'Brand'});
-            lvHtml += renderAndOr({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'andOr', defaultValue: null, currentValue: pvArgs.dataRow.andOr, title: 'And / Or'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm1', currentValue: pvArgs.dataRow.searchTerm1, displayValue: pvArgs.dataRow.searchTerm1, title: 'Search term 1', placeholder: 'Search term 1'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm2', currentValue: pvArgs.dataRow.searchTerm2, displayValue: pvArgs.dataRow.searchTerm2, title: 'Search term 2', placeholder: 'Search term 2'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm3', currentValue: pvArgs.dataRow.searchTerm3, displayValue: pvArgs.dataRow.searchTerm3, title: 'Search term 3', placeholder: 'Search term 3'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm4', currentValue: pvArgs.dataRow.searchTerm4, displayValue: pvArgs.dataRow.searchTerm4, title: 'Search term 4', placeholder: 'Search term 4'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm5', currentValue: pvArgs.dataRow.searchTerm5, displayValue: pvArgs.dataRow.searchTerm5, title: 'Search term 5', placeholder: 'Search term 5'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm6', currentValue: pvArgs.dataRow.searchTerm6, displayValue: pvArgs.dataRow.searchTerm6, title: 'Search term 6', placeholder: 'Search term 6'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm7', currentValue: pvArgs.dataRow.searchTerm7, displayValue: pvArgs.dataRow.searchTerm7, title: 'Search term 7', placeholder: 'Search term 7'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'sex', currentValue: pvArgs.dataRow.sex, displayValue: pvArgs.dataRow.sex, title: 'Sex', placeholder: 'Sex'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'negativeSearchTerm1', currentValue: pvArgs.dataRow.negativeSearchTerm1, displayValue: pvArgs.dataRow.negativeSearchTerm1, title: 'Negative search term 1', placeholder: 'Negative search term 1'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'negativeSearchTerm2', currentValue: pvArgs.dataRow.negativeSearchTerm2, displayValue: pvArgs.dataRow.negativeSearchTerm2, title: 'Negative search term 2', placeholder: 'Negative search term 2'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'negativeSearchTerm3', currentValue: pvArgs.dataRow.negativeSearchTerm3, displayValue: pvArgs.dataRow.negativeSearchTerm3, title: 'Negative search term 3', placeholder: 'Negative search term 3'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'negativeSearchTerm4', currentValue: pvArgs.dataRow.negativeSearchTerm4, displayValue: pvArgs.dataRow.negativeSearchTerm4, title: 'Negative search term 4', placeholder: 'Negative search term 4'});
-            lvHtml += renderAndOr({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'negativeAndOr', defaultValue: null, currentValue: pvArgs.dataRow.negativeAndOr, title: 'Negative and / or'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchCategory', currentValue: pvArgs.dataRow.searchCategoryName, currentId: pvArgs.dataRow.searchCategoryId, title: 'Search category', dataRequired_str: 'true', placeholder: 'search category'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productGroup', currentValue: pvArgs.dataRow.productGroupName, currentId: pvArgs.dataRow.productGroupId, title: 'Product group', dataRequired_str: 'true', placeholder: 'product group'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productName', currentValue: pvArgs.dataRow.productName, displayValue: pvArgs.dataRow.productName, title: 'Product name', dataRequired_str: 'true', placeholder: 'Product name'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'brand', currentValue: pvArgs.dataRow.brand, displayValue: pvArgs.dataRow.brand, title: 'Brand', dataRequired_str: 'true', placeholder: 'Brand'});
+            lvHtml += renderAndOr({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'andOr', defaultValue: null, currentValue: pvArgs.dataRow.andOr, title: 'And / Or', dataRequired_str: 'true'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm1', currentValue: pvArgs.dataRow.searchTerm1, displayValue: pvArgs.dataRow.searchTerm1, title: 'Search term 1', dataRequired_str: 'false', placeholder: 'Search term 1'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm2', currentValue: pvArgs.dataRow.searchTerm2, displayValue: pvArgs.dataRow.searchTerm2, title: 'Search term 2', dataRequired_str: 'false', dataRequired_str: 'true', placeholder: 'Search term 2'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm3', currentValue: pvArgs.dataRow.searchTerm3, displayValue: pvArgs.dataRow.searchTerm3, title: 'Search term 3', dataRequired_str: 'false', placeholder: 'Search term 3'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm4', currentValue: pvArgs.dataRow.searchTerm4, displayValue: pvArgs.dataRow.searchTerm4, title: 'Search term 4', dataRequired_str: 'false', placeholder: 'Search term 4'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm5', currentValue: pvArgs.dataRow.searchTerm5, displayValue: pvArgs.dataRow.searchTerm5, title: 'Search term 5', dataRequired_str: 'false', placeholder: 'Search term 5'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm6', currentValue: pvArgs.dataRow.searchTerm6, displayValue: pvArgs.dataRow.searchTerm6, title: 'Search term 6', dataRequired_str: 'false', placeholder: 'Search term 6'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchTerm7', currentValue: pvArgs.dataRow.searchTerm7, displayValue: pvArgs.dataRow.searchTerm7, title: 'Search term 7', dataRequired_str: 'false', placeholder: 'Search term 7'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'sex', currentValue: pvArgs.dataRow.sex, displayValue: pvArgs.dataRow.sex, title: 'Sex', dataRequired_str: 'false', placeholder: 'Sex'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'negativeSearchTerm1', currentValue: pvArgs.dataRow.negativeSearchTerm1, displayValue: pvArgs.dataRow.negativeSearchTerm1, title: 'Negative search term 1', dataRequired_str: 'false', placeholder: 'Negative search term 1'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'negativeSearchTerm2', currentValue: pvArgs.dataRow.negativeSearchTerm2, displayValue: pvArgs.dataRow.negativeSearchTerm2, title: 'Negative search term 2', dataRequired_str: 'false', placeholder: 'Negative search term 2'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'negativeSearchTerm3', currentValue: pvArgs.dataRow.negativeSearchTerm3, displayValue: pvArgs.dataRow.negativeSearchTerm3, title: 'Negative search term 3', dataRequired_str: 'false', placeholder: 'Negative search term 3'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'negativeSearchTerm4', currentValue: pvArgs.dataRow.negativeSearchTerm4, displayValue: pvArgs.dataRow.negativeSearchTerm4, title: 'Negative search term 4', dataRequired_str: 'false', placeholder: 'Negative search term 4'});
+            lvHtml += renderAndOr({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'negativeAndOr', defaultValue: null, currentValue: pvArgs.dataRow.negativeAndOr, title: 'Negative and / or', dataRequired_str: 'true'});
             break;
         case 'product-groups':
             lvRowId = pvArgs.dataRow.productGroupId;
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productGroupName', currentValue: pvArgs.dataRow.productGroupName, displayValue: pvArgs.dataRow.productGroupName, title: 'Product group name', placeholder: 'Product group name'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'christmasBanner', defaultValue: 'FALSE', currentValue: pvArgs.dataRow.andOr, title: 'Christmas banner'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productGroupName', currentValue: pvArgs.dataRow.productGroupName, displayValue: pvArgs.dataRow.productGroupName, title: 'Product group name', dataRequired_str: 'true', placeholder: 'Product group name'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'christmasBanner', defaultValue: 'FALSE', currentValue: pvArgs.dataRow.andOr, title: 'Christmas banner', dataRequired_str: 'true'});
             break;
         case 'brands':
             lvRowId = pvArgs.dataRow.brandId;
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'brandName',  currentValue: pvArgs.dataRow.brandName, displayValue: pvArgs.dataRow.brandName, title: 'Brand name', placeholder: 'Brand name'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'homepage', currentValue: pvArgs.dataRow.homepage, displayValue: '<a href="' + pvArgs.dataRow.homepage + '" target="_blank">' + pvArgs.dataRow.homepage + '</a>', title: 'Homepage (with http)', placeholder: 'Homepage'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'twitterHandle',  currentValue: pvArgs.dataRow.twitterHandle, displayValue: pvArgs.dataRow.twitterHandle, title: 'Twitter handle (with @)', placeholder: 'Twitter handle'});
-            lvHtml += renderTextArea({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'brandSpiel',  currentValue: pvArgs.dataRow.brandSpiel, displayValue: pvArgs.dataRow.brandSpiel.substring(0,100) + ' ...', title: 'Brand spiel', placeholder: 'Brand spiel'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'baluFavourite', defaultValue: 'FALSE',  currentValue: pvArgs.dataRow.baluFavourite, title: 'Balu favourite'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'isArchived', defaultValue: 'FALSE',  currentValue: pvArgs.dataRow.isArchived, title: 'Is archived'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'brandName',  currentValue: pvArgs.dataRow.brandName, displayValue: pvArgs.dataRow.brandName, title: 'Brand name', dataRequired_str: 'true', placeholder: 'Brand name'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'homepage', currentValue: pvArgs.dataRow.homepage, displayValue: '<a href="' + pvArgs.dataRow.homepage + '" target="_blank">' + pvArgs.dataRow.homepage + '</a>', title: 'Homepage (with http)', dataRequired_str: 'true', placeholder: 'Homepage'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'twitterHandle',  currentValue: pvArgs.dataRow.twitterHandle, displayValue: pvArgs.dataRow.twitterHandle, title: 'Twitter handle (with @)', dataRequired_str: 'true', placeholder: 'Twitter handle'});
+            lvHtml += renderTextArea({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'brandSpiel',  currentValue: pvArgs.dataRow.brandSpiel, displayValue: pvArgs.dataRow.brandSpiel.substring(0,100) + ' ...', title: 'Brand spiel', dataRequired_str: 'true', placeholder: 'Brand spiel'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'baluFavourite', defaultValue: 'FALSE',  currentValue: pvArgs.dataRow.baluFavourite, title: 'Balu favourite', dataRequired_str: 'true'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'isArchived', defaultValue: 'FALSE',  currentValue: pvArgs.dataRow.isArchived, title: 'Is archived', dataRequired_str: 'true'});
             break;
         case 'recommendations':
             lvRowId = pvArgs.dataRow.recommendationId;
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productGroup', currentValue: pvArgs.dataRow.productGroupName, currentId: pvArgs.dataRow.productGroupId, title: 'Product group', placeholder: 'product group'});
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchCategory', currentValue: pvArgs.dataRow.searchCategoryName, currentId: pvArgs.dataRow.searchCategoryId, title: 'Search category', placeholder: 'search category'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productName', currentValue: pvArgs.dataRow.productName, displayValue: pvArgs.dataRow.productName, title: 'Product name', placeholder: 'product name'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'pageConfirmationSearch', currentValue: pvArgs.dataRow.pageConfirmationSearch, displayValue: pvArgs.dataRow.pageConfirmationSearch, title: 'Page load confirmation search', placeholder: 'Page load confirmation search'});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productURL', currentValue: pvArgs.dataRow.productURL, displayValue: '<a href="' + pvArgs.dataRow.productURL + '" target="_blank">' + pvArgs.dataRow.productURL.substring(pvArgs.dataRow.productURL.indexOf('/')+2,pvArgs.dataRow.productURL.indexOf('/',8)+1) + ' ... ' + pvArgs.dataRow.productURL.substring(pvArgs.dataRow.productURL.length-20) + '</a>', title: 'Product URL', placeholder: 'Product URL'});
-            lvHtml += renderDropDownList({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'brand', currentValue: pvArgs.dataRow.brandName, currentId: pvArgs.dataRow.brandId, title: 'Brand', placeholder: 'brand'});
-            lvHtml += renderFileUpload({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'image', currentValue: pvArgs.dataRow.imageURL, title: 'Thumbnail'});
-            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'isArchived', defaultValue: 'FALSE', currentValue: pvArgs.dataRow.isArchived, title: 'Is archived', optional: true});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productGroup', currentValue: pvArgs.dataRow.productGroupName, currentId: pvArgs.dataRow.productGroupId, title: 'Product group', dataRequired_str: 'true', placeholder: 'product group'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'searchCategory', currentValue: pvArgs.dataRow.searchCategoryName, currentId: pvArgs.dataRow.searchCategoryId, title: 'Search category', dataRequired_str: 'true', placeholder: 'search category'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productName', currentValue: pvArgs.dataRow.productName, displayValue: pvArgs.dataRow.productName, title: 'Product name', dataRequired_str: 'true', placeholder: 'product name'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'pageConfirmationSearch', currentValue: pvArgs.dataRow.pageConfirmationSearch, displayValue: pvArgs.dataRow.pageConfirmationSearch, title: 'Page load confirmation search', dataRequired_str: 'true', placeholder: 'Page load confirmation search'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'productURL', currentValue: pvArgs.dataRow.productURL, displayValue: '<a href="' + pvArgs.dataRow.productURL + '" target="_blank">' + pvArgs.dataRow.productURL.substring(pvArgs.dataRow.productURL.indexOf('/')+2,pvArgs.dataRow.productURL.indexOf('/',8)+1) + ' ... ' + pvArgs.dataRow.productURL.substring(pvArgs.dataRow.productURL.length-20) + '</a>', title: 'Product URL', dataRequired_str: 'true', placeholder: 'Product URL'});
+            lvHtml += renderDropDownList({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'brand', currentValue: pvArgs.dataRow.brandName, currentId: pvArgs.dataRow.brandId, title: 'Brand', dataRequired_str: 'true', placeholder: 'brand'});
+            lvHtml += renderFileUpload({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'image', currentValue: pvArgs.dataRow.imageURL, title: 'Thumbnail', dataRequired_str: 'true'});
+            lvHtml += renderTrueFalse({addOrUpdate: lvActionType, rowId: lvRowId, fieldName: 'isArchived', defaultValue: 'FALSE', currentValue: pvArgs.dataRow.isArchived, title: 'Is archived', dataRequired_str: 'true'});
             break;
         case 'activity-dashboard':
             break;
         case 'user-report':
             lvActionType = 'NON-EDITABLE-FORM-update';
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'createdAt', displayValue: pvArgs.dataRow.createdAt});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'email', displayValue: pvArgs.dataRow.email});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'emailVerified', displayValue: pvArgs.dataRow.emailVerified});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'joyrideStatus', displayValue: pvArgs.dataRow.joyrideStatus});
-            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'whoIs', displayValue: pvArgs.dataRow.whoIs});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'createdAt', displayValue: pvArgs.dataRow.createdAt, dataRequired_str: 'true'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'email', displayValue: pvArgs.dataRow.email, dataRequired_str: 'true'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'emailVerified', displayValue: pvArgs.dataRow.emailVerified, dataRequired_str: 'true'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'joyrideStatus', displayValue: pvArgs.dataRow.joyrideStatus, dataRequired_str: 'true'});
+            lvHtml += renderTextField({addOrUpdate: lvActionType, fieldName: 'whoIs', displayValue: pvArgs.dataRow.whoIs, dataRequired_str: 'true'});
             break;
         case 'data-quality':
             break;
@@ -668,7 +668,7 @@ function renderCheckbox(pvArgs){
     if(pvArgs.addOrUpdate === 'add'){
         return '  <td></td>';
     } else if (pvArgs.addOrUpdate === 'update') {
-        return '  <td><input data-required="false" data-action="delete" id="' + pvArgs.rowId + '" type="checkbox" data-group="' + pvArgs.rowId + '" name="checkbox" value="' + pvArgs.rowId + '" class="insideTable"></td>';
+        return '  <td><input data-required="' + pvArgs.dataRequired_str + '" data-action="delete" id="' + pvArgs.rowId + '" type="checkbox" data-group="' + pvArgs.rowId + '" name="checkbox" value="' + pvArgs.rowId + '" class="insideTable"></td>';
     } else if(pvArgs.addOrUpdate === 'filter') {
         return '<td style="width: ' + pvArgs.width + '"></td>';
     } else if(pvArgs.addOrUpdate === 'NON-EDITABLE-FORM-update') {
@@ -682,12 +682,12 @@ function renderTextField(pvArgs){
 
     if(pvArgs.addOrUpdate === 'add'){
         lvHtml += '  <td title="' + pvArgs.title + '">';
-        lvHtml += '    <input required data-required="true" data-action="add" type="text" data-group="new" name="' + pvArgs.fieldName + '" value="" placeholder="' + pvArgs.placeholder + '" class="insideTable">';
+        lvHtml += '    <input data-required="' + pvArgs.dataRequired_str + '" data-action="add" type="text" data-group="new" name="' + pvArgs.fieldName + '" value="" placeholder="' + pvArgs.placeholder + '" class="insideTable">';
         lvHtml += '  </td>';
     } else if (pvArgs.addOrUpdate === 'update') {
         lvHtml += '  <td data-inline-edit="true" data-editable="false" title="' + pvArgs.title + '">';
         lvHtml += '    <span name="' + pvArgs.fieldName + '">' + pvArgs.displayValue + '</span>';
-        lvHtml += '    <input required data-required="true" data-action="update" type="text" data-group="' + pvArgs.rowId + '" name="' + pvArgs.fieldName + '" style="display: none" value="' + pvArgs.currentValue + '" class="insideTable">';
+        lvHtml += '    <input data-required="' + pvArgs.dataRequired_str + '" data-action="update" type="text" data-group="' + pvArgs.rowId + '" name="' + pvArgs.fieldName + '" style="display: none" value="' + pvArgs.currentValue + '" class="insideTable">';
         lvHtml += '  </td>';
     } else if(pvArgs.addOrUpdate === 'filter') {
         lvHtml += '<td style="width: ' + pvArgs.width + '"></td>';
@@ -709,13 +709,13 @@ function renderTextArea(pvArgs){
 
     if(pvArgs.addOrUpdate === 'add'){
         lvHtml += '  <td title="' + pvArgs.title + '">';
-        lvHtml += '    <textarea required data-required="true" data-action="add" type="text" data-group="new" name="' + pvArgs.fieldName + '" value="" placeholder="' + pvArgs.placeholder + '" class="insideTable" style="width: 200px" rows="5"></textarea>';
+        lvHtml += '    <textarea data-required="' + pvArgs.dataRequired_str + '" data-action="add" type="text" data-group="new" name="' + pvArgs.fieldName + '" value="" placeholder="' + pvArgs.placeholder + '" class="insideTable" style="width: 200px" rows="5"></textarea>';
         lvHtml += '  </td>';
     } else if (pvArgs.addOrUpdate === 'update') {
         // to do: put a tooltip over this for full spiel text
         lvHtml += '  <td data-inline-edit="true" data-editable="false" title="' + pvArgs.title + '">';
         lvHtml += '    <span name="' + pvArgs.fieldName + '">' + pvArgs.displayValue + '</span>';
-        lvHtml += '    <textarea required data-required="true" data-action="update" type="text" data-group="' + pvArgs.rowId + '" name="' + pvArgs.fieldName + '" style="display: none" class="insideTable" rows="5">' + pvArgs.currentValue + '</textarea>';
+        lvHtml += '    <textarea data-required="' + pvArgs.dataRequired_str + '" data-action="update" type="text" data-group="' + pvArgs.rowId + '" name="' + pvArgs.fieldName + '" style="display: none" class="insideTable" rows="5">' + pvArgs.currentValue + '</textarea>';
         lvHtml += '  </td>';
     } else if(pvArgs.addOrUpdate === 'filter') {
         lvHtml += '<td style="width: ' + pvArgs.width + '"></td>';
@@ -730,7 +730,7 @@ function renderTrueFalse(pvArgs){
 
     if(pvArgs.addOrUpdate === 'add'){
         lvHtml += '  <td title="' + pvArgs.title + '" style="width: ' + pvArgs.width + '">';
-        lvHtml += '    <select required data-required="true" data-action="add" data-group="new" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-action="add" data-group="new" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
         if(pvArgs.defaultValue === 'TRUE') {
             lvHtml += '      <option selected value="TRUE">True</option>';
             lvHtml += '      <option value="FALSE">False</option>';
@@ -746,10 +746,6 @@ function renderTrueFalse(pvArgs){
         lvHtml += '    </select>';
         lvHtml += '  </td>';
     } else if (pvArgs.addOrUpdate === 'update') {
-        var lvRequiredText =  'required data-required="true"';
-        if(pvArgs.optional) {
-             lvRequiredText = 'data-required="false"';
-        }
         lvHtml += '  <td data-inline-edit="true" data-editable="false" title="' + pvArgs.title + '">';
         var lvCurrentValue = pvArgs.currentValue;
         var lvSetDefault = lvCurrentValue;
@@ -766,7 +762,7 @@ function renderTrueFalse(pvArgs){
             lvSetDefault = pvArgs.defaultValue;
         }
         lvHtml += '    <span name="' + pvArgs.fieldName + '">' + lvCurrentValue + '</span>';
-        lvHtml += '    <select ' + lvRequiredText + ' data-value="' + lvCurrentValue_text + '" data-action="update" data-group="' + pvArgs.rowId + '" data-default-value="FALSE" name="' + pvArgs.fieldName + '" style="display: none" class="insideTable">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-value="' + lvCurrentValue_text + '" data-action="update" data-group="' + pvArgs.rowId + '" data-default-value="FALSE" name="' + pvArgs.fieldName + '" style="display: none" class="insideTable">';
         if(lvSetDefault === true) {
             lvHtml += '      <option selected value="TRUE">True</option>';
             lvHtml += '      <option value="FALSE">False</option>';
@@ -782,7 +778,7 @@ function renderTrueFalse(pvArgs){
         lvHtml += '  </td>';
     } else if (pvArgs.addOrUpdate === 'filter') {
         lvHtml += '  <td title="' + pvArgs.title + '" style="width: ' + pvArgs.width + '">';
-        lvHtml += '    <select required data-required="true" data-action="filter" data-group="filter" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-action="filter" data-group="filter" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
         if(pvArgs.defaultValue === 'TRUE') {
             lvHtml += '      <option selected value="TRUE">True</option>';
             lvHtml += '      <option value="FALSE">False</option>';
@@ -811,7 +807,7 @@ function renderOnOff(pvArgs){
 
     if(pvArgs.addOrUpdate === 'add'){
         lvHtml += '  <td title="' + pvArgs.title + '" style="width: ' + pvArgs.width + '">';
-        lvHtml += '    <select required data-required="true" data-action="add" data-group="new" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-action="add" data-group="new" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
         if(pvArgs.defaultValue === 'ON') {
             lvHtml += '      <option selected value="ON">On</option>';
             lvHtml += '      <option value="OFF">Off</option>';
@@ -836,7 +832,7 @@ function renderOnOff(pvArgs){
             lvSetDefault = pvArgs.defaultValue;
         }
         lvHtml += '    <span name="' + pvArgs.fieldName + '">' + lvCurrentValue + '</span>';
-        lvHtml += '    <select required data-required="true" data-action="update"  data-value="' + lvCurrentValue + '" data-group="' + pvArgs.rowId + '" data-default-value="FALSE" name="' + pvArgs.fieldName + '" style="display: none" class="insideTable">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-action="update"  data-value="' + lvCurrentValue + '" data-group="' + pvArgs.rowId + '" data-default-value="FALSE" name="' + pvArgs.fieldName + '" style="display: none" class="insideTable">';
         if(lvSetDefault === 'ON') {
             lvHtml += '      <option selected value="ON">On</option>';
             lvHtml += '      <option value="OFF">Off</option>';
@@ -852,7 +848,7 @@ function renderOnOff(pvArgs){
         lvHtml += '  </td>';
     } else if (pvArgs.addOrUpdate === 'filter') {
         lvHtml += '  <td title="' + pvArgs.title + '" style="width: ' + pvArgs.width + '">';
-        lvHtml += '    <select required data-required="true" data-action="filter" data-group="filter" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-action="filter" data-group="filter" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
         if(pvArgs.defaultValue === 'ON') {
             lvHtml += '      <option selected value="ON">On</option>';
             lvHtml += '      <option value="OFF">Off</option>';
@@ -880,7 +876,7 @@ function renderAndOr(pvArgs){
 
     if(pvArgs.addOrUpdate === 'add'){
         lvHtml += '  <td title="' + pvArgs.title + '" style="width: ' + pvArgs.width + '">';
-        lvHtml += '    <select required data-required="true" data-action="add" data-group="new" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-action="add" data-group="new" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
         if(pvArgs.defaultValue === 'AND') {
             lvHtml += '      <option selected value="AND">And</option>';
             lvHtml += '      <option value="OR">Or</option>';
@@ -905,7 +901,7 @@ function renderAndOr(pvArgs){
             lvSetDefault = pvArgs.defaultValue;
         }
         lvHtml += '    <span name="' + pvArgs.fieldName + '">' + lvCurrentValue + '</span>';
-        lvHtml += '    <select required data-required="true" data-action="update"  data-value="' + lvCurrentValue + '" data-group="' + pvArgs.rowId + '" data-default-value="FALSE" name="' + pvArgs.fieldName + '" style="display: none" class="insideTable">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-action="update"  data-value="' + lvCurrentValue + '" data-group="' + pvArgs.rowId + '" data-default-value="FALSE" name="' + pvArgs.fieldName + '" style="display: none" class="insideTable">';
         if(lvSetDefault === 'AND') {
             lvHtml += '      <option selected value="AND">And</option>';
             lvHtml += '      <option value="OR">Or</option>';
@@ -921,7 +917,7 @@ function renderAndOr(pvArgs){
         lvHtml += '  </td>';
     } else if (pvArgs.addOrUpdate === 'filter') {
         lvHtml += '  <td title="' + pvArgs.title + '" style="width: ' + pvArgs.width + '">';
-        lvHtml += '    <select required data-required="true" data-action="filter" data-group="filter" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-action="filter" data-group="filter" data-default-value="' + pvArgs.defaultValue + '" name="' + pvArgs.fieldName + '" class="insideTable">';
         if(pvArgs.defaultValue === 'AND') {
             lvHtml += '      <option selected value="AND">And</option>';
             lvHtml += '      <option value="OR">Or</option>';
@@ -952,20 +948,20 @@ function renderDropDownList(pvArgs){
     }
     if(pvArgs.addOrUpdate === 'add'){
         lvHtml += '  <td title="' + pvArgs.title + '" style="width: ' + pvArgs.width + '">';
-        lvHtml += '    <select data-required="false" data-action="add" data-group="new" name="' + pvArgs.fieldName + '" class="insideTable">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-action="add" data-group="new" name="' + pvArgs.fieldName + '" class="insideTable">';
         lvHtml += '      <option value="" selected disabled>Select ' + pvArgs.placeholder + '</option>';
         lvHtml += '    </select>';
         lvHtml += '  </td>';
     } else if (pvArgs.addOrUpdate === 'update') {
         lvHtml += '  <td data-inline-edit="true" data-editable="false" title="' + pvArgs.title + '">';
         lvHtml += '    <span name="' + pvArgs.fieldName + '">' + pvArgs.currentValue + '</span>';
-        lvHtml += '    <select data-required="false" data-action="update" data-group="' + pvArgs.rowId + '" data-value="' + pvArgs.currentId + '" name="' + pvArgs.fieldName + '" class="insideTable" style="display: none">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-action="update" data-group="' + pvArgs.rowId + '" data-value="' + pvArgs.currentId + '" name="' + pvArgs.fieldName + '" class="insideTable" style="display: none">';
         lvHtml += '      <option value="" selected disabled>Select ' + pvArgs.placeholder + '</option>';
         lvHtml += '    </select>';
         lvHtml += '  </td>';
     } else if (pvArgs.addOrUpdate === 'filter') {
         lvHtml += '  <td title="' + pvArgs.title + '" style="width: ' + pvArgs.width + '">';
-        lvHtml += '    <select data-required="false" data-action="filter" data-group="filter" name="' + pvArgs.fieldName + '" class="insideTable">';
+        lvHtml += '    <select data-required="' + pvArgs.dataRequired_str + '" data-action="filter" data-group="filter" name="' + pvArgs.fieldName + '" class="insideTable">';
         lvHtml += '      <option value="" selected disabled>Select ' + pvArgs.placeholder + '</option>';
         lvHtml += '    </select>';
         lvHtml += '  </td>';
@@ -991,7 +987,7 @@ function renderFileUpload(pvArgs){
 
     if(pvArgs.addOrUpdate === 'add'){
         lvHtml += '  <td title="' + pvArgs.title + '">';
-        lvHtml += '    <input required data-required="true" data-action="add" type="file" data-group="new" name="' + pvArgs.fieldName + '" class="insideTable" >';
+        lvHtml += '    <input data-required="' + pvArgs.dataRequired_str + '" data-action="add" type="file" data-group="new" name="' + pvArgs.fieldName + '" class="insideTable" >';
         lvHtml += '  </td>';
 
     } else if (pvArgs.addOrUpdate === 'update') {
