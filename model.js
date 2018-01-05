@@ -654,7 +654,7 @@ module.exports = {
         searchProductQuery.get(pvArgs.inputs.checkbox,{
             sessionToken: pvArgs.sessionToken,
             success: function(searchProduct){
-                searchProduct.set('searchCategories',{__type: "Pointer",className: "SearchCategory", objectId: pvArgs.inputs.searchCategorysearchCategory});
+                searchProduct.set('searchCategories',{__type: "Pointer",className: "SearchCategory", objectId: pvArgs.inputs.searchCategory});
                 searchProduct.set('productGroup',{__type: "Pointer",className: "ProductGroup", objectId: pvArgs.inputs.productGroup});
                 searchProduct.set('productName',pvArgs.inputs.productName);
                 searchProduct.set('brand',pvArgs.inputs.brand);
