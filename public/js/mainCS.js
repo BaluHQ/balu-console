@@ -1195,8 +1195,9 @@ function form_ajxCallback(pvArgs, pvPageData) {
             $(lvNewRow).find('input').attr('data-group',pvArgs.newRecord.checkbox);
             $(lvNewRow).find('select').attr('data-group',pvArgs.newRecord.checkbox);
 
-            // And finally set the checkbox ID
+            // And finally set the checkbox ID and value
             $(lvNewRow).find('input[type="checkbox"]').prop('id',pvArgs.newRecord.checkbox);
+            $(lvNewRow).find('input[type="checkbox"]').prop('value',pvArgs.newRecord.checkbox);
 
             /* Return the 'add new' fields to null (or a default text, if specified) */
             $('table#' + pvPageData.tableId).find('[data-action="add"]:not([type="submit"])').each(function(pvIndex){
